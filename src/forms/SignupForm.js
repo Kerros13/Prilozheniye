@@ -38,12 +38,14 @@ const SignupForm = () => {
         placeholder="Password"
         leftIcon={<Icon name="lock" />}
         value={password}
+        secureTextEntry={true}
         onChangeText={setPassword}
       />
       <Input
         placeholder="Confirm password"
         leftIcon={<Icon name="lock" />}
         value={confirmPassword}
+        secureTextEntry={true}
         onChangeText={setConfirmPassword}
       />
       <Button title="Create account" />

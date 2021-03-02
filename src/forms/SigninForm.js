@@ -20,6 +20,7 @@ const SigninForm = () => {
         placeholder="Password"
         leftIcon={<Icon name="lock" />}
         value={password}
+        secureTextEntry={true}
         onChange={setPassword}
       />
       <Button title="Sign-In" />
