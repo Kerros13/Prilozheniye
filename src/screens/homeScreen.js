@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {StyleSheet,View,ScrollView,FlatList,StatusBar,Dimensions} from "react-native";
+import {StyleSheet,View,ScrollView,FlatList,StatusBar,Dimensions,ActivityIndicator} from "react-native";
 import {Text,Image} from "react-native-elements";
 import backend from "../api/backend";
 import getEnvVars from "../../environment";
@@ -18,18 +18,6 @@ const HomeScreen = ({navigation}) => {
     const [tracks,setTracks] = useState(null);
     const [error,setError] = useState(false);
 
-    // const getTracks = async() => {
-    //     try {
-    //         const response = await backend.get(`track.get?commontrack_id=5920049&apikey=${apikeyM}`);
-    //         console.log(response.data.message.body);
-    //         setTracks(response.data.message.body);
-    //     } catch (error) {
-    //         setError(true);
-    //         console.log(error);
-    //     }
-        
-        
-    // }
 
     const getTracks = async () => {
         const newTracks = await fetchTracks();
@@ -46,8 +34,8 @@ const HomeScreen = ({navigation}) => {
 
     if(!tracks){
         return(
-            <View style={styles.container}>
-                <Text>No se han encontrado canciones</Text>
+            <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+                <ActivityIndicator size="large" color="blue"/>
             </View>
         )
     }
