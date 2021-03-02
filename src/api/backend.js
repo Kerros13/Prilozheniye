@@ -2,10 +2,10 @@ import axios from "axios";
 import { processColor } from "react-native";
 import getEnvVars from "../../environment";
 
-const {apiUrl} = getEnvVars();
+const {apiURL} = getEnvVars();
 
 const instance = axios.create({
-    baseURL:apiUrl
+    baseURL:apiURL
 });
 
 export default instance;
