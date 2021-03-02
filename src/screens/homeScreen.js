@@ -5,6 +5,7 @@ import backend from "../api/backend";
 import getEnvVars from "../../environment";
 import fetchTracks from "../api/index";
 import Card from "../components/Card";
+import Box from "../components/Box";
 import { abs } from "react-native-reanimated";
 
 
@@ -63,18 +64,10 @@ const HomeScreen = ({navigation}) => {
 
                 renderItem={({item}) => {
                     return(
-                        <Card>
-                            <Image
-                                style={{width:200,height:200}}
-                                source={{uri:item.album.cover_big}}
-                            
-                            />
-                            <Text style={styles.texto}>{item.title}</Text>
-                        </Card>
+                        <Box tittle={item.title} image={{uri:item.album.cover_big}} />
                     )
                 }
             }
-            
             />  
         </View>
 
@@ -88,20 +81,9 @@ const styles = StyleSheet.create({
 
     container:{
         marginTop:StatusBar.currentHeight+50,
+        backgroundColor:'#fff',
+        flex:1,
     },
-    texto:{
-        color:'#fff',
-        backgroundColor:'#000',
-        color:'#fff',
-        top:'80%',
-        position:"absolute",
-        paddingTop:5,
-        paddingBottom:5,
-        paddingRight:5,
-        paddingLeft:5
-    },
-
-
 })
 
 
