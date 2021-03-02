@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
-import {StyleSheet,View,ScrollView,Text, Image, TouchableOpacity, TextInput} from "react-native";
+import {StyleSheet,View,ScrollView,Text, Image, TouchableOpacity, TextInput, Dimensions} from "react-native";
+import * as Font from "expo-font";
+//import {AppLoading} from "expo"
+import AppLoading from 'expo-app-loading'
+import { UserInterfaceIdiom } from "expo-constants";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { Button } from "react-native-elements";
+
+const {width, height} = Dimensions.get("window");
 
 const loginScreen = ({ navigation }) => {
     
     const [Usuario, setUsuario] = useState([]);
     const [Contraseña, setContraseña] = useState([]);
+    const [fontLoaded, setFontLoaded] = useState(false)
 
     const myOnChangeUser = async (e) =>{
         const {name, value} = await e.currentTarget;
@@ -14,6 +23,13 @@ const loginScreen = ({ navigation }) => {
     const myOnChangePassword = async (e) =>{
         const {name, value} = await e.currentTarget;
         setContraseña(value);
+    }
+
+    const loadFonts = () => {
+        return Font.loadAsync({
+            "mistral": require("../../assets/Font/mistral.ttf"),
+            "PlayfairDisplay": require("../../assets/Font/PlayfairDisplay-Italic.otf"),
+        });
     }
 
     //"Base de datos" provisional
@@ -29,83 +45,114 @@ const loginScreen = ({ navigation }) => {
        }
     }
 
+    if(!fontLoaded){    
+        return (
+            <AppLoading
+            startAsync={loadFonts}
+            onFinish={() => setFontLoaded(true)}
+            onError={(err) => console.log(err)}
+            />
+        );
+    }
+
     return (
         <View style={styles.container}>
-            <View style={styles.imgContainer}>
-                <Image
-                    style={styles.tinyLogo}
-                    source={require("../../assets/user1.png")}
-                />
+            <View style={{flexDirection:"row"}}>
+                <Image style={styles.image} source={require("../../assets/qwerty.png")}/>
+                <Text style={styles.textTitulo}>PRILOZ</Text>
             </View>
+            <Image style={styles.fondo} source={require("../../assets/g47.png")}/>
             <View style={styles.textContainer}>
-                <Text>Usuario</Text>
                 <TextInput
-                    type="text"
-                    id="user"
-                    name="user"
+                    placeholder=" User"
+                    name={<Icon name="envelope" color="#ff0000" />}
                     style={styles.input}
                     onChange={myOnChangeUser}
                 />
-                <Text>Contraseña</Text>
                 <TextInput
-                    type="text"
-                    id="pass"
-                    name="pass"
+                    placeholder=" Pass"
                     style={styles.input}
                     secureTextEntry={true}
                     onChange={myOnChangePassword}
                 />
             </View>
-            <View style={styles.btnContainer}>
-                <TouchableOpacity style={styles.button} onPress={onPress}>
-                    <Text style={styles.buttonText}>Login</Text>
+            <Button buttonStyle={styles.button}
+                    raised={true}
+                    color="gray"
+                    title={<Text style={styles.buttonText}>Login</Text>}
+                    type="outline" 
+                    onPress={onPress}
+            />
+            <View style={{flexDirection:"column", marginTop:20, alignContent:'center'}}>
+                <Text style={{color:"white", marginBottom:20}}>Forgot your password?</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+                    <Text style={{color:"white"}}>Don't have an account? Sign-Up</Text>
                 </TouchableOpacity>
             </View>
+           
         </View>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
     container: {
-        height: "100vh",
-        width: "100vw",
+        height: "100%",
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        backgroundColor: "#007ACC",
+        backgroundColor: "#313030",
     },
-    imgContainer: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginBottom: 10,
-    },
-    tinyLogo: {
-        width: 100,
-        height: 100,
+    image:{
+        top: "-6%",
+        width: 39,
+        height: 106,
+        transform: [{ rotate: '20deg' }],
     },
     textContainer: {
         display: "flex",
         flexDirection: "column",
     },
     input:{
-        height: 40,
-        width: 200,
-        color:"#fff", 
-        borderColor:"#000", 
-        borderWidth: 1, 
-        marginBottom: 10, 
+        height: height*0.1,
+        width: width*0.7,
+        color:"#000", 
+        backgroundColor: "white",
+        fontSize:25,
+        borderRadius:100,
+        marginBottom: 20,
         paddingLeft: 5,
+        alignContent:"center",
+        alignItems: "center",
+        fontFamily: "PlayfairDisplay",
     },
-    btnContainer: {
-        marginTop: 5,
+    textTitulo:{
+        color:"#BBFE1B",
+        fontSize: 72,
+        fontFamily: "mistral",
+        alignContent:"center",
+        alignItems: "center",
+        marginBottom: 10,
     },
     button: {
+        backgroundColor: "rgb(195,195,195)",
+        borderRadius: 50,
+        justifyContent:"center",
         alignItems: "center",
-        backgroundColor: "#DDDDDD",
-        padding: 10,
-        width: 200,
+        height: height*0.09,
+        width: 100,
+    },
+    buttonText: {
+        fontFamily: "PlayfairDisplay",
+        fontSize: 25,
+    },
+    fondo:{
+        width: 140,
+        height: height*0.6,
+        position: "absolute",
+        top: height*0.4,
+        left: width*0.6,
     },
 });
 
