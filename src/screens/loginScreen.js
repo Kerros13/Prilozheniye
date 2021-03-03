@@ -61,7 +61,7 @@ const loginScreen = ({ navigation }) => {
                 <Image style={styles.image} source={require("../../assets/qwerty.png")}/>
                 <Text style={styles.textTitulo}>PRILOZ</Text>
             </View>
-            <Image style={styles.fondo} source={require("../../assets/g47.png")}/>
+            <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
             <View style={styles.textContainer}>
                 <TextInput
                     placeholder=" User"
@@ -80,7 +80,8 @@ const loginScreen = ({ navigation }) => {
             <Button buttonStyle={styles.button}
                     raised={true}
                     color="gray"
-                    title={<Text style={styles.buttonText}>Login</Text>}
+                    title="Login"
+                    titleStyle={styles.buttonText}
                     type="outline" 
                     onPress={onPress}
             />
