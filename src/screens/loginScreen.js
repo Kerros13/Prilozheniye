@@ -71,8 +71,9 @@ const loginScreen = ({ navigation }) => {
                 />
                 <TextInput
                     placeholder=" Pass"
-                    style={styles.input, {autoCapitalize= "none"}}
+                    style={styles.input}
                     secureTextEntry={true}
+                    autoCapitalize= "none"
                     onChange={myOnChangePassword}
                 />
             </View>

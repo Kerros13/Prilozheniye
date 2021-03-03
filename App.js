@@ -13,39 +13,20 @@ import Signup from "./src/screens/Signup";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Entypo,FontAwesome } from '@expo/vector-icons';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import TabBar from './src/components/TabBar.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+
+function MyTabs (){
   return (
-    <Tab.Navigator tabBarOptions={{
-        style:{
-          backgroundColor:'#fff',
-          borderRightColor:'#aaa',
-        },
-        activeBackgroundColor:'#e8e8e8',
-        inactiveTintColor:'#aaa',
-        labelStyle:{
-          fontSize:15
-        }
-    }}>
-        <Tab.Screen name="homeScreen" component={HomeScreen} options={{
-          title:'Home',
-          tabBarIcon:({color,size}) =>(
-            <Entypo name="home" size={size} color={color} />
-          ),
-        }} />
-        <Tab.Screen name="searchScreen" component={searchScreen} options={{
-          title:'Search',
-          tabBarIcon:({color,size}) =>(
-            <FontAwesome name="search" size={size} color={color} />
-          ),
-        }} />
-        
+    <Tab.Navigator tabBar={props => <TabBar {...props} />}>
+      <Tab.Screen name='Home' component={HomeScreen} initialParams={{ icon2: 'home' }}/>
+      <Tab.Screen name='Search' component={searchScreen} initialParams={{ icon3: 'search' }}/>
     </Tab.Navigator>
   );
-}
+};
 
 export default function App() {
   return (
@@ -59,7 +40,7 @@ export default function App() {
           />
           <Stack.Screen
             name="signin"
-            component={Login}
+            component={loginScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -86,3 +67,39 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+
+
+
+
+
+// function MyTabs() {
+//   return (
+//     <Tab.Navigator tabBarOptions={{
+//         style:{
+//           backgroundColor:'#fff',
+//           borderRightColor:'#aaa',
+//         },
+//         activeBackgroundColor:'#e8e8e8',
+//         inactiveTintColor:'#aaa',
+//         labelStyle:{
+//           fontSize:15
+//         }
+//     }}>
+//         <Tab.Screen name="homeScreen" component={HomeScreen} options={{
+//           title:'Home',
+//           tabBarIcon:({color,size}) =>(
+//             <Entypo name="home" size={size} color={color} />
+//           ),
+//         }} />
+//         <Tab.Screen name="searchScreen" component={searchScreen} options={{
+//           title:'Search',
+//           tabBarIcon:({color,size}) =>(
+//             <FontAwesome name="search" size={size} color={color} />
+//           ),
+//         }} />
+        
+//     </Tab.Navigator>
+//   );
+// }
