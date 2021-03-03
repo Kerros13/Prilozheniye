@@ -71,7 +71,7 @@ const loginScreen = ({ navigation }) => {
                 />
                 <TextInput
                     placeholder=" Pass"
-                    style={styles.input}
+                    style={styles.input, {autoCapitalize= "none"}}
                     secureTextEntry={true}
                     onChange={myOnChangePassword}
                 />
