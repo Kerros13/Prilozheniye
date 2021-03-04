@@ -73,7 +73,7 @@ const mainScreen = ({navigation}) => {
                     title="Tabs"
                     titleStyle={{color:"#000", fontFamily: "PlayfairDisplay",}}
                     type="solid"
-                    onPress={()=>{navigation.navigate("tab")}}
+                    onPress={()=>{navigation.navigate("App")}}
                 />
             </View>
                 

@@ -7,6 +7,7 @@ import {fetchTracks, fetchGenres,_fetchArtists } from "../api/index";
 import Card from "../components/Card";
 import Box from "../components/Box";
 import { abs } from "react-native-reanimated";
+import Header from '../components/Header.js';
 
 const {apikeyM} = getEnvVars();
 
@@ -71,58 +72,58 @@ const HomeScreen = ({navigation}) => {
     }
     
     return(
-
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <Text h2>Top Charts</Text>
-            <FlatList
-                data={tracks}
-                horizontal={true}
-                keyExtractor={(item)=>item.id.toString()}
-                showsHorizontalScrollIndicator={false}
-
-                renderItem={({item}) => {
-                    return(
-                        <Box tittle={item.title} image={{uri:item.album.cover_big}} />
-                    )
-                }
-            }
-            />
-            <Text h2>Genres</Text>
-            <FlatList
-                data={genres}
-                horizontal={true}
-                keyExtractor={(item)=>item.id.toString()}
-                showsHorizontalScrollIndicator={false}
-
-                renderItem={({item}) => {
-                    return(
-                        <Box tittle={item.name} image={{uri:item.picture_big}}/>
-                    )
-                }
-            }
-            />
-            <Text h2>Top Artists</Text>
+        <View   style={styles.container}>
+            <ScrollView  showsVerticalScrollIndicator={false}>
+                <Text h2>Top Charts</Text>
                 <FlatList
-                    data={artists}
+                    data={tracks}
                     horizontal={true}
-                    keyExtractor={(item)=>item.artist.artist_id.toString()}
+                    keyExtractor={(item)=>item.id.toString()}
                     showsHorizontalScrollIndicator={false}
 
                     renderItem={({item}) => {
                         return(
-                            <Box tittle={
-                                item.artist.artist_credits.artist_list.length > 0 ? 
-                                item.artist.artist_credits.artist_list[0].artist.artist_name : 
-                                item.artist.artist_name
-                                        } 
-                                image={{uri:item.image_url}}
-                            />
+                            <Box tittle={item.title} image={{uri:item.album.cover_big}} />
                         )
                     }
                 }
-                />    
-        </ScrollView>
+                />
+                <Text h2>Genres</Text>
+                <FlatList
+                    data={genres}
+                    horizontal={true}
+                    keyExtractor={(item)=>item.id.toString()}
+                    showsHorizontalScrollIndicator={false}
 
+                    renderItem={({item}) => {
+                        return(
+                            <Box tittle={item.name} image={{uri:item.picture_big}}/>
+                        )
+                    }
+                }
+                />
+                <Text h2>Top Artists</Text>
+                    <FlatList
+                        data={artists}
+                        horizontal={true}
+                        keyExtractor={(item)=>item.artist.artist_id.toString()}
+                        showsHorizontalScrollIndicator={false}
+
+                        renderItem={({item}) => {
+                            return(
+                                <Box tittle={
+                                    item.artist.artist_credits.artist_list.length > 0 ? 
+                                    item.artist.artist_credits.artist_list[0].artist.artist_name : 
+                                    item.artist.artist_name
+                                            } 
+                                    image={{uri:item.image_url}}
+                                />
+                            )
+                        }
+                    }
+                    />    
+            </ScrollView>
+        </View>
     )
 
 

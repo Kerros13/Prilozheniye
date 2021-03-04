@@ -11,7 +11,7 @@ const Signup = ({ navigation }) => {
       <SignupForm />
       <TouchableOpacity
         onPress={() => {
-          navigation.goBack();
+          navigation.navigate("signin")
         }}
       >
         <Text>Already got an account? Sign in</Text>
