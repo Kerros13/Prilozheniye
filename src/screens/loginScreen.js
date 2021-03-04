@@ -11,18 +11,20 @@ const {width, height} = Dimensions.get("window");
 
 const loginScreen = ({ navigation }) => {
     
-    const [Usuario, setUsuario] = useState([]);
-    const [Contraseña, setContraseña] = useState([]);
+    const [Usuario, setUsuario] = useState("");
+    const [Contraseña, setContraseña] = useState({
+        pass: "",
+    });
     const [fontLoaded, setFontLoaded] = useState(false)
 
-    const myOnChangeUser = async (e) =>{
-        const {name, value} = await e.currentTarget;
+    const myOnChangeUser = (e) =>{
+        const {value} = e.currentTarget;
         setUsuario(value);
     }
 
-    const myOnChangePassword = async (e) =>{
-        const {name, value} = await e.currentTarget;
-        setContraseña(value);
+    const myOnChangePassword = (e) =>{
+        const {value} = e.currentTarget;
+        setContraseña({...Contraseña, pass:value});
     }
 
     const loadFonts = () => {
@@ -37,20 +39,21 @@ const loginScreen = ({ navigation }) => {
     const passList = "pass";
 
     const onPress = () => {
-       if (Usuario == userList && Contraseña == passList) {
+       if (Usuario == userList && Contraseña.pass == passList) {
             navigation.navigate("Home");
        }
        else {
            alert("Credenciales inválidas.");
+           alert(Usuario);
        }
     }
 
     if(!fontLoaded){    
         return (
             <AppLoading
-            startAsync={loadFonts}
-            onFinish={() => setFontLoaded(true)}
-            onError={(err) => console.log(err)}
+                startAsync={loadFonts}
+                onFinish={() => setFontLoaded(true)}
+                onError={(err) => console.log(err)}
             />
         );
     }
@@ -64,32 +67,37 @@ const loginScreen = ({ navigation }) => {
             <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
             <View style={styles.textContainer}>
                 <TextInput
-                    placeholder=" User"
-                    name={<Icon name="envelope" color="#ff0000" />}
+                    placeholder="User"
+                    name="userPH"
+                    value={Usuario}
                     style={styles.input}
                     onChange={myOnChangeUser}
                 />
                 <TextInput
-                    placeholder=" Pass"
+                    placeholder="Contraseña"
+                    name="passPH"
+                    value={Contraseña.pass}
                     style={styles.input}
                     secureTextEntry={true}
                     autoCapitalize= "none"
                     onChange={myOnChangePassword}
                 />
             </View>
-            <Button buttonStyle={styles.button}
-                    raised={true}
+            <Button buttonStyle={styles.signInBtn}
                     color="gray"
-                    title="Login"
-                    titleStyle={styles.buttonText}
-                    type="outline" 
+                    title="Sign-In"
                     onPress={onPress}
+                    titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:27,}}
+                    type="solid"
             />
-            <View style={{flexDirection:"column", marginTop:20, alignContent:'center'}}>
-                <Text style={{color:"white", marginBottom:20}}>Forgot your password?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate("signup")}>
-                    <Text style={{color:"white"}}>Don't have an account? Sign-Up</Text>
-                </TouchableOpacity>
+            <View style={{displat:"flex", flexDirection:"column", marginTop:20, alignContent:"center", justifyContent:"center"}}>
+                <Text style={{color:"white", marginBottom:height*0.02}}>Forgot your password?</Text>
+                <View style={{display:"flex",flexDirection:"row"}}>
+                    <Text style={{color:"white"}}>Don't have an account?</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+                        <Text style={{color:"#006BE1"}}> Sign-Up</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
            
         </View>
@@ -117,17 +125,16 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
     input:{
-        height: height*0.1,
+        height: height*0.07,
         width: width*0.7,
         color:"#000", 
         backgroundColor: "white",
         fontSize:25,
         borderRadius:100,
         marginBottom: 20,
-        paddingLeft: 5,
+        paddingLeft: 25,
         alignContent:"center",
         alignItems: "center",
-        fontFamily: "PlayfairDisplay",
     },
     textTitulo:{
         color:"#BBFE1B",
@@ -137,13 +144,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginBottom: 10,
     },
-    button: {
-        backgroundColor: "rgb(195,195,195)",
-        borderRadius: 50,
-        justifyContent:"center",
-        alignItems: "center",
-        height: height*0.09,
-        width: 100,
+    signInBtn: {
+        width: width*0.7,
+        height: height*0.07,
+        borderRadius:50,
+        marginHorizontal: 3,
+        backgroundColor: "#0159BB",
     },
     buttonText: {
         fontFamily: "PlayfairDisplay",
@@ -154,7 +160,7 @@ const styles = StyleSheet.create({
         height: height*0.6,
         position: "absolute",
         top: height*0.4,
-        left: width*0.6,
+        left: width*0.65,
     },
 });
 
