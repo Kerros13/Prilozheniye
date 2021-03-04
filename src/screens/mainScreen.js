@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { View,StyleSheet,Text, Image, Dimensions } from "react-native";
 import { Button,Header } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Logo from "../components/Logo.js"
 
 
 const {width, height} = Dimensions.get("window");
@@ -19,7 +20,7 @@ const mainScreen = ({navigation}) => {
         });
     }
 
-    if(!fontLoaded){
+    if(!fontLoaded){    
         return (
             <AppLoading
             startAsync={loadFonts}
@@ -31,54 +32,52 @@ const mainScreen = ({navigation}) => {
 
     return(
         <View style={styles.container}>
-                <View style={styles.titleContainer}>
-                    <Image style={styles.image} source={require("../../assets/qwerty.png")}/>
-                    <Text style={styles.textTitulo}>PRILOZ</Text>
-                </View>
-                <View style={styles.signContainer}>
-                    <Image style={styles.bgimage} source={require("../../assets/g44.png")}/>
-                    <Button
-                        buttonStyle={styles.signInBtn}
-                        title="Sign-In"
-                        titleStyle={{color:"#fff", fontFamily: "PlayfairDisplay", fontSize:22,}}
-                        type="solid"
-                        onPress={()=>{navigation.navigate("signin")}}
-                        icon={
-                            <Icon
-                              name="sign-in"
-                              size={25}
-                              color="#fff"
-                            />
-                        }
-                        iconLeft
-                    />
-                    <Button
-                        buttonStyle={styles.signUpBtn}
-                        title="Sign-Up"
-                        titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:22,}}
-                        type="solid"
-                        onPress={()=>{navigation.navigate("signup")}}
-                        icon={
-                            <Icon
-                              name="user-plus"
-                              size={25}
-                              color="#000"
-                            />
-                        }
-                        iconLeft
-                    />
-                </View>
-                <View style={styles.tabsContainer}>
-                    <Button
-                        buttonStyle={styles.tabsBtn}
-                        title="Tabs"
-                        titleStyle={{color:"#000", fontFamily: "PlayfairDisplay",}}
-                        type="solid"
-                        onPress={()=>{navigation.navigate("tab")}}
-                    />
-                </View>
-                
+            <View style={styles.titleContainer}><Logo title="PRILOZ"/></View>
+            
+            <View style={styles.signContainer}>
+                <Image style={styles.bgimage} source={require("../../assets/g44.png")}/>
+                <Button
+                    buttonStyle={styles.signInBtn}
+                    title="Sign-In"
+                    titleStyle={{color:"#fff", fontFamily: "PlayfairDisplay", fontSize:22,}}
+                    type="solid"
+                    onPress={()=>{navigation.navigate("signin")}}
+                    icon={
+                        <Icon
+                            name="sign-in"
+                            size={25}
+                            color="#fff"
+                        />
+                    }
+                    iconLeft
+                />
+                <Button
+                    buttonStyle={styles.signUpBtn}
+                    title="Sign-Up"
+                    titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:22,}}
+                    type="solid"
+                    onPress={()=>{navigation.navigate("signup")}}
+                    icon={
+                        <Icon
+                            name="user-plus"
+                            size={25}
+                            color="#000"
+                        />
+                    }
+                    iconLeft
+                />
             </View>
+            <View style={styles.tabsContainer}>
+                <Button
+                    buttonStyle={styles.tabsBtn}
+                    title="Tabs"
+                    titleStyle={{color:"#000", fontFamily: "PlayfairDisplay",}}
+                    type="solid"
+                    onPress={()=>{navigation.navigate("tab")}}
+                />
+            </View>
+                
+        </View>
     )
 
 };
@@ -107,24 +106,16 @@ const styles = StyleSheet.create({
         height: 106,
         transform: [{ rotate: '20deg' }],
     },
-    textTitulo:{
-        color:"#BBFE1B",
-        fontSize: 72,
-        fontFamily: "mistral",
-        alignContent:"center",
-        alignItems: "center",
-        marginBottom: 10,
-    },
     imgContainer:{
         display: "flex",
         flex:3,
     },
     bgimage: {
-        width: 140,
-        height: height*0.6,
+        width: 150,
+        height: height*0.65,
         position: "absolute",
         top: height*0.1,
-        left: width*0.45,
+        left: width*0.40,
     },
     signContainer: {
         display: "flex",
