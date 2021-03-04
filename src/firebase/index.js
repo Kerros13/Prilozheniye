@@ -1,5 +1,6 @@
 import firebase from "@react-native-firebase/app";
-
+import "@firebase/auth";
+import "@firebase/firestore";
 import getEnvVars from "../../environment";
 
 const {
