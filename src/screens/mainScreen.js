@@ -1,13 +1,33 @@
-import React from "react";
+import React, {useState} from "react";
 import { View,StyleSheet,Text, Image, Dimensions } from "react-native";
 import { Button,Header } from 'react-native-elements';
 import * as Font from "expo-font";
+import AppLoading from 'expo-app-loading';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const {width, height} = Dimensions.get("window");
 
 const mainScreen = ({navigation}) => {
+
+    const [fontLoaded, setFontLoaded] = useState(false);
+
+    const loadFonts = () => {
+        return Font.loadAsync({
+            "mistral": require("../../assets/Font/mistral.ttf"),
+            "PlayfairDisplay": require("../../assets/Font/PlayfairDisplay-Italic.otf"),
+        });
+    }
+
+    if(!fontLoaded){
+        return (
+            <AppLoading
+            startAsync={loadFonts}
+            onFinish={() => setFontLoaded(true)}
+            onError={(err) => console.log(err)}
+            />
+        );
+    }
 
     return(
         <View style={styles.container}>

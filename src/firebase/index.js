@@ -1,4 +1,4 @@
-import firebase from "@react-native-firebase/app";
+import firebase from "firebase/app";
 import "@firebase/auth";
 import "@firebase/firestore";
 import getEnvVars from "../../environment";
@@ -14,7 +14,7 @@ const {
 
 // Valores de la configuración de Firebase
 const firebaseConfig = {
-  apiKey: apiKeyF,
+  apiKey:apiKeyF,
   authDomain,
   projectId,
   storageBucket,
