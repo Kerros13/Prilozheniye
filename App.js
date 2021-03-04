@@ -3,6 +3,7 @@ import React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from "./src/screens/homeScreen";
 import searchScreen from "./src/screens/searchScreen";
@@ -17,11 +18,31 @@ import TabBar from './src/components/TabBar.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
+function drawer(){
+  return(
+      <Drawer.Navigator 
+      initialRouteName="Home" 
+      drawerPosition={"right"} 
+      drawerStyle={{backgroundColor:'#1c2134'}} 
+      drawerContentOptions={{
+        inactiveTintColor:'#ffffff'
+      }}>
+        <Drawer.Screen name="Home" component={MyTabs} options={{
+          title:'Home',
+
+        }} />
+        <Drawer.Screen name="Login" component={Login} options={{
+          title:'Login'
+        }}/>
+      </Drawer.Navigator>
+  );
+};
 
 function MyTabs (){
   return (
-    <Tab.Navigator tabBar={props => <TabBar {...props} />}>
+    <Tab.Navigator tabBar={props => <TabBar {...props} initialRouteName="Home" />}>
       <Tab.Screen name='Home' component={HomeScreen} initialParams={{ icon2: 'home' }}/>
       <Tab.Screen name='Search' component={searchScreen} initialParams={{ icon3: 'search' }}/>
     </Tab.Navigator>
@@ -50,7 +71,7 @@ export default function App() {
           />
           <Stack.Screen
             name="tab"
-            component={MyTabs}
+            component={drawer}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

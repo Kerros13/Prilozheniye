@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {StyleSheet,View,ScrollView,Text, Image, TouchableOpacity, TextInput, Dimensions} from "react-native";
 import * as Font from "expo-font";
-//import {AppLoading} from "expo"
-import AppLoading from 'expo-app-loading'
+import AppLoading from 'expo-app-loading';
 import { UserInterfaceIdiom } from "expo-constants";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-elements";
+import Logo from "../components/Logo.js"
 
 const {width, height} = Dimensions.get("window");
 
@@ -60,10 +60,7 @@ const loginScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:"row"}}>
-                <Image style={styles.image} source={require("../../assets/qwerty.png")}/>
-                <Text style={styles.textTitulo}>PRILOZ</Text>
-            </View>
+            <Logo title="PRILOZ" />
             <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
             <View style={styles.textContainer}>
                 <TextInput
@@ -114,12 +111,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         backgroundColor: "#313030",
     },
-    image:{
-        top: "-6%",
-        width: 39,
-        height: 106,
-        transform: [{ rotate: '20deg' }],
-    },
     textContainer: {
         display: "flex",
         flexDirection: "column",
@@ -135,14 +126,6 @@ const styles = StyleSheet.create({
         paddingLeft: 25,
         alignContent:"center",
         alignItems: "center",
-    },
-    textTitulo:{
-        color:"#BBFE1B",
-        fontSize: 72,
-        fontFamily: "mistral",
-        alignContent:"center",
-        alignItems: "center",
-        marginBottom: 10,
     },
     signInBtn: {
         width: width*0.7,

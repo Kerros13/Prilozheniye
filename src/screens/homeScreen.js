@@ -72,7 +72,7 @@ const HomeScreen = ({navigation}) => {
     
     return(
 
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Text h2>Top Charts</Text>
             <FlatList
                 data={tracks}
