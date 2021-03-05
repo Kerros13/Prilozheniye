@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Avatar,Title,Caption,Paragraph,Drawer } from 'react-native-paper';
+import { View, StyleSheet,Text } from 'react-native';
+import { Avatar,Title,Caption,Paragraph,Drawer,TouchableRipple,Switch } from 'react-native-paper';
 import { DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import { Entypo } from '@expo/vector-icons';
 
@@ -14,12 +14,12 @@ export function DrawerContent(props) {
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image 
-                                source={require('../../assets/6aa.jpg')}
+                                source={require('../../assets/img_avatar.png')}
                                 size={50}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>Kevin Romero</Title>
-                                <Caption style={styles.caption}>@kerros</Caption>
+                                <Title style={styles.title}>Name</Title>
+                                <Caption style={styles.caption}>@tag</Caption>
                             </View>
                         </View>
 
@@ -47,18 +47,17 @@ export function DrawerContent(props) {
                             label="Home"
                             onPress={() => {props.navigation.navigate('Home')}}
                         />
-                        <DrawerItem 
-                            icon={({color, size}) => (
-                                <Entypo 
-                                name="home" 
-                                color={color}
-                                size={size}
-                                />
-                            )}
-                            label="Login"
-                            onPress={() => {props.navigation.navigate('Login')}}
-                        />
-                        
+                    </Drawer.Section>
+
+                    <Drawer.Section title="Preferences">
+                        <TouchableRipple>
+                            <View style={styles.preference}>
+                                <Text>Dark Theme</Text>
+                                <View pointerEvents="none">
+                                    <Switch />
+                                </View>
+                            </View>
+                        </TouchableRipple>
                     </Drawer.Section>
                     
                 </View>
@@ -117,4 +116,10 @@ const styles = StyleSheet.create({
         borderTopColor: '#f4f4f4',
         borderTopWidth: 1
     },
+    preference: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+      },
 });

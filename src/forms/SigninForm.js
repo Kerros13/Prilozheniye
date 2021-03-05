@@ -4,6 +4,8 @@ import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { firebase } from "../firebase";
 import { validate } from "email-validator";
+import Logo from "../components/Logo.js"
+import Login from "../screens/Signin";
 
 const SigninForm = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -11,7 +13,6 @@ const SigninForm = ({ navigation }) => {
   const [error, setError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [login, setLogin] = useState(false);
 
   const handleVerify = (input) => {
      if (input === "email") {
@@ -35,14 +36,15 @@ const SigninForm = ({ navigation }) => {
         console.log("success");
         navigation.navigate("App");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => setError(error.message));
   };
 
   return (
     <View>
+      <Logo title="Priloz"/>
       <Input
         placeholder="Email"
-        leftIcon={<Icon name="envelope" />}
+        leftIcon={<Icon name="envelope" color="white" />}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -55,7 +57,7 @@ const SigninForm = ({ navigation }) => {
       />
       <Input
         placeholder="Password"
-        leftIcon={<Icon name="lock" />}
+        leftIcon={<Icon name="lock" color="white" />}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -74,6 +76,16 @@ const SigninForm = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    backgroundColor: "#313030",
+}
+});
 
 export default SigninForm;

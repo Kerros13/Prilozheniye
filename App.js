@@ -106,7 +106,7 @@ function drawer(){
   return(
       <Drawer.Navigator 
       initialRouteName="Home" 
-      drawerPosition={"right"} 
+      drawerPosition={"left"} 
       drawerContent= {props => <DrawerContent {...props}/>}
       drawerType="back"
     >
