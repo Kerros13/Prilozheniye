@@ -8,7 +8,7 @@ const { width, height } = Dimensions.get("screen");
 const Signup = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <SignupForm />
+      <SignupForm navigation={navigation}/>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("signin")

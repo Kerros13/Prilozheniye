@@ -3,7 +3,7 @@ import {StyleSheet,View,ScrollView,FlatList,StatusBar,Dimensions,ActivityIndicat
 import {Text,Image} from "react-native-elements";
 import backend from "../api/backend";
 import getEnvVars from "../../environment";
-import {fetchTracks, fetchGenres,_fetchArtists } from "../api/index";
+import {fetchTracks, fetchGenres,_fetchArtists} from "../api/index";
 import Card from "../components/Card";
 import Box from "../components/Box";
 import { abs } from "react-native-reanimated";
@@ -33,25 +33,11 @@ const HomeScreen = ({navigation}) => {
         // console.log(newGenres);
     };
 
-    // const getArtists = async () => {
-    //     try {
-    //         const response = await backend.get(`chart.artists.get?page=1&page_size=10&country=us&apikey=${apikeyM}`);
-    //         setArtists(response.data.message.body.artist_list);
-    //         console.log(artists);
-    //     } catch (error) {
-    //         setError(true);
-            
-    //     }
-    // }
-
     const getArtists = async () => {
         const newArtists = await _fetchArtists();
         setArtists(newArtists);
-        console.log(newArtists);
+        //console.log(newArtists);
     }
-
-
-
     
 
     useEffect(()=>{
@@ -74,7 +60,7 @@ const HomeScreen = ({navigation}) => {
     return(
         <View   style={styles.container}>
             <ScrollView  showsVerticalScrollIndicator={false}>
-                <Text h2>Top Charts</Text>
+                <Text h2>Top Canciones</Text>
                 <FlatList
                     data={tracks}
                     horizontal={true}
@@ -88,8 +74,9 @@ const HomeScreen = ({navigation}) => {
                     }
                 }
                 />
-                <Text h2>Genres</Text>
+                <Text h2>Generos</Text>
                 <FlatList
+                    
                     data={genres}
                     horizontal={true}
                     keyExtractor={(item)=>item.id.toString()}
@@ -102,26 +89,28 @@ const HomeScreen = ({navigation}) => {
                     }
                 }
                 />
-                <Text h2>Top Artists</Text>
-                    <FlatList
-                        data={artists}
-                        horizontal={true}
-                        keyExtractor={(item)=>item.artist.artist_id.toString()}
-                        showsHorizontalScrollIndicator={false}
+                <Text h2>Top Artistas</Text>
+                <FlatList
+                    data={artists}
+                    horizontal={true}
+                    keyExtractor={(item)=>item.artist.artist_id.toString()}
+                    showsHorizontalScrollIndicator={false}
 
-                        renderItem={({item}) => {
-                            return(
-                                <Box tittle={
-                                    item.artist.artist_credits.artist_list.length > 0 ? 
-                                    item.artist.artist_credits.artist_list[0].artist.artist_name : 
-                                    item.artist.artist_name
-                                            } 
-                                    image={{uri:item.image_url}}
-                                />
-                            )
-                        }
+                    renderItem={({item}) => {
+                        return(
+                            
+                            <Box tittle={
+                            item.artist.artist_credits.artist_list.length > 0 ? 
+                            item.artist.artist_credits.artist_list[0].artist.artist_name : 
+                            item.artist.artist_name
+                                    } 
+                            image={{uri:item.image_url}}
+                            />
+                            
+                        )
                     }
-                    />    
+                }
+                />    
             </ScrollView>
         </View>
     )
@@ -133,7 +122,7 @@ const HomeScreen = ({navigation}) => {
 const styles = StyleSheet.create({
 
     container:{
-        marginTop:StatusBar.currentHeight,
+        marginTop:0,
         backgroundColor:'#fff',
         flex:1,
     },

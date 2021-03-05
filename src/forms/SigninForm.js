@@ -31,9 +31,9 @@ const SigninForm = ({ navigation }) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email,password)
-      .then((response) => {
-        console.log("login successful");
-        {navigation.navigate("tab")}
+      .then(() => {
+        console.log("success");
+        navigation.navigate("App");
       })
       .catch((error) => console.log(error));
   };

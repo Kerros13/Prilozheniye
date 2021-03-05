@@ -44,7 +44,7 @@ const SignupForm = ({ navigation }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
-        navigation.navigate("App", { userCreated: true });
+        navigation.navigate("signin", { userCreated: true });
       })
       .catch((error) => console.log(error));
   };
