@@ -1,11 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from "./src/screens/homeScreen";
 import searchScreen from "./src/screens/searchScreen";
 import loginScreen from "./src/screens/loginScreen";
@@ -16,8 +15,6 @@ import Prueba1 from "./src/screens/Pruebas/Prueba1";
 import Prueba2 from "./src/screens/Pruebas/Prueba2";
 import Prueba3 from "./src/screens/Pruebas/Prueba3";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Entypo,FontAwesome,MaterialIcons } from '@expo/vector-icons';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import TabBar from './src/components/TabBar.js';
 import {DrawerContent} from './src/components/Drawer.js'
 import Header from './src/components/Header.js';
@@ -147,15 +144,6 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 
 

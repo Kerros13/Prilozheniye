@@ -6,6 +6,7 @@ import { firebase } from "../firebase";
 import { validate } from "email-validator";
 import Logo from "../components/Logo.js"
 import Login from "../screens/Signin";
+import { CommonActions } from '@react-navigation/native';
 
 const SigninForm = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -34,7 +35,17 @@ const SigninForm = ({ navigation }) => {
       .signInWithEmailAndPassword(email,password)
       .then(() => {
         console.log("success");
+        navigation.dispatch(
+          CommonActions.reset({index: 0,routes: [
+              {
+                name: 'App',
+                params: { user: 'jane' },
+              },
+            ],
+          })
+        );
         navigation.navigate("App");
+
       })
       .catch((error) => setError(error.message));
   };
