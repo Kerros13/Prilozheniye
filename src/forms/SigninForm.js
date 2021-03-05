@@ -1,10 +1,12 @@
 import React, { useState,useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Dimensions, TextInput } from "react-native";
 import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { firebase } from "../firebase";
 import { validate } from "email-validator";
 import { CommonActions } from '@react-navigation/native';
+
+const {width, height} = Dimensions.get("window");
 
 const SigninForm = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -48,13 +50,12 @@ const SigninForm = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <Input
+    <View style={styles.container}>
+      <TextInput
         placeholder="Email"
-        leftIcon={<Icon name="envelope" color="white" />}
         value={email}
         onChangeText={setEmail}
-        autoCapitalize="none"
+        style={styles.input}
         onBlur={() => {
           handleVerify("email");
         }}
@@ -62,11 +63,11 @@ const SigninForm = ({ navigation }) => {
           emailError ? "Por favor ingresa una dirección de correo válida" : ""
         }
       />
-      <Input
+      <TextInput
         placeholder="Password"
-        leftIcon={<Icon name="lock" color="white" />}
         value={password}
         onChangeText={setPassword}
+        style={styles.input}
         secureTextEntry
         autoCapitalize="none"
         onBlur={() => {
@@ -78,21 +79,43 @@ const SigninForm = ({ navigation }) => {
             : ""
         }
       />
-      <Button title="Sign-In" onPress={handleSignin} />
+      <Button title="Sign-In" onPress={handleSignin} titleStyle={styles.titleBtn} buttonStyle={styles.signInBtn}/>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
-    width: "100%",
+    width: width,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
     backgroundColor: "#313030",
-}
+  },
+  input:{
+    height: height*0.07,
+    width: width*0.7,
+    color:"#000", 
+    backgroundColor: "white",
+    fontSize:25,
+    borderRadius:100,
+    marginBottom: 20,
+    paddingLeft: 25,
+    alignContent:"center",
+    alignItems: "center",
+  },
+  signInBtn: {
+    width: width*0.7,
+    height: height*0.07,
+    borderRadius:50,
+    marginHorizontal: 3,
+    backgroundColor: "#0159BB",
+  },
+  titleBtn: {
+    fontFamily: "PlayfairDisplay",
+    fontSize: 25,
+  },
 });
 
 export default SigninForm;

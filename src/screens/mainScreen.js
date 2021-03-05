@@ -114,8 +114,8 @@ const styles = StyleSheet.create({
         width: 150,
         height: height*0.65,
         position: "absolute",
-        top: height*0.1,
-        left: width*0.40,
+        top: height*0.14,
+        left: width*0.425,
     },
     signContainer: {
         display: "flex",

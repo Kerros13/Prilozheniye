@@ -71,7 +71,7 @@ const loginScreen = ({ navigation }) => {
                     onChange={myOnChangeUser}
                 />
                 <TextInput
-                    placeholder="Contraseña"
+                    placeholder="Password"
                     name="passPH"
                     value={Contraseña.pass}
                     style={styles.input}
@@ -87,12 +87,16 @@ const loginScreen = ({ navigation }) => {
                     titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:27,}}
                     type="solid"
             />
-            <View style={{displat:"flex", flexDirection:"column", marginTop:20, alignContent:"center", justifyContent:"center"}}>
-                <Text style={{color:"white", marginBottom:height*0.02}}>Forgot your password?</Text>
+            <View style={{display:"flex", flexDirection:"column", marginTop:20, alignItems:"center", justifyContent:"center"}}>
+                <View>
+                    <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+                        <Text style={{color:"#BBFE1B", marginBottom:height*0.02}}>Forgot your password?</Text>
+                    </TouchableOpacity>
+                </View>
                 <View style={{display:"flex",flexDirection:"row"}}>
                     <Text style={{color:"white"}}>Don't have an account?</Text>
                     <TouchableOpacity onPress={() => navigation.navigate("signup")}>
-                        <Text style={{color:"#006BE1"}}> Sign-Up</Text>
+                        <Text style={{color:"#BBFE1B"}}>  Sign-Up</Text>
                     </TouchableOpacity>
                 </View>
             </View>

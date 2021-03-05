@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Dimensions, TextInput } from "react-native";
 import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { firebase } from "../firebase";
 import { validate } from "email-validator";
+
+const {width, height} = Dimensions.get("window");
 
 const SignupForm = ({ navigation }) => {
   const [fullname, setFullname] = useState("");
@@ -50,12 +52,12 @@ const SignupForm = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <Input
-        placeholder="Full name"
-        leftIcon={<Icon name="user" />}
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Username"
         value={fullname}
         onChangeText={setFullname}
+        style={styles.input}
         onBlur={() => {
           handleVerify("fullname");
         }}
@@ -63,11 +65,11 @@ const SignupForm = ({ navigation }) => {
           fullnameError ? "Por favor ingresa tu nombre completo" : ""
         }
       />
-      <Input
-        placeholder="Email"
-        leftIcon={<Icon name="envelope" />}
+      <TextInput
+        placeholder="E-mail"
         value={email}
         onChangeText={setEmail}
+        style={styles.input}
         autoCapitalize="none"
         onBlur={() => {
           handleVerify("email");
@@ -76,11 +78,11 @@ const SignupForm = ({ navigation }) => {
           emailError ? "Por favor ingresa una dirección de correo válida" : ""
         }
       />
-      <Input
+      <TextInput
         placeholder="Password"
-        leftIcon={<Icon name="lock" />}
         value={password}
         onChangeText={setPassword}
+        style={styles.input}
         secureTextEntry
         autoCapitalize="none"
         onBlur={() => {
@@ -92,11 +94,11 @@ const SignupForm = ({ navigation }) => {
             : ""
         }
       />
-      <Input
+      <TextInput
         placeholder="Confirm password"
-        leftIcon={<Icon name="lock" />}
         value={confirmPassword}
         onChangeText={setConfirmPassword}
+        style={styles.input}
         secureTextEntry
         autoCapitalize="none"
         onBlur={() => {
@@ -108,11 +110,42 @@ const SignupForm = ({ navigation }) => {
             : ""
         }
       />
-      <Button title="Create account" onPress={handleSignup} />
+      <Button title="Create account" titleStyle={styles.titleBtn} onPress={handleSignup} buttonStyle={styles.signUpBtn}/>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+container: {
+  width: width,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
+},
+input:{
+    height: height*0.07,
+    width: width*0.7,
+    color:"#000", 
+    backgroundColor: "white",
+    fontSize:25,
+    borderRadius:100,
+    marginBottom: 20,
+    paddingLeft: 25,
+    alignContent:"center",
+    alignItems: "center",
+},
+signUpBtn: {
+    width: width*0.7,
+    height: height*0.07,
+    borderRadius:50,
+    marginHorizontal: 3,
+    backgroundColor: "#0159BB",
+},
+titleBtn: {
+  fontFamily: "PlayfairDisplay",
+  fontSize: 25,
+},
+});
 
 export default SignupForm;
