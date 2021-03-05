@@ -39,7 +39,6 @@ const SigninForm = ({ navigation }) => {
           CommonActions.reset({index: 0,routes: [
               {
                 name: 'App',
-                params: { user: 'jane' },
               },
             ],
           })
