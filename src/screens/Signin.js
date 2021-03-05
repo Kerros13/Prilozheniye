@@ -6,14 +6,15 @@ import {
   View,
   Text,
 } from "react-native";
-import { Input, Button } from "react-native-elements";
 import SigninForm from "../forms/SigninForm";
+import Logo from "../components/Logo.js"
 
 const { width, height } = Dimensions.get("screen");
 
 const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <Logo title="Priloz"/>
       <SigninForm navigation={navigation}/>
       <View style={{displat:"flex", flexDirection:"column", marginTop:20, alignContent:"center", justifyContent:"center"}}>
                 <Text style={{color:"white", marginBottom:height*0.02}}>Forgot your password?</Text>

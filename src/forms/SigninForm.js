@@ -5,8 +5,6 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { firebase } from "../firebase";
 import { validate } from "email-validator";
 import Logo from "../components/Logo.js"
-import Login from "../screens/Signin";
-import { CommonActions } from '@react-navigation/native';
 
 const SigninForm = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -51,7 +49,6 @@ const SigninForm = ({ navigation }) => {
 
   return (
     <View>
-      <Logo title="Priloz"/>
       <Input
         placeholder="Email"
         leftIcon={<Icon name="envelope" color="white" />}
