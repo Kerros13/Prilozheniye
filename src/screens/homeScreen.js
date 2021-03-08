@@ -6,6 +6,7 @@ import getEnvVars from "../../environment";
 import {fetchTracks, fetchGenres,_fetchArtists} from "../api/index";
 import Card from "../components/Card";
 import Box from "../components/Box";
+import BoxS from "../components/Box Song";
 import { abs } from "react-native-reanimated";
 import Header from '../components/Header.js';
 
@@ -60,57 +61,63 @@ const HomeScreen = ({navigation}) => {
     return(
         <View   style={styles.container}>
             <ScrollView  showsVerticalScrollIndicator={false}>
-                <Text h2>Top Canciones</Text>
-                <FlatList
-                    data={tracks}
-                    horizontal={true}
-                    keyExtractor={(item)=>item.id.toString()}
-                    showsHorizontalScrollIndicator={false}
+                <View style={styles.sections}>
+                    <Text h2 style={{marginLeft: 10,}}>Top Canciones</Text>
+                    <FlatList
+                        data={tracks}
+                        horizontal={true}
+                        keyExtractor={(item)=>item.id.toString()}
+                        showsHorizontalScrollIndicator={false}
 
-                    renderItem={({item}) => {
-                        return(
-                            <Box tittle={item.title} image={{uri:item.album.cover_big}} />
-                        )
+                        renderItem={({item}) => {
+                            return(
+                                <BoxS tittle={item.title} image={{uri:item.album.cover_big}} />
+                            )
+                        }
                     }
-                }
-                />
-                <Text h2>Generos</Text>
-                <FlatList
-                    
-                    data={genres}
-                    horizontal={true}
-                    keyExtractor={(item)=>item.id.toString()}
-                    showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+                <View style={styles.sections}>
+                    <Text h2 style={{marginLeft: 10,}}>Géneros</Text>
+                    <FlatList
+                        
+                        data={genres}
+                        horizontal={true}
+                        keyExtractor={(item)=>item.id.toString()}
+                        showsHorizontalScrollIndicator={false}
 
-                    renderItem={({item}) => {
-                        return(
-                            <Box tittle={item.name} image={{uri:item.picture_big}}/>
-                        )
+                        renderItem={({item}) => {
+                            return(
+                                <Box tittle={item.name} image={{uri:item.picture_big}}/>
+                            )
+                        }
                     }
-                }
-                />
-                <Text h2>Top Artistas</Text>
-                <FlatList
-                    data={artists}
-                    horizontal={true}
-                    keyExtractor={(item)=>item.artist.artist_id.toString()}
-                    showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+                <View style={styles.sections}>
+                    <Text h2 style={{marginLeft: 10,}}>Top Artistas</Text>
+                    <FlatList
+                        data={artists}
+                        horizontal={true}
+                        keyExtractor={(item)=>item.artist.artist_id.toString()}
+                        showsHorizontalScrollIndicator={false}
 
-                    renderItem={({item}) => {
-                        return(
-                            
-                            <Box tittle={
-                            item.artist.artist_credits.artist_list.length > 0 ? 
-                            item.artist.artist_credits.artist_list[0].artist.artist_name : 
-                            item.artist.artist_name
-                                    } 
-                            image={{uri:item.image_url}}
-                            />
-                            
-                        )
+                        renderItem={({item}) => {
+                            return(
+                                
+                                <Box tittle={
+                                item.artist.artist_credits.artist_list.length > 0 ? 
+                                item.artist.artist_credits.artist_list[0].artist.artist_name : 
+                                item.artist.artist_name
+                                        } 
+                                image={{uri:item.image_url}}
+                                />
+                                
+                            )
+                        }
                     }
-                }
-                />  
+                    />  
+                </View>
                 <View style={{height:'10%'}}></View>  
             </ScrollView>
         </View>
@@ -126,6 +133,9 @@ const styles = StyleSheet.create({
         marginTop:0,
         backgroundColor:'#fff',
         flex:1,
+    },
+    sections: {
+        marginTop: 10,
     },
 })
 

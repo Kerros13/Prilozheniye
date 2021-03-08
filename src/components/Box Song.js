@@ -1,15 +1,21 @@
 import React from "react";
-import { StyleSheet, Text, Dimensions, Image, View } from "react-native";
+import { StyleSheet, Text, Dimensions, Image, View, } from "react-native";
+import {Button, } from "react-native-elements";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { width, height } = Dimensions.get("screen");
 
-const Box = ({tittle, image}) => {
+const BoxS = ({tittle, image}) => {
   return (
     <View style={styles.caja}>
       <View style={styles.image}>
         <Image style={{width:200,height:200,borderRadius:10,}} source={image}/>
-      </View>
-      <View>
+        <Button buttonStyle={styles.prevButton} iconContainerStyle={styles.icon} icon={{
+            name: "arrow-right",
+            size: 30,
+            color: "white"
+          }} iconRight
+        ></Button>
         <Text style={styles.texto}>{tittle}</Text>
       </View>
     </View>
@@ -26,16 +32,28 @@ const styles = StyleSheet.create({
       alignContent: "center",
     },
     image:{
+      paddingTop:0,
+      borderBottomColor:"#1e1e1e",
+    },
+    prevButton:{
+      height:40,
+      width:40,
+      borderRadius:50,
+      top:"-25%",
+      left:"20%",
+      backgroundColor:"#BBFE1B"
+    },
+    icon:{
       display:"flex",
       justifyContent:"center",
       alignItems:"center",
-      paddingTop:0,
-      borderBottomColor:"#1e1e1e",
+      height:40,
+      width:40,
     },
     texto:{
       width: width*0.49,
       color:'#1E1E1E',
-      top:'80%',
+      top:'82%',
       position:"absolute",
       padding:5,
       fontSize:16,
@@ -43,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Box;
+export default BoxS;

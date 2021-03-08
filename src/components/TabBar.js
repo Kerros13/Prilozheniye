@@ -7,7 +7,9 @@ const {width, height} = Dimensions.get("window");
 const TabBar = ({ state, navigation }) => {
   const [selected, setSelected] = useState('Home');
   const { routes } = state;
-  const renderColor = currentTab => (currentTab === selected ? '#008577' : 'black');
+  const renderColor = currentTab => ((currentTab === selected && selected == 'Home') ? '#0159BB' : 
+  (currentTab === selected && selected == 'Search') ? '#BCFC1E' :  
+  (currentTab === selected && selected == 'Prueba') ? '#C3C3C3' : 'black'  );
 
   const handlePress = (activeTab, index) => {
     if (state.index !== index) {
@@ -49,8 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: 250,
     borderRadius: 100,
-    borderColor:'black',
-    borderWidth:0.5,
+    borderBottomColor:"#1e1e1e",
     elevation: 2,
   },
 });
