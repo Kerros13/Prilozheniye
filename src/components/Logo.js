@@ -36,14 +36,15 @@ const Logo = ({title}) => {
 
 const styles = StyleSheet.create({
     image:{
-        top: "-6%",
-        width: 39,
-        height: 106,
-        transform: [{ rotate: '20deg' }],
+        top: "-5%",
+        width: width*0.1,
+        height: height*0.2,
+        transform: [{ rotate: '22deg' }],
+        resizeMode:"contain"
     },
     textTitulo:{
         color:"#BBFE1B",
-        fontSize: 72,
+        fontSize:width*0.2,
         fontFamily: "mistral",
         alignContent:"center",
         alignItems: "center",

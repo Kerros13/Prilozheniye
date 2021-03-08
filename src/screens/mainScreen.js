@@ -32,14 +32,15 @@ const mainScreen = ({navigation}) => {
 
     return(
         <View style={styles.container}>
+            <Image style={styles.bgimage} source={require("../../assets/g44.png")}/>
             <View style={styles.titleContainer}><Logo title="PRILOZ"/></View>
             
             <View style={styles.signContainer}>
-                <Image style={styles.bgimage} source={require("../../assets/g44.png")}/>
+                
                 <Button
                     buttonStyle={styles.signInBtn}
                     title="Sign-In"
-                    titleStyle={{color:"#fff", fontFamily: "PlayfairDisplay", fontSize:22,}}
+                    titleStyle={{color:"#fff", fontFamily: "PlayfairDisplay", fontSize:width*0.055,}}
                     type="solid"
                     onPress={()=>{navigation.navigate("signin")}}
                     icon={
@@ -54,7 +55,7 @@ const mainScreen = ({navigation}) => {
                 <Button
                     buttonStyle={styles.signUpBtn}
                     title="Sign-Up"
-                    titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:22,}}
+                    titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:width*0.055,}}
                     type="solid"
                     onPress={()=>{navigation.navigate("signup")}}
                     icon={
@@ -67,6 +68,7 @@ const mainScreen = ({navigation}) => {
                     iconLeft
                 />
             </View>
+            
             <View style={styles.tabsContainer}>
                 <Button
                     buttonStyle={styles.tabsBtn}
@@ -90,36 +92,32 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         backgroundColor:"#313030",
+        position:"relative",
     },
     iconContainer: {
         marginRight:10,
     },
     titleContainer: {
         flexDirection:"row", 
-        flex: 2, 
         justifyContent: "center", 
         alignItems: "center",
-    },
-    image:{
-        top: "-6%",
-        width: 39,
-        height: 106,
-        transform: [{ rotate: '20deg' }],
     },
     imgContainer:{
         display: "flex",
         flex:3,
     },
     bgimage: {
-        width: 150,
-        height: height*0.65,
+        width: width*0.4,
+        height: height*0.6,
         position: "absolute",
-        top: height*0.14,
-        left: width*0.425,
+        top: height*0.4,
+        left: width*0.607,
+        resizeMode:"contain"
     },
     signContainer: {
+        width: width,
         display: "flex",
-        flex:4,
+        position:"relative",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
@@ -142,11 +140,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#BBFE1B",
     },
     tabsContainer: {
-        display: "flex",
-        flex:1,
-        justifyContent:"flex-end",
+        position:"absolute",
+        bottom:'2%',
+        justifyContent:"center",
         alignItems:"center",
-        marginBottom:5,
     },
     tabsBtn:{
         width:width*0.95,

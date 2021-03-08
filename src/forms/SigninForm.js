@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { StyleSheet, View, Text, Dimensions, TextInput } from "react-native";
+import { StyleSheet, View, Text, Dimensions, TextInput, Image } from "react-native";
 import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { firebase } from "../firebase";
@@ -14,6 +14,7 @@ const SigninForm = ({ navigation }) => {
   const [error, setError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [hidePass, setHidePass] = useState(true);
 
   const handleVerify = (input) => {
      if (input === "email") {
@@ -51,6 +52,7 @@ const SigninForm = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
       <TextInput
         placeholder="Email"
         value={email}
@@ -63,22 +65,31 @@ const SigninForm = ({ navigation }) => {
           emailError ? "Por favor ingresa una dirección de correo válida" : ""
         }
       />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        style={styles.input}
-        secureTextEntry
-        autoCapitalize="none"
-        onBlur={() => {
-          handleVerify("password");
-        }}
-        errorMessage={
-          passwordError
-            ? "Por favor ingresa una contraseña de mínimo 6 caracteres"
-            : ""
-        }
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          style={styles.inputP}
+          secureTextEntry={hidePass ? true : false}
+          autoCapitalize="none"
+          onBlur={() => {
+            handleVerify("password");
+          }}
+          errorMessage={
+            passwordError
+              ? "Por favor ingresa una contraseña de mínimo 6 caracteres"
+              : ""
+          }
+        />
+        <Icon
+          name={hidePass ? 'eye-slash' : 'eye'}
+          style={styles.passwordIcon}
+          size={width*0.07}
+          color="grey"
+          onPress={() => setHidePass(!hidePass)}
+        />
+      </View>
       <Button title="Sign-In" onPress={handleSignin} titleStyle={styles.titleBtn} buttonStyle={styles.signInBtn}/>
     </View>
   );
@@ -88,20 +99,44 @@ const styles = StyleSheet.create({
   container: {
     width: width,
     display: "flex",
+    position:"relative",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    backgroundColor: "#313030",
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    position:"relative",
+    justifyContent:"center",
+  },
+  passwordIcon: {
+    position:"absolute",
+    top: height*0.015,
+    right:width*0.05,
   },
   input:{
     height: height*0.07,
     width: width*0.7,
     color:"#000", 
     backgroundColor: "white",
-    fontSize:25,
+    fontSize:width*0.05,
     borderRadius:100,
     marginBottom: 20,
-    paddingLeft: 25,
+    paddingLeft: 20,
+    paddingRight: 20,
+    alignContent:"center",
+    alignItems: "center",
+  },
+  inputP:{
+    height: height*0.07,
+    width: width*0.7,
+    color:"#000", 
+    backgroundColor: "white",
+    fontSize:width*0.05,
+    borderRadius:100,
+    marginBottom: 20,
+    paddingLeft: 20,
+    paddingRight: "15%",
     alignContent:"center",
     alignItems: "center",
   },
@@ -114,7 +149,15 @@ const styles = StyleSheet.create({
   },
   titleBtn: {
     fontFamily: "PlayfairDisplay",
-    fontSize: 25,
+    fontSize: width*0.055,
+  },
+  fondo:{
+    width: width*0.4,
+    height: height*0.6,
+    position: "absolute",
+    top: height*0.01, // bluestacks height*(-0.022),
+    left: width*0.607,
+    resizeMode:"contain"
   },
 });
 

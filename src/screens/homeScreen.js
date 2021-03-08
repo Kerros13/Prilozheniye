@@ -110,7 +110,8 @@ const HomeScreen = ({navigation}) => {
                         )
                     }
                 }
-                />    
+                />  
+                <View style={{height:'10%'}}></View>  
             </ScrollView>
         </View>
     )

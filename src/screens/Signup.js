@@ -31,13 +31,12 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Logo title="PRILOZ" style={{flex:2}}/>
-      <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
+      <Logo title="PRILOZ"/>
       <SignupForm navigation={navigation}/>
       <View style={{display:"flex",flexDirection:"row", marginTop:30, alignItems:"center",justifyContent:"center"}}>
-        <Text style={{color:"#fff"}}>Already got an account?</Text>
+        <Text style={{color:"#fff", fontSize:width*0.04}}>Already got an account?</Text>
         <TouchableOpacity onPress={() => { navigation.navigate("signin") }}> 
-          <Text style={{color:"#BBFE1B"}}>  Sign-in</Text>
+          <Text style={{color:"#BBFE1B", fontSize:width*0.04}}>  Sign-in</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -45,20 +44,11 @@ const Signup = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-
   container: {
     backgroundColor: "#313030",
     flex: 1,
     justifyContent: "center",
   },
-  fondo:{
-    width: 140,
-    height: height*0.6,
-    position: "absolute",
-    top: height*0.4,
-    left: width*0.65,
-  },
-
 });
 
 export default Signup;

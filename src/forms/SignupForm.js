@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Dimensions, TextInput } from "react-native";
+import { StyleSheet, View, Dimensions, TextInput,Image } from "react-native";
 import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { firebase } from "../firebase";
@@ -16,6 +16,8 @@ const SignupForm = ({ navigation }) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [hidePass1, setHidePass1] = useState(true);
+  const [hidePass2, setHidePass2] = useState(true);
 
   // Verifica que los datos ingresados sean correctos
   const handleVerify = (input) => {
@@ -53,6 +55,7 @@ const SignupForm = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
       <TextInput
         placeholder="Username"
         value={fullname}
@@ -78,74 +81,125 @@ const SignupForm = ({ navigation }) => {
           emailError ? "Por favor ingresa una dirección de correo válida" : ""
         }
       />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        style={styles.input}
-        secureTextEntry
-        autoCapitalize="none"
-        onBlur={() => {
-          handleVerify("password");
-        }}
-        errorMessage={
-          passwordError
-            ? "Por favor ingresa una contraseña de mínimo 6 caracteres"
-            : ""
-        }
-      />
-      <TextInput
-        placeholder="Confirm password"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        style={styles.input}
-        secureTextEntry
-        autoCapitalize="none"
-        onBlur={() => {
-          handleVerify("confirmPassword");
-        }}
-        errorMessage={
-          confirmPasswordError
-            ? "Por favor reingresa la contraseña y verifica que es correcta"
-            : ""
-        }
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          style={styles.inputP}
+          secureTextEntry={hidePass1 ? true : false}
+          autoCapitalize="none"
+          onBlur={() => {
+            handleVerify("password");
+          }}
+          errorMessage={
+            passwordError
+              ? "Por favor ingresa una contraseña de mínimo 6 caracteres"
+              : ""
+          }
+        />
+        <Icon
+          name={hidePass1 ? 'eye-slash' : 'eye'}
+          style={styles.passwordIcon}
+          size={width*0.07}
+          color="grey"
+          onPress={() => setHidePass1(!hidePass1)}
+        />
+      </View>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          placeholder="Confirm password"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          style={styles.inputP}
+          secureTextEntry={hidePass2 ? true : false}
+          autoCapitalize="none"
+          onBlur={() => {
+            handleVerify("confirmPassword");
+          }}
+          errorMessage={
+            confirmPasswordError
+              ? "Por favor reingresa la contraseña y verifica que es correcta"
+              : ""
+          }
+        />
+        <Icon
+          name={hidePass2 ? 'eye-slash' : 'eye'}
+          style={styles.passwordIcon}
+          size={width*0.07}
+          color="grey"
+          onPress={() => setHidePass2(!hidePass2)}
+        />
+      </View>
       <Button title="Create account" titleStyle={styles.titleBtn} onPress={handleSignup} buttonStyle={styles.signUpBtn}/>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-container: {
-  width: width,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexDirection: "column",
-},
-input:{
+  container: {
+    width: width,
+    display: "flex",
+    position:"relative",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    position:"relative",
+    justifyContent:"center",
+  },
+  passwordIcon: {
+    position:"absolute",
+    top: height*0.015,
+    right:width*0.05,
+  },
+  input:{
     height: height*0.07,
     width: width*0.7,
     color:"#000", 
     backgroundColor: "white",
-    fontSize:25,
+    fontSize:width*0.05,
     borderRadius:100,
     marginBottom: 20,
-    paddingLeft: 25,
+    paddingLeft: 20,
+    paddingRight: 20,
     alignContent:"center",
     alignItems: "center",
-},
-signUpBtn: {
-    width: width*0.7,
+  },
+  inputP:{
     height: height*0.07,
-    borderRadius:50,
-    marginHorizontal: 3,
-    backgroundColor: "#0159BB",
-},
-titleBtn: {
-  fontFamily: "PlayfairDisplay",
-  fontSize: 25,
-},
+    width: width*0.7,
+    color:"#000", 
+    backgroundColor: "white",
+    fontSize:width*0.05,
+    borderRadius:100,
+    marginBottom: 20,
+    paddingLeft: 20,
+    paddingRight: "15%",
+    alignContent:"center",
+    alignItems: "center",
+  },
+  signUpBtn: {
+      width: width*0.7,
+      height: height*0.07,
+      borderRadius:50,
+      marginHorizontal: 3,
+      backgroundColor: "#0159BB",
+  },
+  titleBtn: {
+    fontFamily: "PlayfairDisplay",
+    fontSize: width*0.055,
+  },
+  fondo:{
+    width: width*0.4,
+    height: height*0.6,
+    position: "absolute",
+    top: 50,
+    left: width*0.62,
+    resizeMode:"contain"
+  },
 });
 
 export default SignupForm;
