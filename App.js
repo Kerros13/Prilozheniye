@@ -56,7 +56,7 @@ function  HomeStack({navigation}) {
         name='Home' 
         component={HomeScreen}
         options={{
-          headerTitle: () => <Header title='Home' navigation={navigation}/>,
+          headerTitle: () => <Header title='Home' navigation={navigation} x={false}/>,
           headerLeft: null,
           headerStyle: {backgroundColor: "#18191A"}
         }}
@@ -82,7 +82,7 @@ function  MyTopTabsStack({navigation}) {
         name='TopTaps' 
         component={MyTopTabs}
         options={{
-          headerTitle: () => <Header title='TopTaps' navigation={navigation}/>,
+          headerTitle: () => <Header title='TopTaps' navigation={navigation} x={true}/>,
           headerLeft: null
         }}
       />

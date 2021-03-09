@@ -22,10 +22,10 @@ const BoxS = ({tittle, image, artist}) => {
   return (
     <View style={styles.caja}>
         <TouchableOpacity onPress={onPressYoutube}>
-          <Image style={{width: width*0.49,height: height*0.23,borderRadius:10,}} source={image}/>
+          <Image style={styles.img} source={image}/>
         </TouchableOpacity>
         <TouchableOpacity style={styles.prevButton} onPress={onPressPreview}>
-            <Icon name='play' size={20} color='#fff' type='ionicon' containerStyle={styles.iconC}/>
+            <Icon name='play' size={width*0.08} color='#fff' type='ionicon' containerStyle={styles.iconC}/>
         </TouchableOpacity>
         <Text style={styles.texto}>{tittle}</Text>
     </View>
@@ -33,39 +33,45 @@ const BoxS = ({tittle, image, artist}) => {
 };
 
 const styles = StyleSheet.create({
-    caja:{
-      height: height*0.25,
-      width: width*0.49,
-      marginTop:10,
-      marginLeft: 10,
-      marginBottom:20,
-      alignContent: "center",
-    },
-    prevButton:{
-      height:40,
-      width:40,
-      borderRadius:50,
-      top:"-40%",
-      left:"3%",
-      backgroundColor:"#0159BB",
-      display:"flex",
-      justifyContent:"center",
-      alignItems:"center",
-    },
-    iconC:{
-      display:"flex",
-      justifyContent:"center",
-      alignItems:"center",
-    },
-    texto:{
-      color:'#fff',
-      backgroundColor:'#000',
-      top:'73%',
-      position:"absolute",
-      padding:5,
-      fontSize:16,
-      fontWeight:"bold",
+  caja:{
+    height: height*0.25,
+    width: width*0.49,
+    marginTop:10,
+    marginLeft: 10,
+    marginBottom:20,
+    alignContent: "center",
   },
+  prevButton:{
+    height:width*0.1,
+    width:width*0.1,
+    borderRadius:50,
+    top: -(height*0.25)/2,
+    left: -width*0.15,
+    alignSelf:"center",
+    justifyContent:"center",
+    backgroundColor:"#0159BB",
+  },
+  iconC:{
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+  },
+  texto:{
+    color:'#fff',
+    backgroundColor:'rgba(0,0,0,0.7)',
+    top:'78%',
+    left:'5.5%',
+    position:"absolute",
+    padding:5,
+    fontSize:width*0.04,
+    borderRadius:5,
+  },
+  img:{
+    width: "100%",
+    height: "100%",
+    borderRadius:10,
+    resizeMode:"contain",
+  }
 });
 
 export default BoxS;

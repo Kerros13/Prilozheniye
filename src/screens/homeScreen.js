@@ -6,7 +6,7 @@ import getEnvVars from "../../environment";
 import {fetchTracks, fetchGenres,_fetchArtists} from "../api/index";
 import Card from "../components/Card";
 import Box from "../components/Box";
-import BoxS from "../components/Box Song";
+import BoxS from "../components/BoxSong";
 import { abs } from "react-native-reanimated";
 import Header from '../components/Header.js';
 
@@ -50,8 +50,8 @@ const HomeScreen = ({navigation}) => {
 
     if(!tracks || !genres || !artists){
         return(
-            <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
-                <ActivityIndicator size="large" color="blue"/>
+            <View style={{flex:1,alignItems:"center",justifyContent:"center",backgroundColor:'#1E1E1E'}}>
+                <ActivityIndicator size="large" color="blue" />
             </View>
         )
     }
@@ -99,7 +99,7 @@ const HomeScreen = ({navigation}) => {
                         horizontal={true}
                         keyExtractor={(item)=>item.artist.artist_id.toString()}
                         showsHorizontalScrollIndicator={false}
-
+                        
                         renderItem={({item}) => {
                             return(
                                 
@@ -116,6 +116,7 @@ const HomeScreen = ({navigation}) => {
                     }
                     />  
                 </View>
+                <View style={{height:height*0.08}}></View>  
             </ScrollView>
         </View>
     )

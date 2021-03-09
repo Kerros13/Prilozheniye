@@ -6,31 +6,39 @@ const { width, height } = Dimensions.get("screen");
 const Box = ({tittle, image}) => {
   return (
     <View style={styles.caja}>
-        <Image style={{width: width*0.49,height: height*0.23,borderRadius:10,}} source={image}/>
+        <Image style={styles.img} source={image}/>
         <Text style={styles.texto}>{tittle}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    caja:{
-      height: height*0.25,
-      width: width*0.49,
-      marginTop:10,
-      marginLeft: 10,
-      marginBottom:20,
-      justifyContent: "center",
-      alignContent: "center",
-    },
-    texto:{
-      color:'#fff',
-      backgroundColor:'#000',
-      top:'78%',
-      position:"absolute",
-      padding:5,
-      fontSize:16,
-      fontWeight:"bold",
+  caja:{
+    height: height*0.25,
+    width: width*0.49,
+    marginTop:10,
+    marginLeft: 5,
+    marginBottom:20,
+    justifyContent: "center",
+    alignContent: "center",
+    overflow: "hidden"
   },
+  texto:{
+    color:'#fff',
+    backgroundColor:'rgba(0,0,0,0.7)',
+    top:'78%',
+    left:'5.5%',
+    position:"absolute",
+    padding:5,
+    fontSize:width*0.04,
+    borderRadius:5,
+  },
+  img:{
+    width: "100%",
+    height: "100%",
+    borderRadius:10,
+    resizeMode:"contain",
+  }
 });
 
 export default Box;

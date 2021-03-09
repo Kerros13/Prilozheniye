@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, StyleSheet,Text } from 'react-native';
+import { View, StyleSheet,Text,Dimensions } from 'react-native';
 import { Avatar,Title,Caption,Paragraph,Drawer,TouchableRipple,Switch } from 'react-native-paper';
 import { DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import { Entypo } from '@expo/vector-icons';
 
+const {width, height} = Dimensions.get("window");
 
 export function DrawerContent(props) {
 
@@ -15,7 +16,7 @@ export function DrawerContent(props) {
                         <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image 
                                 source={require('../../assets/img_avatar.png')}
-                                size={50}
+                                size={width*0.2}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>Name</Title>
@@ -45,7 +46,8 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Home"
-                            labelStyle={{color:"#fff"}}
+                            style={{fontsize:width*0.04}}
+                            labelStyle={{color:"#fff",fontSize:width*0.04}}
                             onPress={() => {props.navigation.navigate('Home')}}
                         />
                     </Drawer.Section>
@@ -53,7 +55,7 @@ export function DrawerContent(props) {
                     <Drawer.Section>
                         <TouchableRipple>
                             <View style={styles.preference}>
-                                <Text style={{color:"#fff"}}>Dark Theme</Text>
+                                <Text style={{color:"#fff",fontSize:width*0.04}}>Dark Theme</Text>
                                 <View pointerEvents="none">
                                     <Switch/>
                                 </View>
@@ -73,7 +75,7 @@ export function DrawerContent(props) {
                         />
                     )}
                     label="Sign Out"
-                    labelStyle={{color:"#fff"}}
+                    labelStyle={{color:"#fff",fontSize:width*0.04}}
                 />
             </Drawer.Section>
         </View>
@@ -88,14 +90,14 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
     },
     title: {
-        fontSize: 16,
+        fontSize: width*0.05,
         marginTop: 3,
         fontWeight: 'bold',
         color:"#fff",
     },
     caption: {
-        fontSize: 14,
-        lineHeight: 14,
+        fontSize: width*0.04,
+        lineHeight: width*0.04,
         color:"#fff",
     },
     row: {
