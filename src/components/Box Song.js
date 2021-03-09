@@ -1,23 +1,33 @@
 import React from "react";
-import { StyleSheet, Text, Dimensions, Image, View, } from "react-native";
+import { StyleSheet, Text, Dimensions, Image, View, TouchableOpacity, Linking, } from "react-native";
 import {Button, } from "react-native-elements";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Icon } from 'react-native-elements'
 
 const { width, height } = Dimensions.get("screen");
 
-const BoxS = ({tittle, image}) => {
+const BoxS = ({tittle, image, artist}) => {
+
+  
+  const urlPreview = "https://cdns-preview-2.dzcdn.net/stream/c-269bb724b66c421cc60de7bd302b1015-10.mp3";
+  const urlYoutube = "https://www.youtube.com/watch?v=niqrrmev4mA";
+
+  const onPressYoutube = () => {
+    Linking.openURL(urlYoutube);
+  }
+
+  const onPressPreview = () => {
+    Linking.openURL(urlPreview);
+  }
+
   return (
     <View style={styles.caja}>
-      <View style={styles.image}>
-        <Image style={{width:200,height:200,borderRadius:10,}} source={image}/>
-        <Button buttonStyle={styles.prevButton} iconContainerStyle={styles.icon} icon={{
-            name: "arrow-right",
-            size: 30,
-            color: "white"
-          }} iconRight
-        ></Button>
+        <TouchableOpacity onPress={onPressYoutube}>
+          <Image style={{width: width*0.49,height: height*0.23,borderRadius:10,}} source={image}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.prevButton} onPress={onPressPreview}>
+            <Icon name='play' size={20} color='#fff' type='ionicon' containerStyle={styles.iconC}/>
+        </TouchableOpacity>
         <Text style={styles.texto}>{tittle}</Text>
-      </View>
     </View>
   );
 };
@@ -31,29 +41,26 @@ const styles = StyleSheet.create({
       marginBottom:20,
       alignContent: "center",
     },
-    image:{
-      paddingTop:0,
-      borderBottomColor:"#1e1e1e",
-    },
     prevButton:{
       height:40,
       width:40,
       borderRadius:50,
-      top:"-25%",
-      left:"20%",
-      backgroundColor:"#BBFE1B"
-    },
-    icon:{
+      top:"-40%",
+      left:"3%",
+      backgroundColor:"#0159BB",
       display:"flex",
       justifyContent:"center",
       alignItems:"center",
-      height:40,
-      width:40,
+    },
+    iconC:{
+      display:"flex",
+      justifyContent:"center",
+      alignItems:"center",
     },
     texto:{
-      width: width*0.49,
-      color:'#1E1E1E',
-      top:'82%',
+      color:'#fff',
+      backgroundColor:'#000',
+      top:'73%',
       position:"absolute",
       padding:5,
       fontSize:16,

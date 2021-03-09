@@ -18,6 +18,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TabBar from './src/components/TabBar.js';
 import {DrawerContent} from './src/components/Drawer.js'
 import Header from './src/components/Header.js';
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
 
 const Stack = createStackNavigator();
 const LStack = createStackNavigator();
@@ -56,7 +57,8 @@ function  HomeStack({navigation}) {
         component={HomeScreen}
         options={{
           headerTitle: () => <Header title='Home' navigation={navigation}/>,
-          headerLeft: null
+          headerLeft: null,
+          headerStyle: {backgroundColor: "#18191A"}
         }}
       />
     </HStack.Navigator>

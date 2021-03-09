@@ -40,7 +40,6 @@ const HomeScreen = ({navigation}) => {
         //console.log(newArtists);
     }
     
-
     useEffect(()=>{
 
         getTracks();
@@ -48,7 +47,6 @@ const HomeScreen = ({navigation}) => {
         getArtists();
 
     },[])
-
 
     if(!tracks || !genres || !artists){
         return(
@@ -62,7 +60,7 @@ const HomeScreen = ({navigation}) => {
         <View   style={styles.container}>
             <ScrollView  showsVerticalScrollIndicator={false}>
                 <View style={styles.sections}>
-                    <Text h2 style={{marginLeft: 10,}}>Top Canciones</Text>
+                    <Text h2 style={{marginLeft: 10, color:"#fff"}}>Top Canciones</Text>
                     <FlatList
                         data={tracks}
                         horizontal={true}
@@ -71,14 +69,14 @@ const HomeScreen = ({navigation}) => {
 
                         renderItem={({item}) => {
                             return(
-                                <BoxS tittle={item.title} image={{uri:item.album.cover_big}} />
+                                <BoxS tittle={item.title} image={{uri:item.album.cover_big}}  />
                             )
                         }
                     }
                     />
                 </View>
                 <View style={styles.sections}>
-                    <Text h2 style={{marginLeft: 10,}}>Géneros</Text>
+                    <Text h2 style={{marginLeft: 10, color:"#fff"}}>Géneros</Text>
                     <FlatList
                         
                         data={genres}
@@ -95,7 +93,7 @@ const HomeScreen = ({navigation}) => {
                     />
                 </View>
                 <View style={styles.sections}>
-                    <Text h2 style={{marginLeft: 10,}}>Top Artistas</Text>
+                    <Text h2 style={{marginLeft: 10, color:"#fff"}}>Top Artistas</Text>
                     <FlatList
                         data={artists}
                         horizontal={true}
@@ -118,7 +116,6 @@ const HomeScreen = ({navigation}) => {
                     }
                     />  
                 </View>
-                <View style={{height:'10%'}}></View>  
             </ScrollView>
         </View>
     )
@@ -131,7 +128,7 @@ const styles = StyleSheet.create({
 
     container:{
         marginTop:0,
-        backgroundColor:'#fff',
+        backgroundColor:'#1E1E1E',
         flex:1,
     },
     sections: {

@@ -24,16 +24,11 @@ export default function Header({ title, navigation }) {
 
 const styles = StyleSheet.create({
   header: {
-    width: '100%',
-    height: '100%',
+    width: width,
+    height: height*0.07,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  headerText: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    letterSpacing: 1,
   },
   icon: {
     position: 'absolute',

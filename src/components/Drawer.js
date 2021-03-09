@@ -8,7 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 export function DrawerContent(props) {
 
     return(
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor:"#1E1E1E"}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
@@ -40,21 +40,22 @@ export function DrawerContent(props) {
                             icon={({color, size}) => (
                                 <Entypo 
                                 name="home" 
-                                color={color}
+                                color="#fff"
                                 size={size}
                                 />
                             )}
                             label="Home"
+                            labelStyle={{color:"#fff"}}
                             onPress={() => {props.navigation.navigate('Home')}}
                         />
                     </Drawer.Section>
 
-                    <Drawer.Section title="Preferences">
+                    <Drawer.Section>
                         <TouchableRipple>
                             <View style={styles.preference}>
-                                <Text>Dark Theme</Text>
+                                <Text style={{color:"#fff"}}>Dark Theme</Text>
                                 <View pointerEvents="none">
-                                    <Switch />
+                                    <Switch/>
                                 </View>
                             </View>
                         </TouchableRipple>
@@ -67,11 +68,12 @@ export function DrawerContent(props) {
                     icon={({color, size}) => (
                         <Entypo 
                         name="home" 
-                        color={color}
+                        color="#fff"
                         size={size}
                         />
                     )}
                     label="Sign Out"
+                    labelStyle={{color:"#fff"}}
                 />
             </Drawer.Section>
         </View>
@@ -89,10 +91,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 3,
         fontWeight: 'bold',
+        color:"#fff",
     },
     caption: {
         fontSize: 14,
         lineHeight: 14,
+        color:"#fff",
     },
     row: {
         marginTop: 20,
@@ -103,17 +107,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginRight: 15,
+        color:"#fff",
     },
     paragraph: {
         fontWeight: 'bold',
         marginRight: 3,
+        color:"#fff",
     },
     drawerSection: {
         marginTop: 15,
     },
     bottomDrawerSection: {
         marginBottom: 15,
-        borderTopColor: '#f4f4f4',
+        borderTopColor: '#666',
         borderTopWidth: 1
     },
     preference: {
@@ -121,5 +127,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 12,
         paddingHorizontal: 16,
+        color:"#fff",
       },
 });

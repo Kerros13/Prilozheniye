@@ -9,7 +9,7 @@ const TabBar = ({ state, navigation }) => {
   const { routes } = state;
   const renderColor = currentTab => ((currentTab === selected && selected == 'Home') ? '#0159BB' : 
   (currentTab === selected && selected == 'Search') ? '#BCFC1E' :  
-  (currentTab === selected && selected == 'Prueba') ? '#C3C3C3' : 'black'  );
+  (currentTab === selected && selected == 'Prueba') ? '#C3C3C3' : 'white'  );
 
   const handlePress = (activeTab, index) => {
     if (state.index !== index) {
@@ -44,14 +44,14 @@ const styles = StyleSheet.create({
     width:width,
     alignItems: 'center',
     justifyContent: 'center',
+    borderEndColor:"#fff",
   },
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#fff',
+    backgroundColor: '#322E2E',
     width: 250,
     borderRadius: 100,
-    borderBottomColor:"#1e1e1e",
     elevation: 2,
   },
 });
