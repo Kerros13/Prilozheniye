@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View,StyleSheet,Text, Image, Dimensions } from "react-native";
+import { View,StyleSheet,Text, Image, Dimensions,StatusBar } from "react-native";
 import { Button,Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Font from "expo-font";
@@ -32,6 +32,11 @@ const mainScreen = ({navigation}) => {
 
     return(
         <View style={styles.container}>
+            <StatusBar 
+                translucent
+                backgroundColor={"transparent"}
+                barStyle={'light-content'}
+                hidden={false}/>
             <Image style={styles.bgimage} source={require("../../assets/g44.png")}/>
             <View style={styles.titleContainer}><Logo title="PRILOZ"/></View>
             

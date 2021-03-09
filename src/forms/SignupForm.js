@@ -48,7 +48,31 @@ const SignupForm = ({ navigation }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
-        navigation.navigate("signin", { userCreated: true });
+        // Obtener el Unique Identifier generado para cada usuario
+        // Firebase -> Authentication
+        const uid = response.user.uid;
+
+        // Construir el objeto que le enviaremos a la collección de "users"
+        const data = {
+          id: uid,
+          email,
+          fullname,
+        };
+
+        // Obtener la colección desde Firebase
+        const usersRef = firebase.firestore().collection("users");
+
+        // Almacenar la información del usuario que se registra en Firestore
+        usersRef
+          .doc(uid)
+          .set(data)
+          .then(() => {
+            navigation.navigate("App");
+          })
+          .catch((error) => {
+            console.log(error);
+            setError(error.message);
+          });
       })
       .catch((error) => console.log(error));
   };

@@ -29,9 +29,8 @@
       "favicon": "./assets/favicon.png"
     },
     "androidNavigationBar":{
-      "visible": "true",
       "barStyle":"light-content",
-      "backgroundColor": "#0000"
+      "backgroundColor": "#000000"
     }
   }
 }
