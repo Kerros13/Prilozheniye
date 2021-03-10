@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,7 +17,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TabBar from './src/components/TabBar.js';
 import {DrawerContent} from './src/components/Drawer.js'
 import Header from './src/components/Header.js';
-import { setStatusBarBackgroundColor } from 'expo-status-bar';
+import { LogBox } from 'react-native';
+import PersistLogin from "./src/firebase/persistLogin";
+LogBox.ignoreLogs(['Setting a timer']);
 
 const Stack = createStackNavigator();
 const LStack = createStackNavigator();
@@ -121,26 +122,40 @@ function drawer(){
 };
 
 export default function App() {
+
+  const [user, setUser] = useState({});
+
+  // Verificar si ya existen credenciales de autenticación
+  useEffect(() => {
+    const userData = PersistLogin();
+    setUser(userData);
+  }, []);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen 
+          {user ? 
+            <Stack.Screen 
+            name="App"
+            component={drawer}
+            options={{
+              animationEnabled: false,
+              headerShown: false
+            }}
+            />
+          :
+          
+          <Stack.Screen 
           name="Log"
           component={LoginStack}
           options={{
             animationEnabled: false,
             headerShown: false
           }}
-          />
-          <Stack.Screen 
-          name="App"
-          component={drawer}
-          options={{
-            animationEnabled: false,
-            headerShown: false
-          }}
-          />
+          />}
+        
+          
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

@@ -1,33 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View, Image } from "react-native";
-import { Button, Input, Text } from "react-native-elements";
+import { Text } from "react-native-elements";
 import SignupForm from "../forms/SignupForm";
-import AppLoading from 'expo-app-loading';
-import Logo from "../components/Logo.js"
+import Logo from "../components/Logo.js";
+
 
 const { width, height } = Dimensions.get("screen");
 
 const Signup = ({ navigation }) => {
-  
-  const [fontLoaded, setFontLoaded] = useState(false)
-  
-  const loadFonts = () => {
-    return Font.loadAsync({
-        "mistral": require("../../assets/Font/mistral.ttf"),
-        "PlayfairDisplay": require("../../assets/Font/PlayfairDisplay-Italic.otf"),
-    });
-  }
 
-
-  if(!fontLoaded){    
-    return (
-        <AppLoading
-            startAsync={loadFonts}
-            onFinish={() => setFontLoaded(true)}
-            onError={(err) => console.log(err)}
-        />
-    );
-  }
 
   return (
     <View style={styles.container}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {StyleSheet,View,ScrollView,FlatList,Dimensions,ActivityIndicator} from "react-native";
+import {StyleSheet,View,ScrollView,FlatList,StatusBar,Dimensions,ActivityIndicator} from "react-native";
 import {Text,Image} from "react-native-elements";
 import backend from "../api/backend";
 import getEnvVars from "../../environment";
@@ -58,7 +58,11 @@ const HomeScreen = ({navigation}) => {
     
     return(
         <View   style={styles.container}>
-            
+            <StatusBar 
+                translucent
+                backgroundColor={"transparent"}
+                barStyle={'light-content'}
+                hidden={false}/>
             <ScrollView  showsVerticalScrollIndicator={false}>
                 <View style={styles.sections}>
                     <Text h2 style={{marginLeft: 10, color:"#fff"}}>Top Canciones</Text>

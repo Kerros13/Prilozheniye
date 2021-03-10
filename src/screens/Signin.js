@@ -1,7 +1,9 @@
 import React from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View, Text, Image} from "react-native";
 import SigninForm from "../forms/SigninForm";
-import Logo from "../components/Logo.js"
+import Logo from "../components/Logo.js";
+import * as Font from "expo-font";
+import AppLoading from 'expo-app-loading';
 
 const { width, height } = Dimensions.get("screen");
 
