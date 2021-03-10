@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View,StyleSheet, Text,TextInput,Dimensions,TouchableOpacity } from "react-native";
-import { Button } from "react-native-elements";
+import { View,StyleSheet, TextInput,Dimensions,TouchableOpacity } from "react-native";
+import { Text,Button } from "react-native-elements";
 import { firebase } from "../firebase";
 import Alert from "../components/Alert";
 const { width, height } = Dimensions.get("screen");
@@ -22,26 +22,27 @@ const changePasswordScreen = ({navigation}) =>{
         .catch(function(error) {
             console.log(error);
             setType("error");
-            setTitle("Ha ocurrido un error:"+error);
+            setTitle("Ha ocurrido un error: "+error);
         });
     }
 
 
     return(
-
+        
         <View style={styles.container}>
             {type ? <Alert type={type} title={title}/>:null}
+            <View style={{flex:0.2}}><Text h4 style={{color:"#fff",margin:10}}>Para cambiar tu contraseña:</Text></View>
             <TextInput
-                placeholder="E-mail"
+                placeholder="Ingresa tu correo"
                 value={email}
                 onChangeText={setEmail}
                 style={styles.input}
             />
-            <Button title="Reset Password Email" onPress={handlePasswordChange} buttonStyle={styles.signUpBtn}/>
+            <Button title="Enviar E-mail" onPress={handlePasswordChange} buttonStyle={styles.signUpBtn}/>
             <View style={{display:"flex",flexDirection:"row", marginTop:30, alignItems:"center",justifyContent:"center"}}>
-                <Text style={{color:"#fff", fontSize:width*0.04}}>Already reset your password?</Text>
+                <Text style={{color:"#fff", fontSize:width*0.04}}>¿Ya cambiaste tu contraseña?</Text>
                 <TouchableOpacity onPress={() => { navigation.goBack() }}> 
-                <Text style={{color:"#BBFE1B", fontSize:width*0.04}}>  Sign-in</Text>
+                <Text style={{color:"#BBFE1B", fontSize:width*0.04}}>  Inicia Sesión</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -53,8 +54,8 @@ const changePasswordScreen = ({navigation}) =>{
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        alignItems:"center",
         justifyContent:"center",
+        alignItems:"center",
         backgroundColor: "#313030"
     },
     input:{

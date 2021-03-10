@@ -81,7 +81,7 @@ const SignupForm = ({ navigation }) => {
     <View style={styles.container}>
       <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
       <TextInput
-        placeholder="Username"
+        placeholder="Nombre"
         value={fullname}
         onChangeText={setFullname}
         style={styles.input}
@@ -107,7 +107,7 @@ const SignupForm = ({ navigation }) => {
       />
       <View style={styles.passwordContainer}>
         <TextInput
-          placeholder="Password"
+          placeholder="Contraseña"
           value={password}
           onChangeText={setPassword}
           style={styles.inputP}
@@ -132,7 +132,7 @@ const SignupForm = ({ navigation }) => {
       </View>
       <View style={styles.passwordContainer}>
         <TextInput
-          placeholder="Confirm password"
+          placeholder="Confirmar Contraseña"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           style={styles.inputP}
@@ -155,7 +155,7 @@ const SignupForm = ({ navigation }) => {
           onPress={() => setHidePass2(!hidePass2)}
         />
       </View>
-      <Button title="Create account" titleStyle={styles.titleBtn} onPress={handleSignup} buttonStyle={styles.signUpBtn}/>
+      <Button title="Crear Cuenta" titleStyle={styles.titleBtn} onPress={handleSignup} buttonStyle={styles.signUpBtn}/>
     </View>
   );
 };

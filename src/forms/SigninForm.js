@@ -54,7 +54,7 @@ const SigninForm = ({ navigation }) => {
     <View style={styles.container}>
       <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
       <TextInput
-        placeholder="Email"
+        placeholder="E-mail"
         value={email}
         onChangeText={setEmail}
         style={styles.input}
@@ -67,7 +67,7 @@ const SigninForm = ({ navigation }) => {
       />
       <View style={styles.passwordContainer}>
         <TextInput
-          placeholder="Password"
+          placeholder="Contraseña"
           value={password}
           onChangeText={setPassword}
           style={styles.inputP}
@@ -90,7 +90,7 @@ const SigninForm = ({ navigation }) => {
           onPress={() => setHidePass(!hidePass)}
         />
       </View>
-      <Button title="Sign-In" onPress={handleSignin} titleStyle={styles.titleBtn} buttonStyle={styles.signInBtn}/>
+      <Button title="Iniciar Sesión" onPress={handleSignin} titleStyle={styles.titleBtn} buttonStyle={styles.signInBtn}/>
     </View>
   );
 };

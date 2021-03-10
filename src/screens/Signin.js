@@ -15,13 +15,13 @@ const Login = ({ navigation }) => {
       <View style={{display:"flex", flexDirection:"column", marginTop:30, alignItems:"center", justifyContent:"center"}}>
         <View>
           <TouchableOpacity onPress={() => navigation.navigate("chpassword")}>
-            <Text style={{color:"#BBFE1B", marginBottom:height*0.03, fontSize:width*0.04}}>Forgot your password?</Text>
+            <Text style={{color:"#BBFE1B", marginBottom:height*0.03, fontSize:width*0.04}}>¿Olvide mi contraseña?</Text>
           </TouchableOpacity>
         </View>
         <View style={{display:"flex",flexDirection:"row"}}>
-          <Text style={{color:"white", fontSize:width*0.04}}>Don't have an account?</Text>
+          <Text style={{color:"white", fontSize:width*0.04}}>¿No tienes una cuenta?</Text>
           <TouchableOpacity onPress={() => navigation.navigate("signup")}>
-            <Text style={{color:"#BBFE1B", fontSize:width*0.04}}>  Sign-Up</Text>
+            <Text style={{color:"#BBFE1B", fontSize:width*0.04}}>  Regístrate</Text>
           </TouchableOpacity>
         </View>
       </View>

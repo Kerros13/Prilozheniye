@@ -15,9 +15,9 @@ const Signup = ({ navigation }) => {
       <Logo title="PRILOZ"/>
       <SignupForm navigation={navigation}/>
       <View style={{display:"flex",flexDirection:"row", marginTop:30, alignItems:"center",justifyContent:"center"}}>
-        <Text style={{color:"#fff", fontSize:width*0.04}}>Already got an account?</Text>
+        <Text style={{color:"#fff", fontSize:width*0.04}}>¿Ya tienes una cuenta?</Text>
         <TouchableOpacity onPress={() => { navigation.navigate("signin") }}> 
-          <Text style={{color:"#BBFE1B", fontSize:width*0.04}}>  Sign-in</Text>
+          <Text style={{color:"#BBFE1B", fontSize:width*0.04}}>  Inicia Sesión</Text>
         </TouchableOpacity>
       </View>
     </View>

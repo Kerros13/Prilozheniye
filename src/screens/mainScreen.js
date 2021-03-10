@@ -44,7 +44,7 @@ const mainScreen = ({navigation}) => {
                 
                 <Button
                     buttonStyle={styles.signInBtn}
-                    title="Sign-In"
+                    title=" Iniciar Sesión"
                     titleStyle={{color:"#fff", fontFamily: "PlayfairDisplay", fontSize:width*0.055,}}
                     type="solid"
                     onPress={()=>{navigation.navigate("signin")}}
@@ -59,7 +59,7 @@ const mainScreen = ({navigation}) => {
                 />
                 <Button
                     buttonStyle={styles.signUpBtn}
-                    title="Sign-Up"
+                    title=" Registrarse"
                     titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:width*0.055,}}
                     type="solid"
                     onPress={()=>{navigation.navigate("signup")}}
