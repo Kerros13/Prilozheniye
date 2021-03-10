@@ -14,7 +14,7 @@ const Login = ({ navigation }) => {
       <SigninForm navigation={navigation}/>
       <View style={{display:"flex", flexDirection:"column", marginTop:30, alignItems:"center", justifyContent:"center"}}>
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+          <TouchableOpacity onPress={() => navigation.navigate("chpassword")}>
             <Text style={{color:"#BBFE1B", marginBottom:height*0.03, fontSize:width*0.04}}>Forgot your password?</Text>
           </TouchableOpacity>
         </View>

@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import HomeScreen from "./src/screens/homeScreen";
+import changePasswordScreen from "./src/screens/changePasswordScreen";
 import searchScreen from "./src/screens/searchScreen";
 import loginScreen from "./src/screens/loginScreen";
 import mainScreen from "./src/screens/mainScreen";
@@ -44,6 +45,11 @@ function  LoginStack() {
       <LStack.Screen
         name="signup"
         component={Signup}
+        options={{ headerShown: false }}
+      />
+      <LStack.Screen
+        name="chpassword"
+        component={changePasswordScreen}
         options={{ headerShown: false }}
       />
     </LStack.Navigator>
@@ -123,39 +129,34 @@ function drawer(){
 
 export default function App() {
 
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
 
-  // Verificar si ya existen credenciales de autenticación
-  useEffect(() => {
-    const userData = PersistLogin();
-    setUser(userData);
-  }, []);
+  // // Verificar si ya existen credenciales de autenticación
+  // useEffect(() => {
+  //   const userData = PersistLogin();
+  //   setUser(userData);
+  // }, []);
 
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          {user ? 
-            <Stack.Screen 
+          <Stack.Screen 
+            name="Log"
+            component={LoginStack}
+            options={{
+              animationEnabled: false,
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
             name="App"
             component={drawer}
             options={{
               animationEnabled: false,
               headerShown: false
             }}
-            />
-          :
-          
-          <Stack.Screen 
-          name="Log"
-          component={LoginStack}
-          options={{
-            animationEnabled: false,
-            headerShown: false
-          }}
-          />}
-        
-          
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
