@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize:  width*0.05,
     letterSpacing: 1,
-    color:'#000'
+    color:'#fff'
   },
   icon: {
     position: 'absolute',

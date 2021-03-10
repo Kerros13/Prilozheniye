@@ -1,10 +1,29 @@
 import React from 'react';
 import { View, StyleSheet,Text,Dimensions } from 'react-native';
 import { Avatar,Title,Caption,Paragraph,Drawer,TouchableRipple,Switch } from 'react-native-paper';
+import { CommonActions } from '@react-navigation/native';
 import { DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import { Entypo } from '@expo/vector-icons';
-
+import { firebase } from "../firebase";
 const {width, height} = Dimensions.get("window");
+
+
+
+const signOut = ({navigation}) =>{
+    try {
+        firebase.auth()
+        .signOut()
+        .then(() => {
+            console.log("success");
+            const resetAction = navigation.dispatch( CommonActions.reset({index: 0,routes: [{ Name: 'Log', }, ], }) );
+            navigation.navigate(resetAction);
+        });
+
+    } catch(error){
+        console.log("err", error);
+    }
+}
+
 
 export function DrawerContent(props) {
 
@@ -76,6 +95,7 @@ export function DrawerContent(props) {
                     )}
                     label="Sign Out"
                     labelStyle={{color:"#fff",fontSize:width*0.04}}
+                    onPress={signOut}
                 />
             </Drawer.Section>
         </View>

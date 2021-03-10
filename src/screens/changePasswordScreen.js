@@ -30,15 +30,16 @@ const changePasswordScreen = ({navigation}) =>{
     return(
         
         <View style={styles.container}>
-            {type ? <Alert type={type} title={title}/>:null}
-            <View style={{flex:0.2}}><Text h4 style={{color:"#fff",margin:10}}>Para cambiar tu contraseña:</Text></View>
+            <Alert type="error" title="Se envio un correo para que cambies tu contraseña!"/>
+            {/* {type ? <Alert type={type} title={title}/>:null} */}
+            <View style={{flex:0.2}}><Text style={{color:"#fff",margin:10, fontSize:width*0.06}}>Para cambiar tu contraseña:</Text></View>
             <TextInput
                 placeholder="Ingresa tu correo"
                 value={email}
                 onChangeText={setEmail}
                 style={styles.input}
             />
-            <Button title="Enviar E-mail" onPress={handlePasswordChange} buttonStyle={styles.signUpBtn}/>
+            <Button disabled={type == "success"?true:false} disabledStyle={styles.disabled} disabledTitleStyle={styles.disabledTxt} title="Enviar E-mail" onPress={handlePasswordChange} titleStyle={styles.titleBtn} buttonStyle={styles.signUpBtn}/>
             <View style={{display:"flex",flexDirection:"row", marginTop:30, alignItems:"center",justifyContent:"center"}}>
                 <Text style={{color:"#fff", fontSize:width*0.04}}>¿Ya cambiaste tu contraseña?</Text>
                 <TouchableOpacity onPress={() => { navigation.goBack() }}> 
@@ -71,13 +72,23 @@ const styles = StyleSheet.create({
         alignContent:"center",
         alignItems: "center",
     },
+    titleBtn:{
+        fontFamily: "PlayfairDisplay",
+        fontSize: width*0.055,
+    },
     signUpBtn: {
         width: width*0.7,
         height: height*0.07,
         borderRadius:50,
         marginHorizontal: 3,
         backgroundColor: "#0159BB",
-    }
+    },
+    disabled:{
+        backgroundColor:"#527ba8",
+    },
+    disabledTxt:{
+        color:"#fff",
+    },
 })
 
 
