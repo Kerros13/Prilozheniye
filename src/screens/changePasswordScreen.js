@@ -30,8 +30,8 @@ const changePasswordScreen = ({navigation}) =>{
     return(
         
         <View style={styles.container}>
-            <Alert type="error" title="Se envio un correo para que cambies tu contraseña!"/>
-            {/* {type ? <Alert type={type} title={title}/>:null} */}
+            
+            {type ? <Alert type={type} title={title}/>:null}
             <View style={{flex:0.2}}><Text style={{color:"#fff",margin:10, fontSize:width*0.06}}>Para cambiar tu contraseña:</Text></View>
             <TextInput
                 placeholder="Ingresa tu correo"

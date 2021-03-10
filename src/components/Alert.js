@@ -41,13 +41,15 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     borderRadius:5,
+    width:width*0.9
   },
   icon: {
-    fontSize:width*0.04,
+    alignSelf:"center",
+    fontSize:width*0.07,
     marginRight: 10,
   },
   txt:{
-    fontSize:width*0.03,
+    fontSize:width*0.04,
   },
 });
 
