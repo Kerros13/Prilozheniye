@@ -9,14 +9,25 @@ const {width, height} = Dimensions.get("window");
 
 
 
-const signOut = ({navigation}) =>{
+const signOut = (props) =>{
     try {
         firebase.auth()
         .signOut()
         .then(() => {
             console.log("success");
-            const resetAction = navigation.dispatch( CommonActions.reset({index: 0,routes: [{ Name: 'Log', }, ], }) );
-            navigation.navigate(resetAction);
+            props.navigation.dispatch({
+                ...CommonActions.reset({
+                    index: 0,
+                    routes: [{
+                        name: "Log",
+                        state: {
+                            routes: [{
+                                name: "main",
+                            }]
+                        }
+                    }]
+                })
+            })
         });
 
     } catch(error){
@@ -95,7 +106,26 @@ export function DrawerContent(props) {
                     )}
                     label="Sign Out"
                     labelStyle={{color:"#fff",fontSize:width*0.04}}
-                    onPress={signOut}
+                    onPress={() => (
+                        firebase.auth()
+                        .signOut()
+                        .then(() => {
+                            console.log("success");
+                            props.navigation.dispatch({
+                                ...CommonActions.reset({
+                                    index: 0,
+                                    routes: [{
+                                        name: "Log",
+                                        state: {
+                                            routes: [{
+                                                name: "main",
+                                            }]
+                                        }
+                                    }]
+                                })
+                                })
+                        })
+                    )}
                 />
             </Drawer.Section>
         </View>
