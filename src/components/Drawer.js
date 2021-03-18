@@ -9,25 +9,30 @@ const {width, height} = Dimensions.get("window");
 
 
 
-function signOut(props){
-    firebase.auth()
-    .signOut()
-    .then(() => {
-        console.log("success");
-        props.navigation.dispatch({
-            ...CommonActions.reset({
-                index: 0,
-                routes: [{
-                    name: "Log",
-                    state: {
-                        routes: [{
-                            name: "main",
-                        }]
-                    }
-                }]
+const signOut = (props) =>{
+    try {
+        firebase.auth()
+        .signOut()
+        .then(() => {
+            console.log("success");
+            props.navigation.dispatch({
+                ...CommonActions.reset({
+                    index: 0,
+                    routes: [{
+                        name: "Log",
+                        state: {
+                            routes: [{
+                                name: "main",
+                            }]
+                        }
+                    }]
+                })
             })
-        })
-    });
+        });
+
+    } catch(error){
+        console.log("err", error);
+    }
 }
 
 
@@ -99,9 +104,28 @@ export function DrawerContent(props) {
                         size={size}
                         />
                     )}
-                    label="Cerrar Sesión"
+                    label="Sign Out"
                     labelStyle={{color:"#fff",fontSize:width*0.04}}
-                    onPress={() => (signOut(props))}
+                    onPress={() => (
+                        firebase.auth()
+                        .signOut()
+                        .then(() => {
+                            console.log("success");
+                            props.navigation.dispatch({
+                                ...CommonActions.reset({
+                                    index: 0,
+                                    routes: [{
+                                        name: "Log",
+                                        state: {
+                                            routes: [{
+                                                name: "main",
+                                            }]
+                                        }
+                                    }]
+                                })
+                                })
+                        })
+                    )}
                 />
             </Drawer.Section>
         </View>
