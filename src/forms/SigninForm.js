@@ -58,7 +58,6 @@ const SigninForm = ({ navigation }) => {
         value={email}
         onChangeText={setEmail}
         style={styles.input}
-        autoCapitalize="none"
         onBlur={() => {
           handleVerify("email");
         }}

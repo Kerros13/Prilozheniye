@@ -4,9 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import HomeScreen from "../screens/homeScreen";
 import searchScreen from "../screens/searchScreen";
-import List from "../screens/Music/list";
-import Player from "../screens/Music/player";
-import PlayList from "../screens/Music/playList";
+import Prueba1 from "../screens/Pruebas/Prueba1";
+import Prueba2 from "../screens/Pruebas/Prueba2";
+import Prueba3 from "../screens/Pruebas/Prueba3";
 import TabBar from './TabBar.js';
 import Header from './Header.js';
 
@@ -33,17 +33,10 @@ function  HomeStack({navigation}) {
 
 function MyTopTabs() {
     return (
-        <TopTab.Navigator
-        initialRouteName="Player"
-            tabBarOptions={{
-                style: {
-                    display: 'none'
-                },
-          }}
-        >
-            <TopTab.Screen name="List" component={List} />
-            <TopTab.Screen name="Player" component={Player} />
-            <TopTab.Screen name="PlayList" component={PlayList} />
+        <TopTab.Navigator>
+            <TopTab.Screen name="Prueba1" component={Prueba1} />
+            <TopTab.Screen name="Prueba2" component={Prueba2} />
+            <TopTab.Screen name="Prueba3" component={Prueba3} />
         </TopTab.Navigator>
     );
 };
@@ -55,10 +48,9 @@ function  MyTopTabsStack({navigation}) {
             name='TopTaps' 
             component={MyTopTabs}
             options={{
-                headerShown: false,
-                // headerTitle: () => <Header title='TopTabs' navigation={navigation} x={true}/>,
-                // headerLeft: null,
-                // headerStyle: {backgroundColor: "#18191A"}
+                headerTitle: () => <Header title='TopTabs' navigation={navigation} x={true}/>,
+                headerLeft: null,
+                headerStyle: {backgroundColor: "#18191A"}
             }}
         />
         </HStack.Navigator>
