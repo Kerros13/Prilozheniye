@@ -6,6 +6,7 @@ import { firebase } from "../firebase";
 import { validate } from "email-validator";
 import { CommonActions } from '@react-navigation/native';
 import { Context as AuthContext } from "../context/AuthContext";
+import { Alert } from "../components/Alert";
 
 const {width, height} = Dimensions.get("window");
 
@@ -13,7 +14,7 @@ const SigninForm = ({ navigation }) => {
   const { state, signin, clearErrorMessage } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [hidePass, setHidePass] = useState(true);
@@ -45,8 +46,10 @@ const SigninForm = ({ navigation }) => {
   };
 
   return (
+    
     <View style={styles.container}>
       <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
+      {error ? <Alert title={error} type="error" /> : null}
       <TextInput
         placeholder="E-mail"
         value={email}

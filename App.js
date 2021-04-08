@@ -5,8 +5,10 @@ import Navigation from "./src/navigation";
 import LongTimers from "./src/utils/LongTimers";
 
 
+
 export default function App() {
   LongTimers();
+
 
   return (
     <AuthProvider>

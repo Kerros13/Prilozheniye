@@ -3515,6 +3515,14 @@ expo-asset@~8.2.1:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-av@~8.7.0:
+  version "8.7.0"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-8.7.0.tgz#01030256dc75cebd5d02060393ba0ad36c10a7f8"
+  integrity sha512-tYw0z//UZm9THicOsu4w0A7Olq/JauTy7kcBR15Fhyppd9wd8Jtq7QYNtf2igd1R+byS2L0AGwE0nazlbQR+Qw==
+  dependencies:
+    lodash "^4.17.15"
+    nullthrows "^1.1.0"
+
 expo-constants@~9.3.3:
   version "9.3.5"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.3.5.tgz#78085763e8ed100a5f2df7c682fd99631aa03d5e"
@@ -6057,6 +6065,11 @@ react-native-tab-view@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.0.0.tgz#ea01e0956a4a96dd87d3cfdd8ee39f9aad319943"
   integrity sha512-uuvLV3KWVXx3ZEESBYALo4w8fuHFUrrg2K2OCtfHv+xOmTWjjRzm+opi0PMXSLOxl7+uMeJvJYEzR13B6pXpkA==
+
+react-native-track-player@^1.2.7:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-1.2.7.tgz#a721662fc32383cf2979a48b33db091140e88962"
+  integrity sha512-U1kA25qm398/kY6BvTojGHt4S1tYuKrJNQpXW+dA+p0B+n4LlPyoidUXfu951YM7aoisg8EmQPsevUFmcXG+cg==
 
 react-native-vector-icons@^8.1.0:
   version "8.1.0"

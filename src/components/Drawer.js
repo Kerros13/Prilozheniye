@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import { View, StyleSheet,Text,Dimensions } from 'react-native';
 import { Avatar,Title,Caption,Paragraph,Drawer,TouchableRipple,Switch } from 'react-native-paper';
 import { CommonActions } from '@react-navigation/native';
@@ -6,32 +6,16 @@ import { DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import { Entypo } from '@expo/vector-icons';
 import { firebase } from "../firebase";
 const {width, height} = Dimensions.get("window");
-
-
-
-function signOut(props){
-    firebase.auth()
-    .signOut()
-    .then(() => {
-        console.log("success");
-        props.navigation.dispatch({
-            ...CommonActions.reset({
-                index: 0,
-                routes: [{
-                    name: "Log",
-                    state: {
-                        routes: [{
-                            name: "main",
-                        }]
-                    }
-                }]
-            })
-        })
-    });
-}
+import { Context as AuthContext } from "../context/AuthContext";
 
 
 export function DrawerContent(props) {
+
+    const { state, signout } = useContext(AuthContext);
+
+    useEffect(() => {
+        console.log(state);
+    }, []);
 
     return(
         <View style={{flex:1, backgroundColor:"#1E1E1E"}}>
@@ -44,7 +28,7 @@ export function DrawerContent(props) {
                                 size={width*0.2}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>Name</Title>
+                                <Title style={styles.title}>{state.user.fullname}</Title>
                                 <Caption style={styles.caption}>@tag</Caption>
                             </View>
                         </View>
@@ -80,7 +64,7 @@ export function DrawerContent(props) {
                     <Drawer.Section>
                         <TouchableRipple>
                             <View style={styles.preference}>
-                                <Text style={{color:"#fff",fontSize:width*0.04}}>Dark Theme</Text>
+                                <Text style={{color:"#fff",fontSize:width*0.04}}>Light Theme</Text>
                                 <View pointerEvents="none">
                                     <Switch/>
                                 </View>
@@ -101,7 +85,7 @@ export function DrawerContent(props) {
                     )}
                     label="Cerrar Sesión"
                     labelStyle={{color:"#fff",fontSize:width*0.04}}
-                    onPress={() => (signOut(props))}
+                    onPress={() => (signout())}
                 />
             </Drawer.Section>
         </View>

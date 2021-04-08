@@ -140,7 +140,7 @@ const signup = (dispatch) => (fullname, email, password) => {
           dispatch({ type: "errorMessage", payload: error.message });
         });
     });
-  dispatch({ type: "errorMessage", payload: error.message });
+  // dispatch({ type: "errorMessage", payload: error.message });
 };
 
 const clearErrorMessage = (dispatch) => () => {

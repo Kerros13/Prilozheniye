@@ -75,6 +75,7 @@ const SignupForm = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
+      {error ? <Alert title={error} type="error" /> : null}
       <TextInput
         placeholder="Nombre"
         value={fullname}
@@ -150,7 +151,7 @@ const SignupForm = ({ navigation }) => {
           onPress={() => setHidePass2(!hidePass2)}
         />
       </View>
-      <Button title="Crear Cuenta" titleStyle={styles.titleBtn} onPress={handleVerify("signup")} buttonStyle={styles.signUpBtn}/>
+      <Button title="Crear Cuenta" titleStyle={styles.titleBtn} onPress={() => handleVerify("signup")} buttonStyle={styles.signUpBtn}/>
     </View>
   );
 };
