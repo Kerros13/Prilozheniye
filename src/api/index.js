@@ -1,7 +1,7 @@
 import getEnvVars from "../../environment";
-import {createClient} from "pexels"
+// import {createClient} from "pexels"
 const {apikeyM} = getEnvVars();
-const client = createClient('563492ad6f9170000100000100def160705549058757709fa28c4a8d')
+// const client = createClient('563492ad6f9170000100000100def160705549058757709fa28c4a8d')
 
 export const fetchTracks = async () => {
     const endpoint = `https://api.deezer.com/chart`;

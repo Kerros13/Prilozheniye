@@ -1,20 +1,30 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useContext } from "react";
 import { StyleSheet, View, Text, Dimensions, TextInput, Image } from "react-native";
 import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { firebase } from "../firebase";
 import { validate } from "email-validator";
 import { CommonActions } from '@react-navigation/native';
+import { Context as AuthContext } from "../context/AuthContext";
 
 const {width, height} = Dimensions.get("window");
 
 const SigninForm = ({ navigation }) => {
+  const { state, signin, clearErrorMessage } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [hidePass, setHidePass] = useState(true);
+
+  useEffect(() => {
+    if (state.errorMessage) clearErrorMessage();
+  }, []);
+
+  useEffect(() => {
+    if (state.errorMessage) setError(state.errorMessage);
+  }, [state.errorMessage]);
 
   const handleVerify = (input) => {
      if (input === "email") {
@@ -31,23 +41,7 @@ const SigninForm = ({ navigation }) => {
 
 
   const handleSignin = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email,password)
-      .then(() => {
-        console.log("success");
-        navigation.dispatch(
-          CommonActions.reset({index: 0,routes: [
-              {
-                name: 'App',
-              },
-            ],
-          })
-        );
-        navigation.navigate("App");
-
-      })
-      .catch((error) => setError(error.message));
+    signin(email,password);
   };
 
   return (

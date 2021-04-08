@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useContext,useEffect } from "react";
 import { StyleSheet, View, Dimensions, TextInput,Image } from "react-native";
-import { Input, Button } from "react-native-elements";
+import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { firebase } from "../firebase";
 import { validate } from "email-validator";
+import { Context as AuthContext } from "../context/AuthContext";
 
 const {width, height} = Dimensions.get("window");
 
 const SignupForm = ({ navigation }) => {
+  const { state, signup } = useContext(AuthContext);
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +19,19 @@ const SignupForm = ({ navigation }) => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [hidePass1, setHidePass1] = useState(true);
   const [hidePass2, setHidePass2] = useState(true);
+  const [error, setError] = useState("");
+  
+  useEffect(() => {
+    if (state.errorMessage) clearErrorMessage();
+  }, []);
+
+  useEffect(() => {
+    if (state.errorMessage) setError(state.errorMessage);
+  }, [state.errorMessage]);
+
+  useEffect(() => {
+    if (state.registered) navigation.navigate("App");
+  }, [state]);
 
   // Verifica que los datos ingresados sean correctos
   const handleVerify = (input) => {
@@ -40,42 +54,23 @@ const SignupForm = ({ navigation }) => {
       if (!confirmPassword) setConfirmPasswordError(true);
       else if (confirmPassword !== password) setConfirmPasswordError(true);
       else setConfirmPasswordError(false);
+    }else if (input === "signup") {
+      if (
+        !fullnameError &&
+        !emailError &&
+        !passwordError &&
+        !confirmPasswordError &&
+        fullname &&
+        email &&
+        password &&
+        confirmPassword
+      )
+        signup(fullname, email, password);
+      else setError("All fields are required!");
     }
   };
 
-  const handleSignup = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        // Obtener el Unique Identifier generado para cada usuario
-        // Firebase -> Authentication
-        const uid = response.user.uid;
 
-        // Construir el objeto que le enviaremos a la collección de "users"
-        const data = {
-          id: uid,
-          email,
-          fullname,
-        };
-
-        // Obtener la colección desde Firebase
-        const usersRef = firebase.firestore().collection("users");
-
-        // Almacenar la información del usuario que se registra en Firestore
-        usersRef
-          .doc(uid)
-          .set(data)
-          .then(() => {
-            navigation.navigate("App");
-          })
-          .catch((error) => {
-            console.log(error);
-            setError(error.message);
-          });
-      })
-      .catch((error) => console.log(error));
-  };
 
   return (
     <View style={styles.container}>
@@ -155,7 +150,7 @@ const SignupForm = ({ navigation }) => {
           onPress={() => setHidePass2(!hidePass2)}
         />
       </View>
-      <Button title="Crear Cuenta" titleStyle={styles.titleBtn} onPress={handleSignup} buttonStyle={styles.signUpBtn}/>
+      <Button title="Crear Cuenta" titleStyle={styles.titleBtn} onPress={handleVerify("signup")} buttonStyle={styles.signUpBtn}/>
     </View>
   );
 };
