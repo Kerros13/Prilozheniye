@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as AuthProvider } from "./src/context/AuthContext";
+import { SongGlobal } from "./src/context/SongContext";
 import Navigation from "./src/navigation";
 import LongTimers from "./src/utils/LongTimers";
 
@@ -12,9 +13,11 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <SafeAreaProvider>
-        <Navigation />
-      </SafeAreaProvider>
+      <SongGlobal>
+        <SafeAreaProvider>
+          <Navigation />
+        </SafeAreaProvider>
+      </SongGlobal>
     </AuthProvider>
   );
 }

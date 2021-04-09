@@ -5,10 +5,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import HomeScreen from "../screens/homeScreen";
 import searchScreen from "../screens/searchScreen";
 import List from "../screens/Music/list";
-import Player from "../player/Player";
+import Player from "../screens/Music/player";
 import PlayList from "../screens/Music/playList";
 import TabBar from './TabBar.js';
 import Header from './Header.js';
+import { Modal } from 'react-native-paper';
 
 
 const HStack = createStackNavigator();

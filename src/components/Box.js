@@ -1,14 +1,18 @@
 import React from "react";
+import { TouchableOpacity } from "react-native";
 import { StyleSheet, Text, Dimensions, Image, View } from "react-native";
+import { acc } from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("screen");
 
-const Box = ({tittle, image}) => {
+const Box = ({tittle, image,accion}) => {
   return (
-    <View style={styles.caja}>
+    <TouchableOpacity onPress={accion}>
+      <View style={styles.caja}>
         <Image style={styles.img} source={image}/>
         <Text style={styles.texto}>{tittle}</Text>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 

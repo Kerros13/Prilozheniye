@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState,useContext } from "react";
 import {
   View,
   SafeAreaView,
@@ -12,57 +12,102 @@ import {
 
 import songs from "./data.json";
 import Controller from "./Controller";
-// import TrackPlayer from "react-native-track-player";
+import { Audio } from 'expo-av';
+import { SongContext } from "../context/SongContext";
+import { youtubeSearch,musicAPI} from "../api/backend";
 
 const { width, height } = Dimensions.get("window");
 
-export default function Player() {
+export default function Player({id}) {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const slider = useRef(null);
   const [songIndex, setSongIndex] = useState(0);
   const [sound, setSound] = useState();
 
-  // for tranlating the album art
-  const position = useRef(Animated.divide(scrollX, width)).current;
+  const [{ currentVideoSnippet, themeSelectValue }, dispatch] = useContext(
+    SongContext
+  );
 
+  const setCurrentVideoSnippet = (data) => {
+    dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
+  };
 
+  const fetchAndSetCurrentVideoSnippet = (id) => {
+    youtubeSearch
+      .get('videos', {
+        params: {
+          id: id,
+        },
+      })
+      .then((res) => {
+        const item = res.data.items[0];
+        // console.log(item);
+        setCurrentVideoSnippet({
+          id: item.id,
+          title: item.snippet.title,
+          channelTitle: item.snippet.channelTitle,
+          maxThumbnail: `https://img.youtube.com/vi/${item.id}/maxresdefault.jpg`,
+          sdThumbnail: `https://img.youtube.com/vi/${item.id}/sddefault.jpg`,
+          // this is the url of the max resolution of thumbnail
+        });
+      });
+  };
 
-  useEffect(() => {
-    // position.addListener(({ value }) => {
-    //   console.log(value);
-    // });
+  const getAudio = async (data) => {
+    const res = await musicAPI.get('/song', {
+      params: { id: data },
+    });
+    playSound(res.data);
+  }
+
+  useEffect(()=>{
 
     scrollX.addListener(({ value }) => {
       const val = Math.round(value / width);
 
       setSongIndex(val);
-
-      // little buggy
-      //if previous index is not same then only update it
-      // if (val !== songIndex) {
-      //   setSongIndex(val);
-      //   console.log(val);
-      // }
     });
 
-    // TrackPlayer.setupPlayer().then(async()=>{
-    //   console.log("player ready");
-    //   await TrackPlayer.add(songs);
-    // })
+    fetchAndSetCurrentVideoSnippet(id);
+    if(currentVideoSnippet){
+      getAudio(currentVideoSnippet.id)
+    }
 
     return () => {
       scrollX.removeAllListeners();
     };
+  },[])
 
-   
-  }, []);
+  // for tranlating the album art
+  const position = useRef(Animated.divide(scrollX, width)).current;
+
+  async function playSound(url) {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+      {uri: url}
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync(); 
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync(); 
+          // setSound(null);
+        }
+      : undefined;
+  }, [sound]);
+
 
   const goNext = () => {
     slider.current.scrollToOffset({
       offset: (songIndex + 1) * width,
     });
-    playSound();
   };
   const goPrv = () => {
     slider.current.scrollToOffset({
@@ -112,12 +157,14 @@ export default function Player() {
           )}
         />
       </SafeAreaView>
+      {currentVideoSnippet.id ? 
       <View>
-        <Text style={styles.title}>{songs[songIndex].title}</Text>
-        <Text style={styles.artist}>{songs[songIndex].artist}</Text>
-      </View>
+        <Text style={styles.title}>{currentVideoSnippet.title}</Text>
+      </View>:null
+      }
+      
 
-      <Controller onNext={goNext} onPrv={goPrv} />
+      <Controller onNext={goNext} pausePlay={()=>{getAudio(currentVideoSnippet.id)}} onPrv={goPrv} />
     </SafeAreaView>
   );
 }

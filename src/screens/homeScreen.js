@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {StyleSheet,View,ScrollView,FlatList,StatusBar,Dimensions,ActivityIndicator} from "react-native";
+import {StyleSheet,View,ScrollView,FlatList,StatusBar,Dimensions,ActivityIndicator,Modal} from "react-native";
 import {Text,Image} from "react-native-elements";
-import backend from "../api/backend";
+import backend, { youtubeSearch } from "../api/backend";
 import getEnvVars from "../../environment";
 import {fetchTracks, fetchGenres,_fetchArtists} from "../api/index";
 import Card from "../components/Card";
 import Box from "../components/Box";
 import BoxS from "../components/BoxSong";
 import { abs } from "react-native-reanimated";
-import Header from '../components/Header.js';
+import Player from "../player/Player";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const {apikeyM} = getEnvVars();
 
@@ -18,10 +19,33 @@ const {width, height} = Dimensions.get("window");
 const HomeScreen = ({navigation}) => {
 
     const [tracks,setTracks] = useState(null);
+    const [songId,setSongId] = useState("");
     const [genres,setGenres] = useState(null);
     const [artists,setArtists] = useState(null);
     const [error,setError] = useState(false);
 
+    const [open,setOpen] = useState(false);
+
+    const openModal = () =>{
+        setOpen(true);
+    };
+
+    const closeModal = () =>{
+        setSongId("");
+        setOpen(false);
+    }
+
+    const getSong = async (name) => {
+        const res = await youtubeSearch.get('/search', {
+          params: {
+            q: name,
+            maxResults: 1,
+          },
+        });
+        setSongId(res.data.items[0].id.videoId);
+        console.log(songId);
+        openModal();
+    };
 
     const getTracks = async () => {
         const newTracks = await fetchTracks();
@@ -74,7 +98,7 @@ const HomeScreen = ({navigation}) => {
 
                         renderItem={({item}) => {
                             return(
-                                <BoxS tittle={item.title} image={{uri:item.album.cover_big}}  />
+                                <Box tittle={item.title} accion={()=>{getSong(item.title)}} image={{uri:item.album.cover_big}}  />
                             )
                         }
                     }
@@ -123,6 +147,13 @@ const HomeScreen = ({navigation}) => {
                 </View>
                 <View style={{height:height*0.08}}></View>  
             </ScrollView>
+            {songId ? 
+                <Modal animationType="slide" visible={open} transparent={false}>
+                    <Icon name="chevron-down" size={25} color="black" style={{position:'absolute', zIndex:2,margin:5,padding:15}} onPress={()=>closeModal()} />
+                    <Player id={songId}/>
+                </Modal>:null
+            }
+            
         </View>
     )
 
