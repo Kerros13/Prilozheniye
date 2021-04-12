@@ -4,12 +4,14 @@ import SigninForm from "../forms/SigninForm";
 import Logo from "../components/Logo.js";
 import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
+import Images from 'react-native-scalable-image';
 
 const { width, height } = Dimensions.get("screen");
 
 const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <Images style={styles.fondo} source={require("../../assets/g44.png")} height={height*0.6}/>
       <Logo title="PRILOZ"/>
       <SigninForm navigation={navigation}/>
       <View style={{display:"flex", flexDirection:"column", marginTop:30, alignItems:"center", justifyContent:"center"}}>
@@ -35,6 +37,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor:"#313030",
     position:"relative",
+  },
+  fondo:{
+    position: "absolute",
+    bottom: 0, 
+    right: 0,
   },
 });
 

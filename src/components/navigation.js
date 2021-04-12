@@ -36,6 +36,7 @@ function  HomeStack({navigation}) {
 
 function MyTopTabs() {
     return (
+        <AudioProvider>
         <TopTab.Navigator
         initialRouteName="Player"
             tabBarOptions={{
@@ -48,6 +49,7 @@ function MyTopTabs() {
             <TopTab.Screen name="Player" component={Player} />
             <TopTab.Screen name="PlayList" component={PlayList} />
         </TopTab.Navigator>
+        </AudioProvider>
     );
 };
   

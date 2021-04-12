@@ -12,5 +12,3 @@ web-build/
 # macOS
 .DS_Store
 environment.js
-package.json
-package-lock.json

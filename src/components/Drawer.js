@@ -80,6 +80,19 @@ export function DrawerContent(props) {
                             labelStyle={{color:"#fff",fontSize:width*0.04}}
                             onPress={() => {props.navigation.navigate('Home')}}
                         />
+                        <DrawerItem 
+                            icon={({color, size}) => (
+                                <Entypo 
+                                name="home" 
+                                color="#fff"
+                                size={size}
+                                />
+                            )}
+                            label="Login"
+                            style={{fontsize:width*0.04}}
+                            labelStyle={{color:"#fff",fontSize:width*0.04}}
+                            onPress={() => {props.navigation.navigate('Login')}}
+                        />
                     </Drawer.Section>
 
                     <Drawer.Section>

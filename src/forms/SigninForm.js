@@ -70,8 +70,6 @@ const SigninForm = ({ navigation }) => {
   return (
     
     <View style={styles.container}>
-      <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
-      {error ? <Alert title={error} type="error" /> : null}
       <TextInput
         placeholder="E-mail"
         value={email}
@@ -171,14 +169,6 @@ const styles = StyleSheet.create({
   titleBtn: {
     fontFamily: "PlayfairDisplay",
     fontSize: width*0.055,
-  },
-  fondo:{
-    width: width*0.4,
-    height: height*0.6,
-    position: "absolute",
-    top: height*0.01, // bluestacks height*(-0.022),
-    left: width*0.607,
-    resizeMode:"contain"
   },
 });
 
