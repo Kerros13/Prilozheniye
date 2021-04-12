@@ -19,7 +19,7 @@ const {width, height} = Dimensions.get("window");
 const HomeScreen = ({navigation}) => {
 
     const [tracks,setTracks] = useState(null);
-    const [songId,setSongId] = useState("");
+    const [item,setItem] = useState(null);
     const [genres,setGenres] = useState(null);
     const [artists,setArtists] = useState(null);
     const [error,setError] = useState(false);
@@ -31,25 +31,31 @@ const HomeScreen = ({navigation}) => {
     };
 
     const closeModal = () =>{
-        setSongId("");
+        setItem(null);
         setOpen(false);
     }
 
-    const getSong = async (name) => {
-        const res = await youtubeSearch.get('/search', {
-          params: {
-            q: name,
-            maxResults: 1,
-          },
-        });
-        setSongId(res.data.items[0].id.videoId);
-        console.log(songId);
+    // const getSong = async (name) => {
+    //     const res = await youtubeSearch.get('/search', {
+    //       params: {
+    //         q: name,
+    //         maxResults: 1,
+    //       },
+    //     });
+    //     setSongId(res.data.items[0].id.videoId);
+    //     //console.log(songId);
+    //     openModal();
+    // };
+
+    const getSong = async (item) => {
+        setItem(item);
         openModal();
     };
 
     const getTracks = async () => {
         const newTracks = await fetchTracks();
         setTracks(newTracks);
+        console.log(tracks);
     };
 
     const getGenres = async () => {
@@ -98,7 +104,7 @@ const HomeScreen = ({navigation}) => {
 
                         renderItem={({item}) => {
                             return(
-                                <Box tittle={item.title} accion={()=>{getSong(item.title)}} image={{uri:item.album.cover_big}}  />
+                                <Box tittle={item.title} accion={()=>{getSong(item)}} image={{uri:item.album.cover_big}}  />
                             )
                         }
                     }
@@ -147,10 +153,10 @@ const HomeScreen = ({navigation}) => {
                 </View>
                 <View style={{height:height*0.08}}></View>  
             </ScrollView>
-            {songId ? 
+            {item ? 
                 <Modal animationType="slide" visible={open} transparent={false}>
                     <Icon name="chevron-down" size={25} color="black" style={{position:'absolute', zIndex:2,margin:5,padding:15}} onPress={()=>closeModal()} />
-                    <Player id={songId}/>
+                    <Player item={item}/>
                 </Modal>:null
             }
             

@@ -10,99 +10,138 @@ import {
   StyleSheet,
 } from "react-native";
 
-import songs from "./data.json";
+//import songs from "./data.json";
 import Controller from "./Controller";
 import { Audio } from 'expo-av';
+
 import { SongContext } from "../context/SongContext";
 import { youtubeSearch,musicAPI} from "../api/backend";
+import { ActivityIndicator } from "react-native-paper";
 
 const { width, height } = Dimensions.get("window");
 
-export default function Player({id}) {
+export default function Player({item,bandera}) {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const slider = useRef(null);
   const [songIndex, setSongIndex] = useState(0);
-  const [sound, setSound] = useState();
+  const [sound, setSound] = useState(null);
+  const [state,setState] = useState("");  
 
-  const [{ currentVideoSnippet, themeSelectValue }, dispatch] = useContext(
+  const [{ currentVideoSnippet, audio }, dispatch] = useContext(
     SongContext
   );
+
+  // for tranlating the album art
+  const position = useRef(Animated.divide(scrollX, width)).current;
 
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
   };
+  const setAudio = (data) => {
+    dispatch({ type: 'setAudio', snippet: data });
+  };
+  // const fetchAndSetCurrentVideoSnippet = (id) => {
+  //   youtubeSearch
+  //     .get('videos', {
+  //       params: {
+  //         id: id,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       const item = res.data.items[0];
+  //       // console.log(item);
+  //       setCurrentVideoSnippet({
+  //         id: item.id,
+  //         title: item.snippet.title,
+  //         channelTitle: item.snippet.channelTitle,
+  //         maxThumbnail: `https://img.youtube.com/vi/${item.id}/maxresdefault.jpg`,
+  //         sdThumbnail: `https://img.youtube.com/vi/${item.id}/sddefault.jpg`,
+  //         // this is the url of the max resolution of thumbnail
+  //       });
+  //       console.log(currentVideoSnippet);
+  //     });
+  // };
 
-  const fetchAndSetCurrentVideoSnippet = (id) => {
-    youtubeSearch
-      .get('videos', {
-        params: {
-          id: id,
-        },
-      })
-      .then((res) => {
-        const item = res.data.items[0];
-        // console.log(item);
-        setCurrentVideoSnippet({
-          id: item.id,
-          title: item.snippet.title,
-          channelTitle: item.snippet.channelTitle,
-          maxThumbnail: `https://img.youtube.com/vi/${item.id}/maxresdefault.jpg`,
-          sdThumbnail: `https://img.youtube.com/vi/${item.id}/sddefault.jpg`,
-          // this is the url of the max resolution of thumbnail
-        });
-      });
+  const SetCurrentVideoSnippet = (item) => {
+    setCurrentVideoSnippet({
+      id: item.id,
+      title: item.title,
+      artist: item.artist.name,
+      image: item.album.cover_big,
+      preview:item.preview
+    });
   };
 
-  const getAudio = async (data) => {
-    const res = await musicAPI.get('/song', {
-      params: { id: data },
-    });
-    playSound(res.data);
+  const playSound = async(url) => {
+    console.log('Loading Sound');
+    audio.length ? await audio.unloadAsync() :null; 
+    const { sound } = await Audio.Sound.createAsync(
+      {uri: url}
+    );
+    
+    setSound(sound);
+
+    
+    console.log('Playing Sound');
+    await sound.playAsync();
+    setState("playing");
+    
+
   }
 
+  const playPause = async () =>{
+    if(audio.length!=0){
+     if(state=="playing"){
+      await sound.pauseAsync();
+      setState("paused");
+     }else{
+      await sound.playAsync();
+      setState("playing");
+     }
+    }
+  }
+
+  // const getAudio = async (data) => {
+  //   const res = await musicAPI.get('/song', {
+  //     params: { id: data },
+  //   });
+  //   playSound(res.data);
+  // }
+
   useEffect(()=>{
+
 
     scrollX.addListener(({ value }) => {
       const val = Math.round(value / width);
 
       setSongIndex(val);
     });
+    SetCurrentVideoSnippet(item);
 
-    fetchAndSetCurrentVideoSnippet(id);
-    if(currentVideoSnippet){
-      getAudio(currentVideoSnippet.id)
-    }
-
+    //fetchAndSetCurrentVideoSnippet(id);
+    
     return () => {
       scrollX.removeAllListeners();
     };
   },[])
 
-  // for tranlating the album art
-  const position = useRef(Animated.divide(scrollX, width)).current;
+  useEffect(()=>{
+  
+    playSound(currentVideoSnippet.preview);
 
-  async function playSound(url) {
-    console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync(
-      {uri: url}
-    );
-    setSound(sound);
-
-    console.log('Playing Sound');
-    await sound.playAsync(); 
-  }
+  },[currentVideoSnippet])
 
   useEffect(() => {
     return sound
       ? () => {
           console.log('Unloading Sound');
-          sound.unloadAsync(); 
-          // setSound(null);
+          sound.unloadAsync();
+          //setAudio(sound);
         }
       : undefined;
+    
   }, [sound]);
-
 
   const goNext = () => {
     slider.current.scrollToOffset({
@@ -139,32 +178,26 @@ export default function Player({id}) {
     );
   };
 
+  if(!currentVideoSnippet){
+    return(
+      <View style={styles.container}>
+        <ActivityIndicator size={25} color="blue"/>
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <SafeAreaView style={{ height: 320 }}>
-        <Animated.FlatList
-          ref={slider}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={16}
-          data={songs}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            { useNativeDriver: true }
-          )}
-        />
+      <SafeAreaView style={{ height: 320,alignItems:"center" }}>
+        <Image style={styles.image} source={{uri:currentVideoSnippet.image}}/>
       </SafeAreaView>
-      {currentVideoSnippet.id ? 
+      
       <View>
         <Text style={styles.title}>{currentVideoSnippet.title}</Text>
-      </View>:null
-      }
+        <Text style={styles.artist}>{currentVideoSnippet.artist}</Text>
+      </View>
       
-
-      <Controller onNext={goNext} pausePlay={()=>{getAudio(currentVideoSnippet.id)}} onPrv={goPrv} />
+      <Controller onNext={goNext} pausePlay={playPause} onPrv={goPrv} />
     </SafeAreaView>
   );
 }
@@ -185,4 +218,8 @@ const styles = StyleSheet.create({
     height: height,
     maxHeight: 600,
   },
+  image:{
+    height:320,
+    width:320
+  }
 });

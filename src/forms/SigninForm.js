@@ -2,16 +2,18 @@ import React, { useState,useEffect,useContext } from "react";
 import { StyleSheet, View, Text, Dimensions, TextInput, Image } from "react-native";
 import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { firebase } from "../firebase";
+import getEnvVars from "../../environment";
 import { validate } from "email-validator";
 import { CommonActions } from '@react-navigation/native';
 import { Context as AuthContext } from "../context/AuthContext";
 import { Alert } from "../components/Alert";
+import * as Google from 'expo-google-app-auth';
 
 const {width, height} = Dimensions.get("window");
+const {googleSignInKey} = getEnvVars();
 
 const SigninForm = ({ navigation }) => {
-  const { state, signin, clearErrorMessage } = useContext(AuthContext);
+  const { state, signin,onSignIn, clearErrorMessage } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -44,6 +46,26 @@ const SigninForm = ({ navigation }) => {
   const handleSignin = () => {
     signin(email,password);
   };
+
+  const googleLogIn = async() => {
+  
+    try {
+      const result = await Google.logInAsync({
+        androidClientId: googleSignInKey,
+        //iosClientId: YOUR_CLIENT_ID_HERE,
+        scopes: ['profile', 'email'],
+      });
+  
+      if (result.type === 'success') {
+        onSignIn(result);
+      } else {
+        console.log(result);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  
+}
 
   return (
     
@@ -89,6 +111,7 @@ const SigninForm = ({ navigation }) => {
         />
       </View>
       <Button title="Iniciar Sesión" onPress={handleSignin} titleStyle={styles.titleBtn} buttonStyle={styles.signInBtn}/>
+      <Button title="Google Sign-In" onPress={googleLogIn} titleStyle={styles.titleBtn} buttonStyle={styles.signInBtn}/>
     </View>
   );
 };

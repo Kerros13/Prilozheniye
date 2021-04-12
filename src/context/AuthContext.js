@@ -1,6 +1,7 @@
 import createDataContext from "./createDataContext";
 import { firebase } from "../firebase";
 
+
 // Acciones disponibles para el reducer
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -65,6 +66,79 @@ const signin = (dispatch) => (email, password) => {
     });
 };
 
+function isUserEqual(googleUser, firebaseUser) {
+  if (firebaseUser) {
+    var providerData = firebaseUser.providerData;
+    for (var i = 0; i < providerData.length; i++) {
+      if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+          providerData[i].uid === googleUser.getBasicProfile().getId()) {
+        // We don't need to reauth the Firebase connection.
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+const onSignIn = (dispatch) => (googleUser) => {
+  console.log(googleUser);
+  const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
+    unsubscribe();
+    if (!isUserEqual(googleUser, firebaseUser)) {
+      const credential = firebase.auth.GoogleAuthProvider.credential(
+        googleUser.idToken,
+        googleUser.accessToken
+      );
+      firebase
+        .auth()
+        .signInWithCredential(credential)
+        .then((response) => {
+          const uid = response.user.uid;
+          const email = response.user.email;
+          const name = response.user.displayName;
+          const pictureUrl = response.user.photoURL;
+          const data = {
+            id: uid,
+            email,
+            name,
+            pictureUrl,
+          };
+          const usersRef = firebase.firestore().collection("users");
+          usersRef
+            .doc(uid)
+            .get()
+            .then((firestoreDocument) => {
+              if (!firestoreDocument.exists) {
+                usersRef
+                  .doc(uid)
+                  .set(data)
+                  .then(() => {
+                    dispatch({
+                      type: "signup",
+                      payload: { user: data, registered: true },
+                    });
+                  })
+                  .catch((error) => {
+                    dispatch({ type: "errorMessage", payload: error.message });
+                  });
+              } else {
+                dispatch({ type: "errorMessage", payload: "" });
+                dispatch({ type: "signin", payload: firestoreDocument.data() });
+              }
+            });
+        })
+        .catch((error) => {
+          dispatch({ type: "errorMessage", payload: error.message });
+        });
+    } else {
+      console.log("User already signed-in Firebase.");
+    }
+  });
+};
+
+
+
+
 // Cierra la sesión del usuario
 const signout = (dispatch) => () => {
   firebase
@@ -107,7 +181,7 @@ const persistLogin = (dispatch) => () => {
   });
 };
 
-const signup = (dispatch) => (fullname, email, password) => {
+const signup = (dispatch) => (name, email, password) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -120,7 +194,7 @@ const signup = (dispatch) => (fullname, email, password) => {
       const data = {
         id: uid,
         email,
-        fullname,
+        name,
       };
 
       // Obtener la colección desde Firebase
@@ -152,6 +226,7 @@ export const { Provider, Context } = createDataContext(
   authReducer,
   {
     signin,
+    onSignIn,
     signout,
     persistLogin,
     signup,
