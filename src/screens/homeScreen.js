@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {StyleSheet,View,ScrollView,FlatList,StatusBar,Dimensions,ActivityIndicator,Modal} from "react-native";
 import {Text,Image} from "react-native-elements";
 import backend, { youtubeSearch } from "../api/backend";
@@ -7,13 +7,15 @@ import {fetchTracks, fetchGenres,_fetchArtists} from "../api/index";
 import Card from "../components/Card";
 import Box from "../components/Box";
 import BoxS from "../components/BoxSong";
-import { abs } from "react-native-reanimated";
+import { ThemeContext } from "../theme";
 import Player from "../player/Player";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { Context } from "../context/AuthContext";
 
 const {apikeyM} = getEnvVars();
 
 const {width, height} = Dimensions.get("window");
+
 
 
 const HomeScreen = ({navigation}) => {
@@ -23,6 +25,8 @@ const HomeScreen = ({navigation}) => {
     const [genres,setGenres] = useState(null);
     const [artists,setArtists] = useState(null);
     const [error,setError] = useState(false);
+
+    const {theme, ContextStyles} = useContext(ThemeContext); 
 
     const [open,setOpen] = useState(false);
 
@@ -80,14 +84,14 @@ const HomeScreen = ({navigation}) => {
 
     if(!tracks || !genres || !artists){
         return(
-            <View style={{flex:1,alignItems:"center",justifyContent:"center",backgroundColor:'#1E1E1E'}}>
+            <View style={[{flex:1,alignItems:"center",justifyContent:"center"},ContextStyles[`container${theme}`]]}>
                 <ActivityIndicator size="large" color="blue" />
             </View>
         )
     }
     
     return(
-        <View   style={styles.container}>
+        <View   style={[styles.container,ContextStyles[`container${theme}`]]}>
             <StatusBar 
                 translucent
                 backgroundColor={"transparent"}
@@ -95,7 +99,7 @@ const HomeScreen = ({navigation}) => {
                 hidden={false}/>
             <ScrollView  showsVerticalScrollIndicator={false}>
                 <View style={styles.sections}>
-                    <Text h2 style={{marginLeft: 10, color:"#fff"}}>Top Canciones</Text>
+                    <Text h2 style={[styles.text,ContextStyles[`text${theme}`]]}>Top Canciones</Text>
                     <FlatList
                         data={tracks}
                         horizontal={true}
@@ -111,7 +115,7 @@ const HomeScreen = ({navigation}) => {
                     />
                 </View>
                 <View style={styles.sections}>
-                    <Text h2 style={{marginLeft: 10, color:"#fff"}}>Géneros</Text>
+                    <Text h2 style={[styles.text,ContextStyles[`text${theme}`]]}>Géneros</Text>
                     <FlatList
                         
                         data={genres}
@@ -128,7 +132,7 @@ const HomeScreen = ({navigation}) => {
                     />
                 </View>
                 <View style={styles.sections}>
-                    <Text h2 style={{marginLeft: 10, color:"#fff"}}>Top Artistas</Text>
+                    <Text h2 style={[styles.text,ContextStyles[`text${theme}`]]}>Top Artistas</Text>
                     <FlatList
                         data={artists}
                         horizontal={true}
@@ -171,12 +175,14 @@ const styles = StyleSheet.create({
 
     container:{
         marginTop:0,
-        backgroundColor:'#1E1E1E',
         flex:1,
     },
     sections: {
         marginTop: 10,
     },
+    text:{
+        marginLeft:10
+    }
 })
 
 

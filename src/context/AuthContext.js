@@ -81,7 +81,7 @@ function isUserEqual(googleUser, firebaseUser) {
 }
 
 const onSignIn = (dispatch) => (googleUser) => {
-  console.log(googleUser);
+  //console.log(googleUser);
   const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
     unsubscribe();
     if (!isUserEqual(googleUser, firebaseUser)) {
