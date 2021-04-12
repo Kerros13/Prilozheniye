@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -9,6 +9,7 @@ import Player from "../screens/Music/player";
 import PlayList from "../screens/Music/playList";
 import TabBar from './TabBar.js';
 import Header from './Header.js';
+import { ThemeContext } from "../theme";
 import { Modal } from 'react-native-paper';
 import AudioProvider from "../context/AudioProvider";
 
@@ -18,6 +19,7 @@ const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 function  HomeStack({navigation}) {
+    const {theme, ContextStyles} = useContext(ThemeContext); 
     return(
         <HStack.Navigator>
             <HStack.Screen
@@ -26,7 +28,7 @@ function  HomeStack({navigation}) {
             options={{
                 headerTitle: () => <Header title='Home' navigation={navigation} x={false}/>,
                 headerLeft: null,
-                headerStyle: {backgroundColor: "#18191A"}
+                headerStyle: {backgroundColor: ContextStyles[`header${theme}`].backgroundColor}
             }}
             />
         </HStack.Navigator>

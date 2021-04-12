@@ -6,17 +6,20 @@ import { DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import { Entypo } from '@expo/vector-icons';
 import { firebase } from "../firebase";
 const {width, height} = Dimensions.get("window");
-import { Context as AuthContext } from "../context/AuthContext";
+import { Context as AuthContext, Context } from "../context/AuthContext";
+import { ThemeContext } from "../theme";
 
 
 export function DrawerContent(props) {
 
     const { state, signout } = useContext(AuthContext);
     const [ready,setReady] = useState(false);
+    const {theme,toggleTheme, ContextStyles} = useContext(ThemeContext);
+    const [isSwitchOn, setIsSwitchOn] = useState(false);
 
     // useEffect(() => {
-    //     console.log(state);
-    // }, []);
+    //     theme == "dark" ? setIsSwitchOn(false) : setIsSwitchOn(true)
+    // }, [theme]);
 
     useEffect(() => {
         if (state.user) setReady(true)
@@ -30,8 +33,13 @@ export function DrawerContent(props) {
         )
     }
 
+    const onToggleSwitch = () =>{
+        setIsSwitchOn(!isSwitchOn)
+        toggleTheme()
+    }
+
     return(
-        <View style={{flex:1, backgroundColor:"#1E1E1E"}}>
+        <View style={[{flex:1},ContextStyles[`container${theme}`]]}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
@@ -88,14 +96,14 @@ export function DrawerContent(props) {
                     </Drawer.Section>
 
                     <Drawer.Section>
-                        <TouchableRipple>
+                        
                             <View style={styles.preference}>
                                 <Text style={{color:"#fff",fontSize:width*0.04}}>Light Theme</Text>
-                                <View pointerEvents="none">
-                                    <Switch/>
+                                <View>
+                                <Switch value={isSwitchOn} thumbColor={isSwitchOn ? "#78bcc4" : "#fff" } trackColor={{true: '#78bcc4', false: 'grey'}} onValueChange={onToggleSwitch} />
                                 </View>
                             </View>
-                        </TouchableRipple>
+                        
                     </Drawer.Section>
                     
                 </View>

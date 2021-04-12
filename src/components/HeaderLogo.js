@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import {StyleSheet,View,Text, Image, Dimensions} from "react-native";
 import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
+import { ThemeContext } from "../theme";
+
 
 const {width, height} = Dimensions.get("window");
 
 const Logo = ({title}) => {
 
     const [fontLoaded, setFontLoaded] = useState(false);
+    const {theme, ContextStyles} = useContext(ThemeContext);
 
     const loadFonts = () => {
         return Font.loadAsync({
@@ -28,8 +31,8 @@ const Logo = ({title}) => {
 
     return (
         <View style={styles.titleContainer}>
-            <Image style={styles.image} source={require("../../assets/qwerty.png")}/>
-            <Text style={styles.textTitulo}>{title}</Text>
+            <Image style={styles.image} source={theme == "dark" ? require("../../assets/qwerty.png"): require("../../assets/qwertylight.png")}/>
+            <Text style={[styles.textTitulo,ContextStyles[`logo${theme}`]]}>{title}</Text>
         </View>
     );
 };
@@ -43,7 +46,6 @@ const styles = StyleSheet.create({
         resizeMode:"contain"
     },
     textTitulo:{
-        color:"#BBFE1B",
         fontSize:40,
         fontFamily: "mistral",
         alignContent:"center",

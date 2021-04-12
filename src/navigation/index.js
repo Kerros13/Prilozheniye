@@ -66,7 +66,7 @@ function drawer(){
   );
 };
 
-const Navigation = () => {
+const Navigation = ({theme}) => {
     const { state, persistLogin } = useContext(AuthContext);
 
     // Verificar si ya existen credenciales de autenticación
@@ -82,7 +82,7 @@ const Navigation = () => {
 
     return(
         
-        <NavigationContainer>
+        <NavigationContainer theme={theme}>
             
             {!state.loading && (
               <>
