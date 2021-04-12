@@ -1,4 +1,6 @@
-import React, { useReducer } from "react";
+import React, { useReducer,useState } from "react";
+import createDataContext from "./createDataContext";
+import { Audio } from 'expo-av';
 
 export const SongContext = React.createContext();
 
@@ -9,7 +11,8 @@ const initialState = {
   menuOpen: false,
   snackbarMsg: false,
   currentVideoSnippet: {},
-  themeSelectValue: "Default"
+  themeSelectValue: "Default",
+  audio:Audio
 };
 
 const reducer = (state, action) => {
@@ -19,35 +22,15 @@ const reducer = (state, action) => {
         ...state,
         currentVideoSnippet: action.snippet
       };
-
-    case "setRelatedVideos": {
+    case "setAudio":
       return {
         ...state,
-        relatedVideos: action.snippet
+        audio: action.snippet
       };
-    }
-    case "setSnackbarMsg": {
-      return {
-        ...state,
-        snackbarMsg: action.snippet
-      };
-    }
     case "setThemeSelectValue": {
       return {
         ...state,
         themeSelectValue: action.snippet
-      };
-    }
-    case "setSearchState": {
-      return {
-        ...state,
-        searchState: action.snippet
-      };
-    }
-    case "setSearchResult": {
-      return {
-        ...state,
-        searchResult: action.snippet
       };
     }
     case "setMenuOpen": {
@@ -61,8 +44,9 @@ const reducer = (state, action) => {
   }
 };
 
+
 export const SongGlobal = props => {
-  const globalState = useReducer(reducer, initialState);
+  const globalState = useReducer(reducer,initialState);
   return (
     <SongContext.Provider value={globalState}>
       {props.children}

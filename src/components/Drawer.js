@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import { View, StyleSheet,Text,Dimensions } from 'react-native';
+import { View, StyleSheet,Text,Dimensions,ActivityIndicator } from 'react-native';
 import { Avatar,Title,Caption,Paragraph,Drawer,TouchableRipple,Switch } from 'react-native-paper';
 import { CommonActions } from '@react-navigation/native';
 import { DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
@@ -13,9 +13,15 @@ export function DrawerContent(props) {
 
     const { state, signout } = useContext(AuthContext);
 
-    useEffect(() => {
-        console.log(state);
-    }, []);
+    // useEffect(() => {
+    //     console.log(state);
+    // }, []);
+
+    if(!state){
+        return(
+            <ActivityIndicator size="large" color="blue"/>
+        )
+    }
 
     return(
         <View style={{flex:1, backgroundColor:"#1E1E1E"}}>
@@ -28,7 +34,7 @@ export function DrawerContent(props) {
                                 size={width*0.2}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>{state.user.fullname}</Title>
+                                <Title style={styles.title}>{state.user.name}</Title>
                                 <Caption style={styles.caption}>@tag</Caption>
                             </View>
                         </View>
