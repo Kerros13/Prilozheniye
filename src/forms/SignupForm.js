@@ -74,8 +74,6 @@ const SignupForm = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
-      {error ? <Alert title={error} type="error" /> : null}
       <TextInput
         placeholder="Nombre"
         value={fullname}
@@ -211,14 +209,6 @@ const styles = StyleSheet.create({
   titleBtn: {
     fontFamily: "PlayfairDisplay",
     fontSize: width*0.055,
-  },
-  fondo:{
-    width: width*0.4,
-    height: height*0.6,
-    position: "absolute",
-    top: 50,
-    left: width*0.62,
-    resizeMode:"contain"
   },
 });
 

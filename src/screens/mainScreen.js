@@ -5,9 +5,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
 import Logo from "../components/Logo.js"
+import Images from 'react-native-scalable-image';
 
 
-const {width, height} = Dimensions.get("window");
+const {width, height} = Dimensions.get("screen");
 
 const mainScreen = ({navigation}) => {
 
@@ -37,7 +38,7 @@ const mainScreen = ({navigation}) => {
                 backgroundColor={"transparent"}
                 barStyle={'light-content'}
                 hidden={false}/>
-            <Image style={styles.bgimage} source={require("../../assets/g44.png")}/>
+            <Images style={styles.fondo} source={require("../../assets/g44.png")} height={height*0.6}/>
             <View style={styles.titleContainer}><Logo title="PRILOZ"/></View>
             
             <View style={styles.signContainer}>
@@ -111,13 +112,10 @@ const styles = StyleSheet.create({
         display: "flex",
         flex:3,
     },
-    bgimage: {
-        width: width*0.4,
-        height: height*0.6,
+    fondo:{
         position: "absolute",
-        top: height*0.4,
-        left: width*0.607,
-        resizeMode:"contain"
+        bottom: 0, 
+        right: 0,
     },
     signContainer: {
         width: width,
