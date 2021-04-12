@@ -81,7 +81,7 @@ function isUserEqual(googleUser, firebaseUser) {
 }
 
 const onSignIn = (dispatch) => (googleUser) => {
-  console.log(googleUser);
+  //console.log(googleUser);
   const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
     unsubscribe();
     if (!isUserEqual(googleUser, firebaseUser)) {
@@ -131,7 +131,7 @@ const onSignIn = (dispatch) => (googleUser) => {
           dispatch({ type: "errorMessage", payload: error.message });
         });
     } else {
-      console.log("User already signed-in Firebase.");
+      //console.log("User already signed-in Firebase.");
     }
   });
 };

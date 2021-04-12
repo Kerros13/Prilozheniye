@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import Screen from '../../components/Screen';
-import color from '../../misc/color';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import PlayerButton from '../../components/PlayerButton';
 import { AudioContext } from '../../context/AudioProvider';
 import { pause, play, resume, playNext } from '../../misc/audioController';
+import { storeAudioForNextOpening } from '../../misc/helper';
 
 const { width } = Dimensions.get('window');
 
@@ -30,6 +30,9 @@ const Player = () => {
     if (context.soundObj === null) {
       const audio = context.currentAudio;
       const status = await play(context.playbackObj, audio.uri);
+      context.playbackObj.setOnPlaybackStatusUpdate(
+        context.onPlaybackStatusUpdate
+      );
       return context.updateState(context, {
         soundObj: status,
         currentAudio: audio,
@@ -57,7 +60,8 @@ const Player = () => {
 
   const handleNext = async () => {
     const {isLoaded} = await context.playbackObj.getStatusAsync();
-    const isLastAudio = context.currentAudioIndex + 1 === context.totalAudioCount;
+    const isLastAudio = 
+      context.currentAudioIndex + 1 === context.totalAudioCount;
     let audio = context.audioFiles[context.currentAudioIndex + 1];
     let index;
     let status;
@@ -88,6 +92,47 @@ const Player = () => {
       soundObj: status,
       isPlaying: true,
       currentAudioIndex: index,
+      playbackPosition: null,
+      playbackDuration: null,
+    });
+    storeAudioForNextOpening(audio, index);
+  };
+
+  const handlePrevius= async () => {
+    const {isLoaded} = await context.playbackObj.getStatusAsync();
+    const isFirstAudio = context.currentAudioIndex <= 0;
+    let audio = context.audioFiles[context.currentAudioIndex - 1];
+    let index;
+    let status;
+
+    if(!isLoaded && !isFirstAudio){
+      index = context.currentAudioIndex - 1;
+      status = await play(context.playbackObj, audio.uri);
+    }
+
+    if(isLoaded && !isFirstAudio){
+      index = context.currentAudioIndex - 1;
+      status = await playNext(context.playbackObj, audio.uri);
+    }
+
+    if(isFirstAudio){
+      index = context.totalAudioCount - 1;
+      audio = context.audioFiles[index];
+      if(isLoaded){
+        status = await playNext(context.playbackObj, audio.uri);
+      }else{
+        status = await play(context.playbackObj, audio.uri);
+      }
+    }
+
+    context.updateState(context, {
+      currentAudio: audio,
+      playbackObj: context.playbackObj,
+      soundObj: status,
+      isPlaying: true,
+      currentAudioIndex: index,
+      playbackPosition: null,
+      playbackDuration: null,
     });
     storeAudioForNextOpening(audio, index);
   }
@@ -104,7 +149,8 @@ const Player = () => {
           <MaterialCommunityIcons
             name='music-circle'
             size={300}
-            color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM}
+            //color circulo player
+            color={context.isPlaying ? '#5252ad' : '#636363'}
           />
         </View>
         <View style={styles.audioPlayerContainer}>
@@ -116,18 +162,18 @@ const Player = () => {
             minimumValue={0}
             maximumValue={1}
             value={calculateSeebBar()}
-            minimumTrackTintColor={color.FONT_MEDIUM}
-            maximumTrackTintColor={color.ACTIVE_BG}
+            //color circulo lista
+            minimumTrackTintColor={'#636363'}
+            maximumTrackTintColor={'#5252ad'}
           />
           <View style={styles.audioControllers}>
-            <PlayerButton iconType='PREV' />
+            <PlayerButton iconType='PREV' onPress={handlePrevius} />
             <PlayerButton
               onPress={handlePlayPause}
               style={{ marginHorizontal: 25 }}
               iconType={context.isPlaying ? 'PLAY' : 'PAUSE'}
             />
-            <PlayerButton iconType='NEXT' 
-              onPress={handleNext}
+            <PlayerButton iconType='NEXT' onPress={handleNext}
             />
           </View>
         </View>
@@ -151,7 +197,7 @@ const styles = StyleSheet.create({
   audioCount: {
     textAlign: 'right',
     padding: 15,
-    color: color.FONT_LIGHT,
+    color: '#b6b8b9',
     fontSize: 14,
   },
   midBannerContainer: {
@@ -161,7 +207,7 @@ const styles = StyleSheet.create({
   },
   audioTitle: {
     fontSize: 16,
-    color: color.FONT,
+    color: "#000",
     padding: 15,
   },
 });

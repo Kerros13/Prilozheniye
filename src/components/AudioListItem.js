@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  Dimensions,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { View,StyleSheet,Text,Dimensions,TouchableWithoutFeedback, } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-import color from '../misc/color';
 
 const getThumbnailText = filename => filename[0];
 
@@ -37,9 +30,9 @@ const convertTime = minutes => {
 const renderPlayPauseIcon = isPlaying => {
   if (isPlaying)
     return (
-      <Entypo name='controller-paus' size={24} color={color.ACTIVE_FONT} />
+      <Entypo name='controller-paus' size={24} color={'#fff'} />
     );
-  return <Entypo name='controller-play' size={24} color={color.ACTIVE_FONT} />;
+  return <Entypo name='controller-play' size={24} color={'#fff'} />;
 };
 
 const AudioListItem = ({
@@ -60,8 +53,8 @@ const AudioListItem = ({
                 styles.thumbnail,
                 {
                   backgroundColor: activeListItem
-                    ? color.ACTIVE_BG
-                    : color.FONT_LIGHT,
+                    ? '#5252ad'
+                    : '#b6b8b9',
                 },
               ]}
             >
@@ -79,15 +72,6 @@ const AudioListItem = ({
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <View style={styles.rightContainer}>
-          <Entypo
-            onPress={onOptionPress}
-            name='dots-three-vertical'
-            size={20}
-            color={color.FONT_MEDIUM}
-            style={{ padding: 10 }}
-          />
-        </View>
       </View>
       <View style={styles.separator} />
     </>
@@ -98,23 +82,17 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignSelf: 'center',
-    width: width - 80,
+    width: width*0.9,
   },
   leftContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
   },
-  rightContainer: {
-    flexBasis: 50,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   thumbnail: {
     height: 50,
     flexBasis: 50,
-    backgroundColor: color.FONT_LIGHT,
+    backgroundColor: '#b6b8b9',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
@@ -122,18 +100,18 @@ const styles = StyleSheet.create({
   thumbnailText: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: color.FONT,
+    color: '#303d49',
   },
   titleContainer: {
-    width: width - 180,
+    width: width*0.7,
     paddingLeft: 10,
   },
   title: {
     fontSize: 16,
-    color: color.FONT,
+    color: '#303d49',
   },
   separator: {
-    width: width - 80,
+    width: width*0.9,
     backgroundColor: '#333',
     opacity: 0.3,
     height: 0.5,
@@ -142,7 +120,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 14,
-    color: color.FONT_LIGHT,
+    color: '#b6b8b9',
   },
 });
 

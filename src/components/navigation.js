@@ -10,6 +10,7 @@ import PlayList from "../screens/Music/playList";
 import TabBar from './TabBar.js';
 import Header from './Header.js';
 import { Modal } from 'react-native-paper';
+import AudioProvider from "../context/AudioProvider";
 
 
 const HStack = createStackNavigator();

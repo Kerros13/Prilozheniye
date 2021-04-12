@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { View, StyleSheet,Text,Dimensions,ActivityIndicator } from 'react-native';
 import { Avatar,Title,Caption,Paragraph,Drawer,TouchableRipple,Switch } from 'react-native-paper';
 import { CommonActions } from '@react-navigation/native';
@@ -12,14 +12,21 @@ import { Context as AuthContext } from "../context/AuthContext";
 export function DrawerContent(props) {
 
     const { state, signout } = useContext(AuthContext);
+    const [ready,setReady] = useState(false);
 
     // useEffect(() => {
     //     console.log(state);
     // }, []);
 
-    if(!state){
+    useEffect(() => {
+        if (state.user) setReady(true)
+    }, [state]);
+
+    if(!ready){
         return(
-            <ActivityIndicator size="large" color="blue"/>
+
+            <ActivityIndicator size="large" color="blue" backgroundColor="#1E1E1E"/>
+
         )
     }
 
@@ -31,7 +38,7 @@ export function DrawerContent(props) {
                         <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image 
                                 source={require('../../assets/img_avatar.png')}
-                                size={width*0.2}
+                                size={width*0.15}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>{state.user.name}</Title>

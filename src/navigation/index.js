@@ -1,4 +1,5 @@
 import React,{useContext,useEffect} from 'react';
+import {Dimensions} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -15,6 +16,8 @@ import * as SplashScreen from "expo-splash-screen";
 const Stack = createStackNavigator();
 const LStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+const {width, height} = Dimensions.get("window");
 
 function  LoginStack() {
   return(
@@ -49,7 +52,8 @@ function drawer(){
       initialRouteName="Home" 
       drawerPosition={"left"} 
       drawerContent= {props => <DrawerContent {...props}/>}
-      drawerType="back"
+      drawerType={width >= 768 ? 'permanent' : 'back'}
+      drawerStyle={width >= 768 ? null : { width: '78%' }}
     >
         <Drawer.Screen name="Home" component={MyTabs} 
         options={{
