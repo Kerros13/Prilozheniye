@@ -165,7 +165,7 @@ const HomeScreen = ({navigation}) => {
                         renderItem={({item}) => {
                             return(
                                 <TouchableOpacity onPress={() => navigation.navigate("genre", {data: item})}>
-                                    <Box tittle={item.name} image={{uri:item.picture}}/>
+                                    <Box tittle={item.name} image={{uri:item.picture_big}}/>
                                 </TouchableOpacity>
                             )
                         }

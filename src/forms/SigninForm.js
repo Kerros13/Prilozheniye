@@ -8,6 +8,7 @@ import { CommonActions } from '@react-navigation/native';
 import { Context as AuthContext } from "../context/AuthContext";
 import { Alert } from "../components/Alert";
 import * as Google from 'expo-google-app-auth';
+import Images from 'react-native-scalable-image';
 import { ThemeContext } from "../theme";
 
 const {width, height} = Dimensions.get("window");
@@ -66,8 +67,7 @@ const SigninForm = ({ navigation }) => {
     } catch (e) {
       console.log(e);
     }
-  
-}
+  }
 
   return (
     
@@ -111,7 +111,19 @@ const SigninForm = ({ navigation }) => {
         />
       </View>
       <Button title="Iniciar Sesión" onPress={handleSignin} titleStyle={[styles.titleBtn,{color:ContextStyles[`signup${theme}`].color}]} buttonStyle={[styles.signInBtn,ContextStyles[`signup${theme}`]]}/>
-      <Button title="Google Sign-In" onPress={googleLogIn} titleStyle={styles.titleBtn} buttonStyle={[styles.signInBtn,ContextStyles[`signin${theme}`]]}/>
+      <Button 
+              title="      Google Sign-In" 
+              onPress={googleLogIn} 
+              titleStyle={styles.titleBtn} 
+              buttonStyle={[styles.signInBtn,ContextStyles[`signin${theme}`]]}
+              icon={
+                <Images
+                  source={require("../../assets/google2.png")}
+                  height={height*0.05}
+                />
+            }
+            iconLeft
+      />
     </View>
   );
 };

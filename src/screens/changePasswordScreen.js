@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { View,StyleSheet, TextInput,Dimensions,TouchableOpacity } from "react-native";
 import { Text,Button } from "react-native-elements";
+import { Ionicons } from '@expo/vector-icons';
 import { firebase } from "../firebase";
 import Alert from "../components/Alert";
 import { ThemeContext } from "../theme";
@@ -33,7 +34,7 @@ const changePasswordScreen = ({navigation}) =>{
     return(
         
         <View style={[styles.container, ContextStyles[`main${theme}`]]}>
-            
+            <Ionicons name="arrow-back" size={width*0.09} color={theme == "dark" ? "white":"#2A2D2E"} onPress={() => {navigation.pop()}} style={{position:"absolute", left:'3%', top:'5%'}}/>
             {type ? <Alert type={type} title={title}/>:null}
             <Text style={ [theme == "dark" ? {color:"white"}:{color:"#2A2D2E"},{margin:10, fontSize:width*0.06}]}>Para cambiar tu contraseña:</Text>
             <TextInput

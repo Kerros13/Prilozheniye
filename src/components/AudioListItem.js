@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View,StyleSheet,Text,Dimensions,TouchableWithoutFeedback, } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
+import { ThemeContext } from "../theme";
 
 const getThumbnailText = filename => filename[0];
 
@@ -27,22 +28,18 @@ const convertTime = minutes => {
   }
 };
 
-const renderPlayPauseIcon = isPlaying => {
+const renderPlayPauseIcon = (isPlaying, theme) => {
   if (isPlaying)
     return (
-      <Entypo name='controller-paus' size={24} color={'#fff'} />
+      <Entypo name='controller-paus' size={width*0.085} color={theme == "dark" ? "#303d49":"#fff"} />
     );
-  return <Entypo name='controller-play' size={24} color={'#fff'} />;
+  return <Entypo name='controller-play' size={width*0.085} color={theme == "dark" ? "#303d49":"#fff"} />;
 };
 
-const AudioListItem = ({
-  title,
-  duration,
-  onOptionPress,
-  onAudioPress,
-  isPlaying,
-  activeListItem,
-}) => {
+const AudioListItem = ({ title, duration, onAudioPress, isPlaying, activeListItem, }) => {
+
+  const {theme} = useContext(ThemeContext);
+
   return (
     <>
       <View style={styles.container}>
@@ -53,27 +50,27 @@ const AudioListItem = ({
                 styles.thumbnail,
                 {
                   backgroundColor: activeListItem
-                    ? '#5252ad'
-                    : '#b6b8b9',
+                    ? (theme == "dark" ? '#BBFE1B':'#7f69a5')
+                    : '#b6b8b9'
                 },
               ]}
             >
               <Text style={styles.thumbnailText}>
                 {activeListItem
-                  ? renderPlayPauseIcon(isPlaying)
+                  ? renderPlayPauseIcon(isPlaying,theme)
                   : getThumbnailText(title)}
               </Text>
             </View>
             <View style={styles.titleContainer}>
-              <Text numberOfLines={1} style={styles.title}>
+              <Text numberOfLines={1} style={[theme == "dark" ? {color:"white"}:{color:"#002c3e"},styles.title]}>
                 {title}
               </Text>
-              <Text style={styles.timeText}>{convertTime(duration)}</Text>
+              <Text style={[theme == "dark" ? {color:"white"}:{color:"#002c3e"},styles.timeText]}>{convertTime(duration)}</Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
       </View>
-      <View style={styles.separator} />
+      <View style={[theme == "dark" ? {backgroundColor:"#E1E1E1"}:{backgroundColor:"#1E1E1E"},styles.separator]} />
     </>
   );
 };
@@ -90,15 +87,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   thumbnail: {
-    height: 50,
-    flexBasis: 50,
-    backgroundColor: '#b6b8b9',
+    height: width*0.13,
+    flexBasis: width*0.13,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 25,
+    borderRadius: 50,
   },
   thumbnailText: {
-    fontSize: 22,
+    fontSize: width*0.06,
     fontWeight: 'bold',
     color: '#303d49',
   },
@@ -107,20 +103,17 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   title: {
-    fontSize: 16,
-    color: '#303d49',
+    fontSize: width*0.05,
   },
   separator: {
     width: width*0.9,
-    backgroundColor: '#333',
     opacity: 0.3,
     height: 0.5,
     alignSelf: 'center',
     marginTop: 10,
   },
   timeText: {
-    fontSize: 14,
-    color: '#b6b8b9',
+    fontSize: width*0.04,
   },
 });
 

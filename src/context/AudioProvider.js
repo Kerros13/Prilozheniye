@@ -59,7 +59,6 @@ export class AudioProvider extends Component {
             }
           }
         } 
-        console.log(song.length);
 
         this.totalAudioCount = song.length;
     
@@ -140,6 +139,7 @@ export class AudioProvider extends Component {
           currentAudio: audio,
           isPlaying: true,
           currentAudioIndex: nextAudioIndex,
+          image_uri:null
         });
         await storeAudioForNextOpening(audio, nextAudioIndex);
       }

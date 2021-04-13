@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
+import { ThemeContext } from "../theme";
 
 const Screen = ({ children }) => {
-  return <View style={styles.container}>{children}</View>;
+
+  const {theme, ContextStyles} = useContext(ThemeContext);
+
+  return <View style={[styles.container, ContextStyles[`music${theme}`]]}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingTop: StatusBar.currentHeight,
   },
 });

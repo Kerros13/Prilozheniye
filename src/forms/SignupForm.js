@@ -5,11 +5,15 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { validate } from "email-validator";
 import { Context as AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../theme";
+import Images from 'react-native-scalable-image';
+import getEnvVars from "../../environment";
+import * as Google from 'expo-google-app-auth';
 
 const {width, height} = Dimensions.get("window");
+const {googleSignInKey} = getEnvVars();
 
 const SignupForm = ({ navigation }) => {
-  const { state, signup } = useContext(AuthContext);
+  const { state, signup, onSignIn, clearErrorMessage } = useContext(AuthContext);
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -72,6 +76,24 @@ const SignupForm = ({ navigation }) => {
     }
   };
 
+  const googleLogIn = async() => {
+  
+    try {
+      const result = await Google.logInAsync({
+        androidClientId: googleSignInKey,
+        //iosClientId: YOUR_CLIENT_ID_HERE,
+        scopes: ['profile', 'email'],
+      });
+  
+      if (result.type === 'success') {
+        onSignIn(result);
+      } else {
+        console.log(result);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
 
   return (
@@ -152,6 +174,19 @@ const SignupForm = ({ navigation }) => {
         />
       </View>
       <Button title="Crear Cuenta" titleStyle={styles.titleBtn} onPress={() => handleVerify("signup")} buttonStyle={[styles.signUpBtn, ContextStyles[`signin${theme}`]]}/>
+      <Button 
+          title="      Google Sign-In" 
+          onPress={googleLogIn} 
+          titleStyle={[styles.titleBtn,{color:ContextStyles[`signup${theme}`].color}]} 
+          buttonStyle={[styles.signInBtn,ContextStyles[`signup${theme}`]]}
+          icon={
+            <Images
+              source={require("../../assets/google2.png")}
+              height={height*0.05}
+            />
+        }
+        iconLeft
+      />
     </View>
   );
 };
@@ -207,10 +242,18 @@ const styles = StyleSheet.create({
       borderRadius:50,
       marginHorizontal: 3,
       backgroundColor: "#0159BB",
+      marginBottom: '2%',
   },
   titleBtn: {
     fontFamily: "PlayfairDisplay",
     fontSize: width*0.055,
+  },
+  signInBtn: {
+    width: width*0.7,
+    height: height*0.07,
+    borderRadius:50,
+    marginHorizontal: 3,
+    marginBottom: '2%',
   },
 });
 

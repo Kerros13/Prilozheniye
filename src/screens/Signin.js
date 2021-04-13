@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View, Text, Image} from "react-native";
 import SigninForm from "../forms/SigninForm";
 import Logo from "../components/Logo.js";
+import { Ionicons } from '@expo/vector-icons';
 import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
 import Images from 'react-native-scalable-image';
@@ -15,6 +16,7 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={[styles.container, ContextStyles[`main${theme}`]]}>
+      <Ionicons name="arrow-back" size={width*0.09} color={theme == "dark" ? "white":"#2A2D2E"} onPress={() => {navigation.pop()}} style={{position:"absolute", left:'3%', top:'5%'}}/>
       <Images style={styles.fondo} source={theme == "dark" ? require("../../assets/g44.png"): require("../../assets/g47.png")} height={height*0.6}/>
       <Logo title="PRILOZ"/>
       <SigninForm navigation={navigation}/>
