@@ -12,6 +12,7 @@ import { AudioContext } from '../context/AudioProvider';
 import { pause, play, resume, playNext } from '../misc/audioController';
 import Player from "../player/Player";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context } from "../context/AuthContext";
 
 const {apikeyM} = getEnvVars();
@@ -163,7 +164,9 @@ const HomeScreen = ({navigation}) => {
 
                         renderItem={({item}) => {
                             return(
-                                <Box tittle={item.name} image={{uri:item.picture_big}}/>
+                                <TouchableOpacity onPress={() => navigation.navigate("genre", {data: item})}>
+                                    <Box tittle={item.name} image={{uri:item.picture}}/>
+                                </TouchableOpacity>
                             )
                         }
                     }
@@ -179,15 +182,15 @@ const HomeScreen = ({navigation}) => {
                         
                         renderItem={({item}) => {
                             return(
-                                
-                                <Box tittle={
-                                item.artist.artist_credits.artist_list.length > 0 ? 
-                                item.artist.artist_credits.artist_list[0].artist.artist_name : 
-                                item.artist.artist_name
-                                        } 
-                                image={{uri:item.image_url}}
-                                />
-                                
+                                <TouchableOpacity onPress={() => navigation.navigate("artist", {data: item})}>
+                                    <Box tittle={
+                                        item.artist.artist_credits.artist_list.length > 0 ? 
+                                        item.artist.artist_credits.artist_list[0].artist.artist_name : 
+                                        item.artist.artist_name
+                                                } 
+                                        image={{uri:item.image_url}}
+                                    />
+                                </TouchableOpacity>
                             )
                         }
                     }

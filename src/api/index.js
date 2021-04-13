@@ -14,10 +14,11 @@ export const fetchTracks = async () => {
 
 export const fetchGenres = async () => {
     const endpoint = `https://api.deezer.com/genre`;
+    //const endpoint_m = `http://api.musixmatch.com/ws/1.1/music.genres.get?apikey=${apikeyM}`;
   
     const response = await fetch(endpoint);
     const data = await response.json();
-  
+
     return data.data.slice(!0);
 };
 
@@ -42,6 +43,20 @@ export const _getImageArray = async (artist)=>{
     return newData;
 }
 
+export const _fetchAlbums = async (artistID) => {
+
+    const response = await fetch(`http://api.musixmatch.com/ws/1.1/artist.albums.get?artist_id=${artistID}&apikey=${apikeyM}`)
+    const data = await response.json();
+    
+    //console.log(data.message.body.album_list);
+
+    const promise = data.message.body.album_list.map((di)=>{
+        const ids = di.album 
+        
+        return ids;
+    });
+    return promise;
+}
 
 export const _fetchArtists = async () =>{
 
