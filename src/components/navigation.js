@@ -6,7 +6,6 @@ import HomeScreen from "../screens/homeScreen";
 import searchScreen from "../screens/searchScreen";
 import List from "../screens/Music/list";
 import Player from "../screens/Music/player";
-import PlayList from "../screens/Music/playList";
 import TabBar from './TabBar.js';
 import Header from './Header.js';
 import { ThemeContext } from "../theme";
@@ -48,7 +47,6 @@ function MyTopTabs() {
         >
             <TopTab.Screen name="List" component={List} />
             <TopTab.Screen name="Player" component={Player} />
-            <TopTab.Screen name="PlayList" component={PlayList} />
         </TopTab.Navigator>
         </AudioProvider>
     );
@@ -76,7 +74,7 @@ const  MyTabs = () => {
         <Tab.Navigator tabBar={props => <TabBar {...props} initialRouteName="Home" />}>
             <Tab.Screen name='Home' component={HomeStack} initialParams={{ icon2: 'home' }}/>
             <Tab.Screen name='Search' component={searchScreen} initialParams={{ icon3: 'search' }}/>
-            <Tab.Screen name='Prueba' component={MyTopTabsStack} initialParams={{ icon2: 'tools' }}/>
+            <Tab.Screen name='Player' component={MyTopTabsStack} initialParams={{ icon4: 'compact-disc' }}/>
         </Tab.Navigator>
     );
 };

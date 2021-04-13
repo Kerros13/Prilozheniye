@@ -48,11 +48,14 @@ export class AudioProvider extends Component {
           first: media.totalCount,
         });
 
-        let searched_string = '.flac'; 
+        let searched_string = '.flac';
+        let searched2 = '.m4a'; 
 
         for(let i=0; i < media.assets.length; i++){
           if(!media.assets[i].filename.match(searched_string)){
-            song.push(media.assets[i]);
+            if(!media.assets[i].filename.match(searched2)){
+              song.push(media.assets[i]);
+            }
           }
         } 
         console.log(song.length);

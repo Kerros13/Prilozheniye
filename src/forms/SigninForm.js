@@ -8,6 +8,7 @@ import { CommonActions } from '@react-navigation/native';
 import { Context as AuthContext } from "../context/AuthContext";
 import { Alert } from "../components/Alert";
 import * as Google from 'expo-google-app-auth';
+import { ThemeContext } from "../theme";
 
 const {width, height} = Dimensions.get("window");
 const {googleSignInKey} = getEnvVars();
@@ -20,6 +21,7 @@ const SigninForm = ({ navigation }) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [hidePass, setHidePass] = useState(true);
+  const {theme, ContextStyles} = useContext(ThemeContext);
 
   useEffect(() => {
     if (state.errorMessage) clearErrorMessage();
@@ -108,8 +110,8 @@ const SigninForm = ({ navigation }) => {
           onPress={() => setHidePass(!hidePass)}
         />
       </View>
-      <Button title="Iniciar Sesión" onPress={handleSignin} titleStyle={styles.titleBtn} buttonStyle={styles.signInBtn}/>
-      <Button title="Google Sign-In" onPress={googleLogIn} titleStyle={styles.titleBtn} buttonStyle={styles.signInBtn}/>
+      <Button title="Iniciar Sesión" onPress={handleSignin} titleStyle={[styles.titleBtn,{color:ContextStyles[`signup${theme}`].color}]} buttonStyle={[styles.signInBtn,ContextStyles[`signup${theme}`]]}/>
+      <Button title="Google Sign-In" onPress={googleLogIn} titleStyle={styles.titleBtn} buttonStyle={[styles.signInBtn,ContextStyles[`signin${theme}`]]}/>
     </View>
   );
 };
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
     height: height*0.07,
     borderRadius:50,
     marginHorizontal: 3,
-    backgroundColor: "#0159BB",
+    marginBottom: '2%',
   },
   titleBtn: {
     fontFamily: "PlayfairDisplay",

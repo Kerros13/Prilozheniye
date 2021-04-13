@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View,StyleSheet,Text, Image, Dimensions,StatusBar } from "react-native";
 import { Button,Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -6,6 +6,7 @@ import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
 import Logo from "../components/Logo.js"
 import Images from 'react-native-scalable-image';
+import { ThemeContext } from "../theme";
 
 
 const {width, height} = Dimensions.get("screen");
@@ -13,6 +14,7 @@ const {width, height} = Dimensions.get("screen");
 const mainScreen = ({navigation}) => {
 
     const [fontLoaded, setFontLoaded] = useState(false);
+    const {theme, ContextStyles} = useContext(ThemeContext);
 
     const loadFonts = () => {
         return Font.loadAsync({
@@ -30,23 +32,23 @@ const mainScreen = ({navigation}) => {
             />
         );
     }
-
+    
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, ContextStyles[`main${theme}`]]}>
             <StatusBar 
                 translucent
                 backgroundColor={"transparent"}
                 barStyle={'light-content'}
                 hidden={false}/>
-            <Images style={styles.fondo} source={require("../../assets/g44.png")} height={height*0.6}/>
+            <Images style={styles.fondo} source={theme == "dark" ? require("../../assets/g44.png"): require("../../assets/g47.png")} height={height*0.6}/>
             <View style={styles.titleContainer}><Logo title="PRILOZ"/></View>
             
             <View style={styles.signContainer}>
                 
                 <Button
-                    buttonStyle={styles.signInBtn}
+                    buttonStyle={[styles.signInBtn,ContextStyles[`signin${theme}`]]}
                     title=" Iniciar Sesión"
-                    titleStyle={{color:"#fff", fontFamily: "PlayfairDisplay", fontSize:width*0.055,}}
+                    titleStyle={[{color:"#fff", fontFamily: "PlayfairDisplay", fontSize:width*0.055,}]}
                     type="solid"
                     onPress={()=>{navigation.navigate("signin")}}
                     icon={
@@ -59,29 +61,19 @@ const mainScreen = ({navigation}) => {
                     iconLeft
                 />
                 <Button
-                    buttonStyle={styles.signUpBtn}
+                    buttonStyle={[styles.signUpBtn,ContextStyles[`signup${theme}`]]}
                     title=" Registrarse"
-                    titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:width*0.055,}}
+                    titleStyle={{color:ContextStyles[`signup${theme}`].color,fontFamily: "PlayfairDisplay", fontSize:width*0.055,}}
                     type="solid"
                     onPress={()=>{navigation.navigate("signup")}}
                     icon={
                         <Icon
                             name="user-plus"
                             size={25}
-                            color="#000"
+                            color={ContextStyles[`signup${theme}`].color}
                         />
                     }
                     iconLeft
-                />
-            </View>
-            
-            <View style={styles.tabsContainer}>
-                <Button
-                    buttonStyle={styles.tabsBtn}
-                    title="Tabs"
-                    titleStyle={{color:"#000", fontFamily: "PlayfairDisplay",}}
-                    type="solid"
-                    onPress={()=>{navigation.navigate("App")}}
                 />
             </View>
                 
@@ -97,7 +89,6 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:"center",
         alignItems:"center",
-        backgroundColor:"#313030",
         position:"relative",
     },
     iconContainer: {
@@ -126,21 +117,17 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
     signInBtn: {
-        width: width*0.55,
-        height: height*0.12,
-        borderRadius:50,
-        borderColor:"#000",
+        width: width*0.5,
+        height: height*0.11,
+        borderRadius:width*0.5,
         marginHorizontal: 3,
-        backgroundColor: "#0159BB",
         marginBottom:15,
     },
     signUpBtn: {
-        width: width*0.55,
-        height: height*0.12,
-        borderRadius:50,
-        borderColor:"#000",
+        width: width*0.5,
+        height: height*0.11,
+        borderRadius:width*0.5,
         marginHorizontal: 10,
-        backgroundColor: "#BBFE1B",
     },
     tabsContainer: {
         position:"absolute",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {StyleSheet,View,Text, Image, Dimensions} from "react-native";
 import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
@@ -36,7 +36,7 @@ const Logo = ({title}) => {
 
     return (
         <View style={styles.titleContainer}>
-            <Image style={styles.image} source={require("../../assets/qwerty.png")}/>
+            <Image style={styles.image} source={theme == "dark" ? require("../../assets/qwerty.png"): require("../../assets/qwertylight.png")}/>
             <Text style={[styles.textTitulo,ContextStyles[`logo${theme}`]]}>{title}</Text>
         </View>
     );

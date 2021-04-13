@@ -59,8 +59,8 @@ function drawer(){
         options={{
           title:'Home', swipeEnabled:false
         }}/>
-        <Drawer.Screen name="Login" component={loginScreen} options={{
-          title:'Login'
+        <Drawer.Screen name="Prueba" component={loginScreen} options={{
+          title:'Prueba'
         }}/>
       </Drawer.Navigator>
   );

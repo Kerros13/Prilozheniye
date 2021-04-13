@@ -42,14 +42,48 @@ export const ThemeProvider = ({children}) =>{
     }
 
     const ContextStyles = StyleSheet.create({
+        maindark:{
+            backgroundColor:'#313030',
+        },
+        mainlight:{
+            backgroundColor:"#E1E1E1"
+        },
+        signindark:{
+            backgroundColor: "#0159BB",
+        },
+        signinlight:{
+            backgroundColor: "#7f69a5",
+        },
+        signupdark:{
+            backgroundColor: "#BBFE1B",
+            color:"#000"
+        },
+        signuplight:{
+            backgroundColor: "#F7444E",
+            color:"#fff"
+        },
+        changedark:{
+            backgroundColor: "#0159BB",
+            color:"#000"
+        },
+        changelight:{
+            backgroundColor: "#F7444E",
+            color:"#fff"
+        },
+        hiperdark:{
+            color:"#BBFE1B",
+        },
+        hiperlight:{
+            color:"#5caab0",
+        },
         containerdark:{
             backgroundColor:'#1E1E1E',
         },
         containerlight:{
-            backgroundColor:"#E1E1E1"
+            backgroundColor:"#E1E1E1",
         },
         textlight:{
-            color:"#002c3e"
+            color:"#002c3e",
         },
         textdark:{
             color:"#fff"
@@ -71,7 +105,31 @@ export const ThemeProvider = ({children}) =>{
         },
         iconheaderdark:{
             color:"#0159BB"
-        }
+        },
+        drawerContentlight:{
+            color:"#002c3e"
+        },
+        drawerContentdark:{
+            color:"#fff"
+        },
+        drawerIconlight:{
+            color:"#F7444E"
+        },
+        drawerIcondark:{
+            color:"#fff"
+        },
+        drawerSBlight:{
+            borderTopColor:'#1E1E1E',
+        },
+        drawerSBdark:{
+            borderTopColor:"#E1E1E1"
+        },
+        bottomtabdark:{
+            backgroundColor:"#322E2E"
+        },
+        bottomtablight:{
+            backgroundColor:'#b8b8b8',
+        },
     });
 
     return(

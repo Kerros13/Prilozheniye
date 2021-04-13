@@ -4,6 +4,7 @@ import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { validate } from "email-validator";
 import { Context as AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../theme";
 
 const {width, height} = Dimensions.get("window");
 
@@ -20,6 +21,7 @@ const SignupForm = ({ navigation }) => {
   const [hidePass1, setHidePass1] = useState(true);
   const [hidePass2, setHidePass2] = useState(true);
   const [error, setError] = useState("");
+  const {theme, ContextStyles} = useContext(ThemeContext);
   
   useEffect(() => {
     if (state.errorMessage) clearErrorMessage();
@@ -83,7 +85,7 @@ const SignupForm = ({ navigation }) => {
           handleVerify("fullname");
         }}
         errorMessage={
-          fullnameError ? "Por favor ingresa tu nombre completo" : ""
+          fullnameError ? "Por favor ingresa tu nombre" : ""
         }
       />
       <TextInput
@@ -149,7 +151,7 @@ const SignupForm = ({ navigation }) => {
           onPress={() => setHidePass2(!hidePass2)}
         />
       </View>
-      <Button title="Crear Cuenta" titleStyle={styles.titleBtn} onPress={() => handleVerify("signup")} buttonStyle={styles.signUpBtn}/>
+      <Button title="Crear Cuenta" titleStyle={styles.titleBtn} onPress={() => handleVerify("signup")} buttonStyle={[styles.signUpBtn, ContextStyles[`signin${theme}`]]}/>
     </View>
   );
 };

@@ -3,7 +3,7 @@ import { View, StyleSheet,Text,Dimensions,ActivityIndicator } from 'react-native
 import { Avatar,Title,Caption,Paragraph,Drawer,TouchableRipple,Switch } from 'react-native-paper';
 import { CommonActions } from '@react-navigation/native';
 import { DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo,MaterialCommunityIcons } from '@expo/vector-icons';
 import { firebase } from "../firebase";
 const {width, height} = Dimensions.get("window");
 import { Context as AuthContext, Context } from "../context/AuthContext";
@@ -49,19 +49,19 @@ export function DrawerContent(props) {
                                 size={width*0.15}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>{state.user.name}</Title>
-                                <Caption style={styles.caption}>@tag</Caption>
+                                <Title style={[styles.title,ContextStyles[`drawerContent${theme}`]]}>{state.user.name}</Title>
+                                <Caption style={[styles.caption, ContextStyles[`drawerContent${theme}`]]}>@tag</Caption>
                             </View>
                         </View>
 
                         <View style={styles.row}>
                             <View style={styles.section}>
-                                <Paragraph style={[styles.paragraph, styles.caption]}>##</Paragraph>
-                                <Caption style={styles.caption}>Datos</Caption>
+                                <Paragraph style={[styles.paragraph, styles.caption, ContextStyles[`drawerContent${theme}`]]}>##</Paragraph>
+                                <Caption style={[styles.caption, ContextStyles[`drawerContent${theme}`]]}>Datos</Caption>
                             </View>
                             <View style={styles.section}>
-                                <Paragraph style={[styles.paragraph, styles.caption]}>##</Paragraph>
-                                <Caption style={styles.caption}>Datos</Caption>
+                                <Paragraph style={[styles.paragraph, styles.caption, ContextStyles[`drawerContent${theme}`]]}>##</Paragraph>
+                                <Caption style={[styles.caption, ContextStyles[`drawerContent${theme}`]]}>Datos</Caption>
                             </View>
                         </View>
                     </View>
@@ -71,36 +71,36 @@ export function DrawerContent(props) {
                             icon={({color, size}) => (
                                 <Entypo 
                                 name="home" 
-                                color="#fff"
-                                size={size}
+                                color = {ContextStyles[`drawerIcon${theme}`].color}
+                                size={width*0.07}
                                 />
                             )}
                             label="Home"
                             style={{fontsize:width*0.04}}
-                            labelStyle={{color:"#fff",fontSize:width*0.04}}
+                            labelStyle={[{fontSize:width*0.04},ContextStyles[`drawerContent${theme}`]]}
                             onPress={() => {props.navigation.navigate('Home')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Entypo 
-                                name="home" 
-                                color="#fff"
-                                size={size}
+                                name="tools" 
+                                color={ContextStyles[`drawerIcon${theme}`].color}
+                                size={width*0.07}
                                 />
                             )}
-                            label="Login"
+                            label="Prueba"
                             style={{fontsize:width*0.04}}
-                            labelStyle={{color:"#fff",fontSize:width*0.04}}
-                            onPress={() => {props.navigation.navigate('Login')}}
+                            labelStyle={[{fontSize:width*0.04},ContextStyles[`drawerContent${theme}`]]}
+                            onPress={() => {props.navigation.navigate('Prueba')}}
                         />
                     </Drawer.Section>
 
                     <Drawer.Section>
                         
                             <View style={styles.preference}>
-                                <Text style={{color:"#fff",fontSize:width*0.04}}>Light Theme</Text>
+                                <Text style={[{fontSize:width*0.04},ContextStyles[`drawerContent${theme}`]]}>Light Theme</Text>
                                 <View>
-                                <Switch value={isSwitchOn} thumbColor={isSwitchOn ? "#78bcc4" : "#fff" } trackColor={{true: '#78bcc4', false: 'grey'}} onValueChange={onToggleSwitch} />
+                                <Switch style={{ transform: [{ scaleX: width*0.0028 }, { scaleY: width*0.0028 }] }} value={isSwitchOn} thumbColor={isSwitchOn ? "#78bcc4" : "#fff" } trackColor={{true: '#78bcc4', false: 'grey'}} onValueChange={onToggleSwitch} />
                                 </View>
                             </View>
                         
@@ -108,17 +108,17 @@ export function DrawerContent(props) {
                     
                 </View>
             </DrawerContentScrollView>
-            <Drawer.Section style={styles.bottomDrawerSection}>
+            <Drawer.Section style={[styles.bottomDrawerSection,ContextStyles[`drawerSB${theme}`]]}>
                 <DrawerItem 
                     icon={({color, size}) => (
-                        <Entypo 
-                        name="home" 
-                        color="#fff"
-                        size={size}
+                        <MaterialCommunityIcons 
+                            name="logout" 
+                            size={width*0.07} 
+                            color={ContextStyles[`drawerIcon${theme}`].color} 
                         />
                     )}
                     label="Cerrar Sesión"
-                    labelStyle={{color:"#fff",fontSize:width*0.04}}
+                    labelStyle={[{fontSize:width*0.04},ContextStyles[`drawerContent${theme}`]]}
                     onPress={() => (signout())}
                 />
             </Drawer.Section>
@@ -137,12 +137,10 @@ const styles = StyleSheet.create({
         fontSize: width*0.05,
         marginTop: 3,
         fontWeight: 'bold',
-        color:"#fff",
     },
     caption: {
         fontSize: width*0.04,
         lineHeight: width*0.04,
-        color:"#fff",
     },
     row: {
         marginTop: 20,
@@ -158,15 +156,13 @@ const styles = StyleSheet.create({
     paragraph: {
         fontWeight: 'bold',
         marginRight: 3,
-        color:"#fff",
     },
     drawerSection: {
         marginTop: 15,
     },
     bottomDrawerSection: {
         marginBottom: 15,
-        borderTopColor: '#666',
-        borderTopWidth: 1
+        borderTopWidth: 0.5
     },
     preference: {
         flexDirection: 'row',

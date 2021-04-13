@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
-import {StyleSheet,View,ScrollView,Text, Image, TouchableOpacity, TextInput, Dimensions} from "react-native";
-import * as Font from "expo-font";
-import AppLoading from 'expo-app-loading';
-import { UserInterfaceIdiom } from "expo-constants";
-import Icon from "react-native-vector-icons/FontAwesome";
+import React, {  useState } from "react";
+import {StyleSheet,View,Text, TouchableOpacity, TextInput, Dimensions} from "react-native";
+
 import { Button } from "react-native-elements";
 import Logo from "../components/Logo.js"
 
@@ -15,60 +12,22 @@ const loginScreen = ({ navigation }) => {
     const [Contraseña, setContraseña] = useState({
         pass: "",
     });
-    const [fontLoaded, setFontLoaded] = useState(false)
 
-    const myOnChangeUser = (e) =>{
-        const {value} = e.currentTarget;
-        setUsuario(value);
-    }
-
-    const myOnChangePassword = (e) =>{
-        const {value} = e.currentTarget;
-        setContraseña({...Contraseña, pass:value});
-    }
-
-    const loadFonts = () => {
-        return Font.loadAsync({
-            "mistral": require("../../assets/Font/mistral.ttf"),
-            "PlayfairDisplay": require("../../assets/Font/PlayfairDisplay-Italic.otf"),
-        });
-    }
 
     //"Base de datos" provisional
     const userList = "user";
     const passList = "pass";
 
-    const onPress = () => {
-       if (Usuario == userList && Contraseña.pass == passList) {
-            navigation.navigate("Home");
-       }
-       else {
-           alert("Credenciales inválidas.");
-           alert(Usuario);
-       }
-    }
-
-    if(!fontLoaded){    
-        return (
-            <AppLoading
-                startAsync={loadFonts}
-                onFinish={() => setFontLoaded(true)}
-                onError={(err) => console.log(err)}
-            />
-        );
-    }
-
     return (
         <View style={styles.container}>
             <Logo title="PRILOZ" />
-            <Image style={styles.fondo} source={require("../../assets/g44.png")}/>
+            
             <View style={styles.textContainer}>
                 <TextInput
                     placeholder="User"
                     name="userPH"
                     value={Usuario}
                     style={styles.input}
-                    onChange={myOnChangeUser}
                 />
                 <TextInput
                     placeholder="Password"
@@ -77,25 +36,23 @@ const loginScreen = ({ navigation }) => {
                     style={styles.input}
                     secureTextEntry={true}
                     autoCapitalize= "none"
-                    onChange={myOnChangePassword}
                 />
             </View>
             <Button buttonStyle={styles.signInBtn}
                     color="gray"
                     title="Sign-In"
-                    onPress={onPress}
                     titleStyle={{color:"#000", fontFamily: "PlayfairDisplay", fontSize:27,}}
                     type="solid"
             />
             <View style={{display:"flex", flexDirection:"column", marginTop:20, alignItems:"center", justifyContent:"center"}}>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+                    <TouchableOpacity>
                         <Text style={{color:"#BBFE1B", marginBottom:height*0.02}}>Forgot your password?</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{display:"flex",flexDirection:"row"}}>
                     <Text style={{color:"white"}}>Don't have an account?</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+                    <TouchableOpacity>
                         <Text style={{color:"#BBFE1B"}}>  Sign-Up</Text>
                     </TouchableOpacity>
                 </View>
