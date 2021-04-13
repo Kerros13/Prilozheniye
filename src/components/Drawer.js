@@ -1,10 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { View, StyleSheet,Text,Dimensions,ActivityIndicator } from 'react-native';
 import { Avatar,Title,Caption,Paragraph,Drawer,TouchableRipple,Switch } from 'react-native-paper';
-import { CommonActions } from '@react-navigation/native';
 import { DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import { Entypo,MaterialCommunityIcons } from '@expo/vector-icons';
-import { firebase } from "../firebase";
 const {width, height} = Dimensions.get("window");
 import { Context as AuthContext, Context } from "../context/AuthContext";
 import { ThemeContext } from "../theme";
@@ -45,7 +43,7 @@ export function DrawerContent(props) {
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image 
-                                source={require('../../assets/img_avatar.png')}
+                                source={state.user.pictureUrl ? {uri:state.user.pictureUrl} : require('../../assets/img_avatar.png')}
                                 size={width*0.15}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>

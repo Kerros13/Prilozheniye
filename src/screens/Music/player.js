@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import { View, StyleSheet, Text, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Dimensions,SafeAreaView,Image } from 'react-native';
 import Screen from '../../components/Screen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import PlayerButton from '../../components/PlayerButton';
+import { SongContext } from "../../context/SongContext";
 import { AudioContext } from '../../context/AudioProvider';
 import { pause, play, resume, playNext } from '../../misc/audioController';
 import { storeAudioForNextOpening } from '../../misc/helper';
@@ -13,6 +14,13 @@ const { width } = Dimensions.get('window');
 const Player = () => {
   const context = useContext(AudioContext);
   const { playbackPosition, playbackDuration } = context;
+  const [{ currentVideoSnippet, audio }, dispatch] = useContext(
+    SongContext
+  );
+
+  const setAudio = (data) => {
+    dispatch({ type: 'setAudio', snippet: data });
+  };
 
   const calculateSeebBar = () => {
     if (playbackPosition !== null && playbackDuration !== null) {
@@ -21,9 +29,22 @@ const Player = () => {
     return 0;
   };
 
+  const SetAudio = () =>{
+    setAudio()
+    console.log(context.currentAudio);
+  }
+
   useEffect(() => {
     context.loadPreviousAudio();
   }, []);
+
+  // useEffect(() => {
+  //   console.log(context.image_uri);
+  // }, [context]);
+
+  useEffect(() => {
+    SetAudio()
+  },[context.soundObj]);
 
   const handlePlayPause = async () => {
     // play
@@ -94,6 +115,7 @@ const Player = () => {
       currentAudioIndex: index,
       playbackPosition: null,
       playbackDuration: null,
+      image_uri:null
     });
     storeAudioForNextOpening(audio, index);
   };
@@ -146,16 +168,22 @@ const Player = () => {
           context.totalAudioCount
         }`}</Text>
         <View style={styles.midBannerContainer}>
+          {context.image_uri ? 
+          <SafeAreaView style={{ height: 320,alignItems:"center" }}>
+            <Image style={styles.image} source={{uri:context.image_uri}}/>
+          </SafeAreaView>  
+          : 
           <MaterialCommunityIcons
             name='music-circle'
             size={300}
             //color circulo player
             color={context.isPlaying ? '#5252ad' : '#636363'}
-          />
+          />}
+          
         </View>
         <View style={styles.audioPlayerContainer}>
           <Text numberOfLines={1} style={styles.audioTitle}>
-            {context.currentAudio.filename}
+            {context.currentAudio.artist ? context.currentAudio.title +" - " + context.currentAudio.artist.name : context.currentAudio.filename }
           </Text>
           <Slider
             style={{ width: width, height: 40 }}
@@ -209,6 +237,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
     padding: 15,
+  },
+  image:{
+    height:320,
+    width:320
   },
 });
 

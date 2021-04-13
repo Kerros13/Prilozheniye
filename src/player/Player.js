@@ -4,27 +4,26 @@ import {
   SafeAreaView,
   Text,
   Image,
-  FlatList,
+  TouchableOpacity,
   Dimensions,
   Animated,
   StyleSheet,
 } from "react-native";
 
 //import songs from "./data.json";
-import Controller from "./Controller";
 import { Audio } from 'expo-av';
 
 import { SongContext } from "../context/SongContext";
+import { AudioContext } from '../context/AudioProvider';
+import { ThemeContext } from "../theme";
 import { youtubeSearch,musicAPI} from "../api/backend";
 import { ActivityIndicator } from "react-native-paper";
+import { MaterialIcons } from "@expo/vector-icons";
+import { pause, play, resume, playNext } from '../misc/audioController';
 
 const { width, height } = Dimensions.get("window");
 
 export default function Player({item,bandera}) {
-  const scrollX = useRef(new Animated.Value(0)).current;
-
-  const slider = useRef(null);
-  const [songIndex, setSongIndex] = useState(0);
   const [sound, setSound] = useState(null);
   const [state,setState] = useState("");  
 
@@ -32,15 +31,15 @@ export default function Player({item,bandera}) {
     SongContext
   );
 
-  // for tranlating the album art
-  const position = useRef(Animated.divide(scrollX, width)).current;
+  const {theme, ContextStyles} = useContext(ThemeContext); 
+
+  const {isPlaying} = useContext(AudioContext);
+  const context = useContext(AudioContext);
 
   const setCurrentVideoSnippet = (data) => {
     dispatch({ type: 'setCurrentVideoSnippet', snippet: data });
   };
-  const setAudio = (data) => {
-    dispatch({ type: 'setAudio', snippet: data });
-  };
+ 
   // const fetchAndSetCurrentVideoSnippet = (id) => {
   //   youtubeSearch
   //     .get('videos', {
@@ -63,6 +62,13 @@ export default function Player({item,bandera}) {
   //     });
   // };
 
+  // const getAudio = async (data) => {
+  //   const res = await musicAPI.get('/song', {
+  //     params: { id: data },
+  //   });
+  //   playSound(res.data);
+  // }
+
   const SetCurrentVideoSnippet = (item) => {
     setCurrentVideoSnippet({
       id: item.id,
@@ -73,25 +79,30 @@ export default function Player({item,bandera}) {
     });
   };
 
+  const handleifPlaying = async() =>{
+    if (context.soundObj && context.soundObj.isPlaying) {
+      const status = await pause(context.playbackObj);
+      return context.updateState(context, {
+        soundObj: status,
+        isPlaying: false,
+      });
+    }
+  }
+
   const playSound = async(url) => {
-    console.log('Loading Sound');
-    audio.length ? await audio.unloadAsync() :null; 
-    const { sound } = await Audio.Sound.createAsync(
-      {uri: url}
-    );
-    
-    setSound(sound);
-
-    
-    console.log('Playing Sound');
-    await sound.playAsync();
-    setState("playing");
-    
-
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        {uri: url}
+      );
+      setSound(sound);
+      await sound.playAsync();
+      setState("playing");
+    } catch (error) {
+      
+    }
   }
 
   const playPause = async () =>{
-    if(audio.length!=0){
      if(state=="playing"){
       await sound.pauseAsync();
       setState("paused");
@@ -99,7 +110,6 @@ export default function Player({item,bandera}) {
       await sound.playAsync();
       setState("playing");
      }
-    }
   }
 
   // const getAudio = async (data) => {
@@ -110,20 +120,9 @@ export default function Player({item,bandera}) {
   // }
 
   useEffect(()=>{
-
-
-    scrollX.addListener(({ value }) => {
-      const val = Math.round(value / width);
-
-      setSongIndex(val);
-    });
     SetCurrentVideoSnippet(item);
-
+    handleifPlaying()
     //fetchAndSetCurrentVideoSnippet(id);
-    
-    return () => {
-      scrollX.removeAllListeners();
-    };
   },[])
 
   useEffect(()=>{
@@ -131,6 +130,17 @@ export default function Player({item,bandera}) {
     playSound(currentVideoSnippet.preview);
 
   },[currentVideoSnippet])
+
+  // useEffect(()=>{
+  //   if(context.soundObj.isPlaying){
+  //     const status = await pause(context.playbackObj);
+  //     return context.updateState(context, {
+  //       soundObj: status,
+  //       isPlaying: false,
+  //     });
+  //   }
+  // },[context])
+
 
   useEffect(() => {
     return sound
@@ -143,40 +153,6 @@ export default function Player({item,bandera}) {
     
   }, [sound]);
 
-  const goNext = () => {
-    slider.current.scrollToOffset({
-      offset: (songIndex + 1) * width,
-    });
-  };
-  const goPrv = () => {
-    slider.current.scrollToOffset({
-      offset: (songIndex - 1) * width,
-    });
-  };
-
-  const renderItem = ({ index, item }) => {
-    return (
-      <Animated.View
-        style={{
-          alignItems: "center",
-          width: width,
-          transform: [
-            {
-              translateX: Animated.multiply(
-                Animated.add(position, -index),
-                -100
-              ),
-            },
-          ],
-        }}
-      >
-        <Animated.Image
-          source={{uri:item.artwork}}
-          style={{ width: 320, height: 320, borderRadius: 5 }}
-        />
-      </Animated.View>
-    );
-  };
 
   if(!currentVideoSnippet){
     return(
@@ -187,17 +163,21 @@ export default function Player({item,bandera}) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,ContextStyles[`container${theme}`]]}>
       <SafeAreaView style={{ height: 320,alignItems:"center" }}>
         <Image style={styles.image} source={{uri:currentVideoSnippet.image}}/>
       </SafeAreaView>
       
       <View>
-        <Text style={styles.title}>{currentVideoSnippet.title}</Text>
-        <Text style={styles.artist}>{currentVideoSnippet.artist}</Text>
+        <Text style={[styles.title,ContextStyles[`text${theme}`]]}>{currentVideoSnippet.title}</Text>
+        <Text style={[styles.artist,ContextStyles[`text${theme}`]]}>{currentVideoSnippet.artist}</Text>
       </View>
       
-      <Controller onNext={goNext} pausePlay={playPause} onPrv={goPrv} />
+      <View style={[styles.containerController,ContextStyles[`container${theme}`]]}>
+        <TouchableOpacity>
+          <MaterialIcons name={state == "playing" ? "pause": "play-arrow"} onPress={playPause} size={45} color={theme == "dark" ? "#fff" : "#000"}/>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -216,10 +196,13 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     height: height,
-    maxHeight: 600,
   },
   image:{
     height:320,
     width:320
-  }
+  },
+  containerController: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
 });

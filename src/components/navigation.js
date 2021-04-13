@@ -10,7 +10,6 @@ import TabBar from './TabBar.js';
 import Header from './Header.js';
 import { ThemeContext } from "../theme";
 import { Modal } from 'react-native-paper';
-import AudioProvider from "../context/AudioProvider";
 
 
 const HStack = createStackNavigator();
@@ -36,7 +35,7 @@ function  HomeStack({navigation}) {
 
 function MyTopTabs() {
     return (
-        <AudioProvider>
+        
         <TopTab.Navigator
         initialRouteName="Player"
             tabBarOptions={{
@@ -48,7 +47,6 @@ function MyTopTabs() {
             <TopTab.Screen name="List" component={List} />
             <TopTab.Screen name="Player" component={Player} />
         </TopTab.Navigator>
-        </AudioProvider>
     );
 };
   

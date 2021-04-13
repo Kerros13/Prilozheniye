@@ -21,6 +21,7 @@ export class AudioProvider extends Component {
       currentAudioIndex: null,
       playbackPosition: null,
       playbackDuration: null,
+      image_uri:null
     };
     this.totalAudioCount = 0;
   }
@@ -157,7 +158,7 @@ export class AudioProvider extends Component {
     
     render() {
         const { audioFiles, dataProvider, permissionError, playbackObj, soundObj, currentAudio, isPlaying,
-          currentAudioIndex, playbackPosition, playbackDuration,} = this.state;
+          currentAudioIndex, playbackPosition, playbackDuration,image_uri} = this.state;
         if (permissionError)
           return (
             <View
@@ -176,7 +177,7 @@ export class AudioProvider extends Component {
           <AudioContext.Provider
             value={{
               audioFiles, dataProvider, playbackObj, soundObj, currentAudio, isPlaying, 
-              currentAudioIndex, totalAudioCount: this.totalAudioCount, playbackPosition, 
+              currentAudioIndex, totalAudioCount: this.totalAudioCount, playbackPosition,image_uri, 
               playbackDuration, updateState: this.updateState,
               loadPreviousAudio: this.loadPreviousAudio,onPlaybackStatusUpdate: this.onPlaybackStatusUpdate,
             }}

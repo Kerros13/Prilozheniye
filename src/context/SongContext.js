@@ -12,7 +12,7 @@ const initialState = {
   snackbarMsg: false,
   currentVideoSnippet: {},
   themeSelectValue: "Default",
-  audio:Audio
+  audio:{}
 };
 
 const reducer = (state, action) => {

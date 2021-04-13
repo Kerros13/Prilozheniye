@@ -6,8 +6,10 @@ import getEnvVars from "../../environment";
 import {fetchTracks, fetchGenres,_fetchArtists} from "../api/index";
 import Card from "../components/Card";
 import Box from "../components/Box";
-import BoxS from "../components/BoxSong";
+import { Audio } from 'expo-av';
 import { ThemeContext } from "../theme";
+import { AudioContext } from '../context/AudioProvider';
+import { pause, play, resume, playNext } from '../misc/audioController';
 import Player from "../player/Player";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Context } from "../context/AuthContext";
@@ -27,6 +29,7 @@ const HomeScreen = ({navigation}) => {
     const [error,setError] = useState(false);
 
     const {theme, ContextStyles} = useContext(ThemeContext); 
+    const context = useContext(AudioContext);
 
     const [open,setOpen] = useState(false);
 
@@ -38,6 +41,41 @@ const HomeScreen = ({navigation}) => {
         setItem(null);
         setOpen(false);
     }
+
+    const handleAudioPress = async(audio) => {
+        const {
+            soundObj,
+            playbackObj,
+            currentAudio,
+            updateState,
+            audioFiles,
+        } = context;
+        // playing audio for the first time.
+        if (soundObj === null) {
+            const playbackObj = new Audio.Sound();
+            const status = await play(playbackObj, audio.preview);
+            updateState(context, {
+              currentAudio: audio,
+              playbackObj: playbackObj,
+              soundObj: status,
+              isPlaying: true,
+              image_uri: audio.album.cover_big
+            });
+            playbackObj.setOnPlaybackStatusUpdate(context.onPlaybackStatusUpdate);
+        }
+    
+        // select another audio
+        if (soundObj.isLoaded && currentAudio.id !== audio.id) {
+            const status = await playNext(playbackObj, audio.preview);
+            updateState(context, {
+            currentAudio: audio,
+            soundObj: status,
+            isPlaying: true,
+            image_uri: audio.album.cover_big
+            });
+            
+        }
+    };
 
     // const getSong = async (name) => {
     //     const res = await youtubeSearch.get('/search', {
@@ -108,7 +146,7 @@ const HomeScreen = ({navigation}) => {
 
                         renderItem={({item}) => {
                             return(
-                                <Box tittle={item.title} accion={()=>{getSong(item)}} image={{uri:item.album.cover_big}}  />
+                                <Box tittle={item.title} accion={()=>{handleAudioPress(item)}} image={{uri:item.album.cover_big}}  />
                             )
                         }
                     }
@@ -158,8 +196,8 @@ const HomeScreen = ({navigation}) => {
                 <View style={{height:height*0.08}}></View>  
             </ScrollView>
             {item ? 
-                <Modal animationType="slide" visible={open} transparent={false}>
-                    <Icon name="chevron-down" size={25} color="black" style={{position:'absolute', zIndex:2,margin:5,padding:15}} onPress={()=>closeModal()} />
+                <Modal animationType="slide" visible={open} style={{flex:1}} transparent={false}>
+                    <Icon name="chevron-down" size={25} color={theme == "dark" ? "#fff" : "#000"} style={{position:'absolute', zIndex:2,margin:5,padding:15}} onPress={()=>closeModal()} />
                     <Player item={item}/>
                 </Modal>:null
             }
