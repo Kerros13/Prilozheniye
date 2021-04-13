@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import {StyleSheet,View,Text, Image, Dimensions} from "react-native";
 import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';

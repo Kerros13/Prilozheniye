@@ -17,9 +17,9 @@ export function DrawerContent(props) {
     const {theme,toggleTheme, ContextStyles} = useContext(ThemeContext);
     const [isSwitchOn, setIsSwitchOn] = useState(false);
 
-    // useEffect(() => {
-    //     theme == "dark" ? setIsSwitchOn(false) : setIsSwitchOn(true)
-    // }, [theme]);
+    useEffect(() => {
+        theme == "dark" ? setIsSwitchOn(false) : setIsSwitchOn(true)
+    }, []);
 
     useEffect(() => {
         if (state.user) setReady(true)

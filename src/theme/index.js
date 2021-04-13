@@ -1,14 +1,44 @@
-import React, {createContext,useState} from "react";
+import React, {createContext,useEffect,useState} from "react";
 import {StyleSheet} from "react-native";
+import { AsyncStorage } from 'react-native';
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({children}) =>{
 
-    const [theme,setTheme] = useState("dark");
+    const [theme,setTheme] = useState("");
 
-    const toggleTheme = ()=>{
-        theme == "dark" ? setTheme("light") : setTheme("dark");
+    const getCurrentTheme = async () => {
+       try {
+        const currentTheme = await AsyncStorage.getItem("currentTheme");
+
+        if(currentTheme == null){
+            setTheme("dark");
+            await AsyncStorage.setItem("currentTheme","dark");
+        }else{
+            setTheme(currentTheme);
+        }
+       } catch (error) {
+           console.log(error);
+       }
+
+    }
+
+    useEffect(()=>{
+
+        getCurrentTheme()
+        
+    },[])
+    
+
+    const toggleTheme = async()=>{
+        if(theme == "dark"){
+            setTheme("light");
+            await AsyncStorage.setItem("currentTheme","light");
+        }else{
+            setTheme("dark");
+            await AsyncStorage.setItem("currentTheme","dark");
+        }
     }
 
     const ContextStyles = StyleSheet.create({
