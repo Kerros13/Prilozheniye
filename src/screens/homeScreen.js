@@ -110,7 +110,7 @@ const HomeScreen = ({navigation}) => {
     const getArtists = async () => {
         const newArtists = await _fetchArtists();
         setArtists(newArtists);
-        //console.log(newArtists);
+        console.log(newArtists);
     }
     
     useEffect(()=>{

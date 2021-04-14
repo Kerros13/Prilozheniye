@@ -7,8 +7,6 @@ import changePasswordScreen from "../screens/changePasswordScreen";
 import MyTabs from "../components/navigation";
 import loginScreen from "../screens/loginScreen";
 import mainScreen from "../screens/mainScreen";
-import artistScreen from "../screens/artistScreen";
-import genreScreen from "../screens/genreScreen";
 import Login from "../screens/Signin";
 import Signup from "../screens/Signup";
 import {DrawerContent} from '../components/Drawer.js';
@@ -111,22 +109,6 @@ const Navigation = ({theme}) => {
                       headerShown: false
                       }}
                   />
-                  <Stack.Screen
-                  name="artist"
-                  component={artistScreen}
-                  options={{
-                  animationEnabled: false,
-                  headerShown: false
-                  }}
-                />
-                <Stack.Screen
-                  name="genre"
-                  component={genreScreen}
-                  options={{
-                  animationEnabled: false,
-                  headerShown: false
-                  }}
-                />
                 </Stack.Navigator>
               )}
 

@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import { ThemeContext } from "../theme";
 
-const Screen = ({ children }) => {
+const Screen = ({ children, style }) => {
 
   const {theme, ContextStyles} = useContext(ThemeContext);
 
-  return <View style={[styles.container, ContextStyles[`music${theme}`]]}>{children}</View>;
+  return <View style={[!style ? styles.container: style, ContextStyles[`music${theme}`]]}>{children}</View>;
 };
 
 const styles = StyleSheet.create({

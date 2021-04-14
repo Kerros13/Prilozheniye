@@ -1,4 +1,5 @@
 import getEnvVars from "../../environment";
+import {backend} from "../api/backend";
 // import {createClient} from "pexels"
 const {apikeyM} = getEnvVars();
 // const client = createClient('563492ad6f9170000100000100def160705549058757709fa28c4a8d')
@@ -78,6 +79,20 @@ export const _fetchArtists = async () =>{
 
     return Promise.all(promises);
 };
+
+export const getNewArtists = (artists)=>{
+    const promises = artists.map(async(artist)=>{
+
+        const array = await backend.get(`artist.search?q_artist=${artist.name}&page_size=1&apikey=${apikeyM}`)
+          
+        return {
+            ...array.data.message.body.artist_list[0],
+            image_url: artist.picture_big
+        }  
+    });
+
+    return Promise.all(promises)
+}
 
 
 

@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import Images from 'react-native-scalable-image';
 import PlayerButton from '../../components/PlayerButton';
-import { SongContext } from "../../context/SongContext";
 import { AudioContext } from '../../context/AudioProvider';
 import { pause, play, resume, playNext } from '../../misc/audioController';
 import { storeAudioForNextOpening } from '../../misc/helper';
@@ -17,13 +16,9 @@ const Player = () => {
   const context = useContext(AudioContext);
   const { playbackPosition, playbackDuration } = context;
   const {theme} = useContext(ThemeContext);
-  const [{ currentVideoSnippet, audio }, dispatch] = useContext(
-    SongContext
-  );
 
-  const setAudio = (data) => {
-    dispatch({ type: 'setAudio', snippet: data });
-  };
+
+
 
   const calculateSeebBar = () => {
     if (playbackPosition !== null && playbackDuration !== null) {
@@ -32,9 +27,6 @@ const Player = () => {
     return 0;
   };
 
-  const SetAudio = () =>{
-    setAudio()
-  }
 
   useEffect(() => {
     context.loadPreviousAudio();
@@ -44,9 +36,9 @@ const Player = () => {
   //   console.log(context.image_uri);
   // }, [context]);
 
-  useEffect(() => {
-    SetAudio()
-  },[context.soundObj]);
+  // useEffect(() => {
+  //   SetAudio()
+  // },[context.soundObj]);
 
   const handlePlayPause = async () => {
     // play

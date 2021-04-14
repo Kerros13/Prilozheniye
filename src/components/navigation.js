@@ -4,8 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import HomeScreen from "../screens/homeScreen";
 import searchScreen from "../screens/searchScreen";
+import songsbyAlbumScreen from "../screens/songsbyAlbumScreen";
 import List from "../screens/Music/list";
 import Player from "../screens/Music/player";
+import artistScreen from "../screens/artistScreen";
+import genreScreen from "../screens/genreScreen";
 import TabBar from './TabBar.js';
 import Header from './Header.js';
 import { ThemeContext } from "../theme";
@@ -29,6 +32,30 @@ function  HomeStack({navigation}) {
                 headerStyle: {backgroundColor: ContextStyles[`header${theme}`].backgroundColor}
             }}
             />
+             <HStack.Screen
+                  name="artist"
+                  component={artistScreen}
+                  options={{
+                  animationEnabled: false,
+                  headerShown: false,
+                  }}
+                />
+                <HStack.Screen
+                  name="genre"
+                  component={genreScreen}
+                  options={{
+                  animationEnabled: false,
+                  headerShown: false
+                  }}
+                />
+                <HStack.Screen
+                  name="songsbyalbum"
+                  component={songsbyAlbumScreen}
+                  options={{
+                  animationEnabled: false,
+                  headerShown: false
+                  }}
+                />
         </HStack.Navigator>
     );
 };

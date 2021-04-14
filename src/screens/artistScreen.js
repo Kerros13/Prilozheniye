@@ -55,7 +55,7 @@ const artistScreen = ({route, navigation}) => {
         })
 
         setNewAlbums(array);
-        console.log(newAlbums);
+        // console.log(newAlbums);
   
     }
 
@@ -72,7 +72,7 @@ const artistScreen = ({route, navigation}) => {
         }
     },[album])
 
-    if(!artists && !newAlbums){
+    if((!artists && !newAlbums) || !data){
         return(
             <View style={[{flex:1,alignItems:"center",justifyContent:"center"},ContextStyles[`container${theme}`]]}>
                 <ActivityIndicator size="large" color="blue" />
@@ -116,17 +116,18 @@ const artistScreen = ({route, navigation}) => {
                                 renderItem={({item}) => {
                                     return(
                                         
-                                        <TouchableOpacity>
+                                        
                                             
-                                            <BoxCard tittle={item.title}
+                                            <BoxCard tittle={item.title} accion={()=>{navigation.navigate("songsbyalbum",{data:item})}}
                                                 image={{uri:item.cover_big}}
                                             />
-                                        </TouchableOpacity> 
+                                       
                                                                      
                                     )
                                 }
                             }
                         />
+                     <View style={{height:'10%'}}></View>
                 </View>
         </View>
     );

@@ -1,17 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, StyleSheet, TouchableOpacity, View, Text, StatusBar, FlatList, ScrollView, ActivityIndicator, RefreshControlBase} from "react-native";
-import {fetchTracks, _fetchAlbums} from "../api/index";
+import {fetchTracks, getNewArtists, _fetchAlbums} from "../api/index";
 import Box from "../components/ArtistPhoto";
 import BoxCard from "../components/aCard";
 import BoxCard1 from "../components/genreCard";
 import { ThemeContext } from "../theme";
+import getEnvVars from "../../environment";
+const {apikeyM} = getEnvVars();
 
 const { width, height } = Dimensions.get("screen");
 
 const genreScreen = ({route, navigation}) => {
 
     const [artists,setArtists] = useState(null);
-    const [item,setItem] = useState(null);
+    const [newArtists,setNewArtists] = useState(null);
+    const [items,setItems] = useState(null);
 
     const {data} = route.params;
 
@@ -20,19 +23,38 @@ const genreScreen = ({route, navigation}) => {
     const [open,setOpen] = useState(false);
 
 
-    const openModal = () =>{
-        setOpen(true);
-    };
+    // const openModal = () =>{
+    //     setOpen(true);
+    // };
 
-    const closeModal = () =>{
-        setItem(null);
-        setOpen(false);
-    }
+    // const closeModal = () =>{
+    //     setItem(null);
+    //     setOpen(false);
+    // }
     
-    const getSong = async (item) => {
-        setItem(item);
-        openModal();
-    };
+    // const getSong = async (item) => {
+    //     setItem(item);
+    //     openModal();
+    // };
+
+    const cleanArray =()=>{
+        let array = [];
+        newArtists.forEach((element)=>{
+            if(typeof(element.artist) !== "undefined"){
+                array.push(element)
+            }
+        })
+
+        // console.log(array.length);
+        // console.log(newArtists.length);
+
+        setItems(array);
+    }
+
+    const getNArtists = async(array)=>{
+        const nArtists = await getNewArtists(array);
+        setNewArtists(nArtists);
+    }
 
     const getArtists = async (id) => {
         const endpoint = `https://api.deezer.com/genre/${id}/artists`;
@@ -50,14 +72,21 @@ const genreScreen = ({route, navigation}) => {
     },[])
 
     useEffect(()=>{
-
-        console.log(artists);
-
+        if(artists){
+            getNArtists(artists)
+        }        
     },[artists])
 
+    useEffect(()=>{
+        if(newArtists){
+            cleanArray()
+        }        
+    },[newArtists])
 
 
-    if(!artists){
+
+
+    if(!items){
         return(
             <View style={[{flex:1,alignItems:"center",justifyContent:"center"},ContextStyles[`container${theme}`]]}>
                 <ActivityIndicator size="large" color="blue" />
@@ -78,20 +107,21 @@ const genreScreen = ({route, navigation}) => {
             <View style={styles.songBox}>
                 <Text style={styles.albumsTitle}>Artistas</Text>
                 <FlatList
-                        data={artists}
+                        data={items}
                         horizontal={false}
                         numColumns={2}
-                        keyExtractor={(item)=>item.id.toString()}
+                        keyExtractor={(item)=>item.artist.artist_id.toString()}
                         showsHorizontalScrollIndicator={false}
 
                         renderItem={({item}) => {
                             return(
-                                <BoxCard tittle={item.name} numberOfLines={1} image={{uri:item.picture_big}}  />
+                                <BoxCard tittle={item.artist.artist_name} accion={()=>{navigation.navigate("artist", {data: item})}} numberOfLines={1} image={{uri:item.image_url}}  />
                             )
                         }
                     }
                     />
             </View>
+            <View style={{height:'10%'}}></View>
         </View>
     );
 };
