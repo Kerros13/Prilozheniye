@@ -11,27 +11,68 @@ const artistScreen = ({route, navigation}) => {
 
     const [artists,setArtists] = useState(null);
     const [album,setAlbum] = useState(null);
+    const [newAlbums,setNewAlbums] = useState(null);
 
     const {data} = route.params;
+
+    const artist_name = data.artist.artist_credits.artist_list.length > 0 ? 
+    data.artist.artist_credits.artist_list[0].artist.artist_name : 
+    data.artist.artist_name;
 
     const getArtists = async () => {
         const newArtists = await _fetchArtists();
         setArtists(newArtists);
     }
 
-    const getAlbum = async () => {
-        const newAlbum = await _fetchAlbums(data.artist.artist_id);
-        setAlbum(newAlbum);
+    const getAlbum = async (name) => {
+        const endpoint = `https://api.deezer.com/search?q=${name}`;
+  
+        const response = await fetch(endpoint);
+        const data2 = await response.json();
+    
+        setAlbum(data2.data);
+        
     };
+
+    const setArray = ()=>{
+        let array =[]
+        album.forEach((a)=>{
+            if(array.length==0){
+                array.push(a.album)
+            }
+            else{
+                let bandera=0;
+                array.forEach((b)=>{
+                    if(a.album.id==b.id){
+                        bandera=1;
+                    }
+                })
+                if(bandera==0){
+                    array.push(a.album)
+                }
+               
+            }
+        })
+
+        setNewAlbums(array);
+        console.log(newAlbums);
+  
+    }
 
     const {theme, ContextStyles} = useContext(ThemeContext);
 
     useEffect(()=>{
         getArtists();
-        getAlbum();
+        getAlbum(artist_name);
     },[])
 
-    if(!artists){
+    useEffect(()=>{
+        if(album){
+            setArray(); 
+        }
+    },[album])
+
+    if(!artists && !newAlbums){
         return(
             <View style={[{flex:1,alignItems:"center",justifyContent:"center"},ContextStyles[`container${theme}`]]}>
                 <ActivityIndicator size="large" color="blue" />
@@ -66,19 +107,22 @@ const artistScreen = ({route, navigation}) => {
                 <View style={styles.extra}>
                     <Text style={styles.albumsTitle}>Álbumes</Text>
                     <FlatList
-                                data={album}
+                                data={newAlbums}
                                 horizontal={false}
                                 numColumns={2}
-                                keyExtractor={(item)=>item.album_id.toString()}
+                                keyExtractor={(item)=>item.id.toString()}
                                 showsHorizontalScrollIndicator={false}
                                 
                                 renderItem={({item}) => {
                                     return(
+                                        
                                         <TouchableOpacity>
-                                            <BoxCard tittle={item.album_name} 
-                                                image={{uri:data.image_url}}
+                                            
+                                            <BoxCard tittle={item.title}
+                                                image={{uri:item.cover_big}}
                                             />
-                                        </TouchableOpacity>                                
+                                        </TouchableOpacity> 
+                                                                     
                                     )
                                 }
                             }

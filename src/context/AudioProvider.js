@@ -129,6 +129,7 @@ export class AudioProvider extends Component {
             currentAudioIndex: 0,
             playbackPosition: null,
             playbackDuration: null,
+            
           });
           return await storeAudioForNextOpening(this.state.audioFiles[0], 0);
         }
@@ -140,6 +141,7 @@ export class AudioProvider extends Component {
           currentAudio: audio,
           isPlaying: true,
           currentAudioIndex: nextAudioIndex,
+          image_uri:null
         });
         await storeAudioForNextOpening(audio, nextAudioIndex);
       }

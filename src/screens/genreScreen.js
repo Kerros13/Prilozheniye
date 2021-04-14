@@ -10,7 +10,7 @@ const { width, height } = Dimensions.get("screen");
 
 const genreScreen = ({route, navigation}) => {
 
-    const [tracks,setTracks] = useState(null);
+    const [artists,setArtists] = useState(null);
     const [item,setItem] = useState(null);
 
     const {data} = route.params;
@@ -34,18 +34,30 @@ const genreScreen = ({route, navigation}) => {
         openModal();
     };
 
-    const getTracks = async () => {
-        const newTracks = await fetchTracks();
-        setTracks(newTracks);
+    const getArtists = async (id) => {
+        const endpoint = `https://api.deezer.com/genre/${id}/artists`;
+    
+        const response = await fetch(endpoint);
+        const data = await response.json();
+
+        setArtists(data.data)
     };
     
     useEffect(()=>{
 
-        getTracks();
+        getArtists(data.id);
 
     },[])
 
-    if(!tracks){
+    useEffect(()=>{
+
+        console.log(artists);
+
+    },[artists])
+
+
+
+    if(!artists){
         return(
             <View style={[{flex:1,alignItems:"center",justifyContent:"center"},ContextStyles[`container${theme}`]]}>
                 <ActivityIndicator size="large" color="blue" />
@@ -64,9 +76,9 @@ const genreScreen = ({route, navigation}) => {
                 <BoxCard1 tittle={data.name} image={{uri:data.picture_big}}/>
             </View>
             <View style={styles.songBox}>
-                <Text style={styles.albumsTitle}>Canciones</Text>
+                <Text style={styles.albumsTitle}>Artistas</Text>
                 <FlatList
-                        data={tracks}
+                        data={artists}
                         horizontal={false}
                         numColumns={2}
                         keyExtractor={(item)=>item.id.toString()}
@@ -74,7 +86,7 @@ const genreScreen = ({route, navigation}) => {
 
                         renderItem={({item}) => {
                             return(
-                                <BoxCard tittle={item.title} accion={()=>{getSong(item)}} image={{uri:item.album.cover_big}}  />
+                                <BoxCard tittle={item.name} numberOfLines={1} image={{uri:item.picture_big}}  />
                             )
                         }
                     }

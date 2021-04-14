@@ -11,7 +11,7 @@ import Header from './Header.js';
 import { ThemeContext } from "../theme";
 import { Modal } from 'react-native-paper';
 
-
+//const S_Stack = createStackNavigator();
 const HStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -32,6 +32,23 @@ function  HomeStack({navigation}) {
         </HStack.Navigator>
     );
 };
+
+// function SearchStack({navigation}){
+//     const {theme, ContextStyles} = useContext(ThemeContext); 
+//     return(
+//         <S_Stack.Navigator>
+//             <S_Stack.Screen
+//             name='Home' 
+//             component={searchScreen}
+//             options={{
+//                 headerTitle: () => <Header title='Home' navigation={navigation} x={false}/>,
+//                 headerLeft: null,
+//                 headerStyle: {backgroundColor: ContextStyles[`header${theme}`].backgroundColor}
+//             }}
+//             />
+//         </S_Stack.Navigator>
+//     );
+// }
 
 function MyTopTabs() {
     return (

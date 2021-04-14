@@ -10,7 +10,7 @@ const BoxCard = ({tittle, image,accion}) => {
     <TouchableOpacity onPress={accion}>
       <View style={styles.caja}>
         <Image style={styles.img} source={image}/>
-        <Text style={styles.texto}>{tittle}</Text>
+        <Text style={styles.texto} numberOfLines={1}>{tittle}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -1,5 +1,5 @@
 import React, {createContext,useEffect,useState} from "react";
-import {StyleSheet} from "react-native";
+import {StyleSheet,StatusBar} from "react-native";
 import { AsyncStorage } from 'react-native';
 
 export const ThemeContext = createContext();
@@ -15,8 +15,10 @@ export const ThemeProvider = ({children}) =>{
         if(currentTheme == null){
             setTheme("dark");
             await AsyncStorage.setItem("currentTheme","dark");
+            
         }else{
             setTheme(currentTheme);
+            
         }
        } catch (error) {
            console.log(error);
@@ -35,6 +37,7 @@ export const ThemeProvider = ({children}) =>{
         if(theme == "dark"){
             setTheme("light");
             await AsyncStorage.setItem("currentTheme","light");
+            
         }else{
             setTheme("dark");
             await AsyncStorage.setItem("currentTheme","dark");

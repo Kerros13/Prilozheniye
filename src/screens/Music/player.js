@@ -31,7 +31,6 @@ const Player = () => {
 
   const SetAudio = () =>{
     setAudio()
-    console.log(context.currentAudio);
   }
 
   useEffect(() => {

@@ -98,13 +98,13 @@ const HomeScreen = ({navigation}) => {
     const getTracks = async () => {
         const newTracks = await fetchTracks();
         setTracks(newTracks);
-        console.log(tracks);
+        //console.log(tracks);
     };
 
     const getGenres = async () => {
         const newGenres = await fetchGenres();
         setGenres(newGenres);
-        // console.log(newGenres);
+        //console.log(newGenres);
     };
 
     const getArtists = async () => {
@@ -134,7 +134,7 @@ const HomeScreen = ({navigation}) => {
             <StatusBar 
                 translucent
                 backgroundColor={"transparent"}
-                barStyle={'light-content'}
+                barStyle={theme == "dark" ? "light-content" : "dark-content"}
                 hidden={false}/>
             <ScrollView  showsVerticalScrollIndicator={false}>
                 <View style={styles.sections}>
@@ -165,7 +165,7 @@ const HomeScreen = ({navigation}) => {
                         renderItem={({item}) => {
                             return(
                                 <TouchableOpacity onPress={() => navigation.navigate("genre", {data: item})}>
-                                    <Box tittle={item.name} image={{uri:item.picture}}/>
+                                    <Box tittle={item.name} image={{uri:item.picture_big}}/>
                                 </TouchableOpacity>
                             )
                         }
