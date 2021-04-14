@@ -54,7 +54,7 @@ const mainScreen = ({navigation}) => {
                     icon={
                         <Icon
                             name="sign-in"
-                            size={25}
+                            size={width*0.055}
                             color="#fff"
                         />
                     }
@@ -69,7 +69,7 @@ const mainScreen = ({navigation}) => {
                     icon={
                         <Icon
                             name="user-plus"
-                            size={25}
+                            size={width*0.055}
                             color={ContextStyles[`signup${theme}`].color}
                         />
                     }

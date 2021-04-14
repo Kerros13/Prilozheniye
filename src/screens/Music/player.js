@@ -3,17 +3,20 @@ import { View, StyleSheet, Text, Dimensions,SafeAreaView,Image } from 'react-nat
 import Screen from '../../components/Screen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
+import Images from 'react-native-scalable-image';
 import PlayerButton from '../../components/PlayerButton';
 import { SongContext } from "../../context/SongContext";
 import { AudioContext } from '../../context/AudioProvider';
 import { pause, play, resume, playNext } from '../../misc/audioController';
 import { storeAudioForNextOpening } from '../../misc/helper';
+import { ThemeContext } from "../../theme";
 
 const { width } = Dimensions.get('window');
 
 const Player = () => {
   const context = useContext(AudioContext);
   const { playbackPosition, playbackDuration } = context;
+  const {theme} = useContext(ThemeContext);
   const [{ currentVideoSnippet, audio }, dispatch] = useContext(
     SongContext
   );
@@ -154,6 +157,7 @@ const Player = () => {
       currentAudioIndex: index,
       playbackPosition: null,
       playbackDuration: null,
+      image_uri:null
     });
     storeAudioForNextOpening(audio, index);
   }
@@ -168,30 +172,30 @@ const Player = () => {
         }`}</Text>
         <View style={styles.midBannerContainer}>
           {context.image_uri ? 
-          <SafeAreaView style={{ height: 320,alignItems:"center" }}>
-            <Image style={styles.image} source={{uri:context.image_uri}}/>
+          <SafeAreaView style={{ alignItems:"center" }}>
+            <Images style={styles.image} source={{uri:context.image_uri}} height={width*0.8}/>
           </SafeAreaView>  
           : 
           <MaterialCommunityIcons
             name='music-circle'
             size={300}
             //color circulo player
-            color={context.isPlaying ? '#5252ad' : '#636363'}
+            color={context.isPlaying ? (theme == "dark" ? '#BBFE1B':'#7f69a5'): '#b6b8b9'}
           />}
           
         </View>
         <View style={styles.audioPlayerContainer}>
-          <Text numberOfLines={1} style={styles.audioTitle}>
+          <Text numberOfLines={1} style={[styles.audioTitle, theme == "dark" ? {color:"white"}:{color:"#002c3e"}]}>
             {context.currentAudio.artist ? context.currentAudio.title +" - " + context.currentAudio.artist.name : context.currentAudio.filename }
           </Text>
           <Slider
-            style={{ width: width, height: 40 }}
+            style={{ width: width, height: width*0.09 }}
             minimumValue={0}
             maximumValue={1}
             value={calculateSeebBar()}
-            //color circulo lista
-            minimumTrackTintColor={'#636363'}
-            maximumTrackTintColor={'#5252ad'}
+            thumbTintColor={theme == "dark" ? '#BBFE1B':'#7f69a5'}
+            minimumTrackTintColor={theme == "dark" ? '#BBFE1B':'#7f69a5'}
+            maximumTrackTintColor={theme == "dark" ? '#BBFE1B':'#7f69a5'}
           />
           <View style={styles.audioControllers}>
             <PlayerButton iconType='PREV' onPress={handlePrevius} />
@@ -222,10 +226,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   audioCount: {
-    textAlign: 'right',
-    padding: 15,
+    position:"absolute",
+    right: '5%',
+    top: '4%',
     color: '#b6b8b9',
-    fontSize: 14,
+    fontSize: width*0.04,
   },
   midBannerContainer: {
     flex: 1,
@@ -233,13 +238,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   audioTitle: {
-    fontSize: 16,
-    color: "#000",
+    fontSize: width*0.045,
     padding: 15,
-  },
-  image:{
-    height:320,
-    width:320
   },
 });
 

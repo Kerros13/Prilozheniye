@@ -133,6 +133,12 @@ export const ThemeProvider = ({children}) =>{
         bottomtablight:{
             backgroundColor:'#b8b8b8',
         },
+        musicdark:{
+            backgroundColor:"#313030"
+        },
+        musiclight:{
+            backgroundColor:'#E1E1E1',
+        },
     });
 
     return(

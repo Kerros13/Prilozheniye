@@ -59,7 +59,6 @@ export class AudioProvider extends Component {
             }
           }
         } 
-        console.log(song.length);
 
         this.totalAudioCount = song.length;
     

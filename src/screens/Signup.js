@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, TouchableOpacity, View, Image } from "react-nat
 import { Text } from "react-native-elements";
 import SignupForm from "../forms/SignupForm";
 import Logo from "../components/Logo.js";
+import { Ionicons } from '@expo/vector-icons';
 import Images from 'react-native-scalable-image';
 import { ThemeContext } from "../theme";
 
@@ -14,6 +15,7 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={[styles.container, ContextStyles[`main${theme}`]]}>
+      <Ionicons name="arrow-back" size={width*0.09} color={theme == "dark" ? "white":"#2A2D2E"} onPress={() => {navigation.pop()}} style={{position:"absolute", left:'3%', top:'5%'}}/>
       <Images style={styles.fondo} source={theme == "dark" ? require("../../assets/g44.png"): require("../../assets/g47.png")} height={height*0.6}/>
       <Logo title="PRILOZ"/>
       <SignupForm navigation={navigation}/>

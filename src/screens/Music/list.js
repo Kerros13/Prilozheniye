@@ -92,6 +92,7 @@ export class list extends Component {
         soundObj: status,
         isPlaying: true,
         currentAudioIndex: index,
+        image_uri:null,
         });
         return storeAudioForNextOpening(audio, index);
     }
