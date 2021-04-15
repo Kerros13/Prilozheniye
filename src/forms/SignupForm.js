@@ -6,6 +6,7 @@ import { validate } from "email-validator";
 import { Context as AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../theme";
 import Images from 'react-native-scalable-image';
+import Alert from "../components/Alert"
 import getEnvVars from "../../environment";
 import * as Google from 'expo-google-app-auth';
 
@@ -35,9 +36,9 @@ const SignupForm = ({ navigation }) => {
     if (state.errorMessage) setError(state.errorMessage);
   }, [state.errorMessage]);
 
-  useEffect(() => {
-    if (state.registered) navigation.navigate("App");
-  }, [state]);
+  // useEffect(() => {
+  //   if (state.registered) navigation.navigate("App");
+  // }, [state]);
 
   // Verifica que los datos ingresados sean correctos
   const handleVerify = (input) => {
@@ -98,6 +99,7 @@ const SignupForm = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {error ? <Alert type="error" title={error} /> : null}
       <TextInput
         placeholder="Nombre"
         value={fullname}

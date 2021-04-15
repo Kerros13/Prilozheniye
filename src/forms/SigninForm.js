@@ -6,7 +6,7 @@ import getEnvVars from "../../environment";
 import { validate } from "email-validator";
 import { CommonActions } from '@react-navigation/native';
 import { Context as AuthContext } from "../context/AuthContext";
-import { Alert } from "../components/Alert";
+import  Alert  from "../components/Alert";
 import * as Google from 'expo-google-app-auth';
 import Images from 'react-native-scalable-image';
 import { ThemeContext } from "../theme";
@@ -72,6 +72,7 @@ const SigninForm = ({ navigation }) => {
   return (
     
     <View style={styles.container}>
+      {error ? <Alert type="error" title={error} /> : null}
       <TextInput
         placeholder="E-mail"
         value={email}
