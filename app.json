@@ -4,11 +4,11 @@
     "slug": "Prilozheniye",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img.png",
+    "icon": "./assets/verde.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/bitmap.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1e1e1e"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

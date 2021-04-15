@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, StyleSheet, TouchableOpacity, View, Text, StatusBar, FlatList, ScrollView, ActivityIndicator, RefreshControlBase} from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 import {_fetchArtists, _fetchAlbums} from "../api/index";
-import Box from "../components/ArtistPhoto";
-import BoxCard from "../components/aCard";
+import Box from "../components/Box";
 import { ThemeContext } from "../theme";
 
 const { width, height } = Dimensions.get("screen");
@@ -81,53 +81,44 @@ const artistScreen = ({route, navigation}) => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,ContextStyles[`container${theme}`]]}>
             <StatusBar 
                 translucent
                 backgroundColor={"transparent"}
                 barStyle={'light-content'}
-                hidden={false}/>
+                hidden={false}
+            />
+            
             <View style={styles.info}>
-                <Box image={{uri:data.image_url}}/>
+            <Ionicons name="arrow-back" size={width*0.09} color={theme == "dark" ? "white":"#2A2D2E"} onPress={() => {navigation.pop()}} style={{position:"absolute", left:'3%', top:'20%'}}/>   
+                <Box image={{uri:data.image_url}} style={3}/>
                 <View style={styles.info2}>
-                    <View style={styles.nameCont}>
-                        <Text style={styles.name}>{data.artist.artist_name}</Text>
-                    </View>
-                    <View style={styles.info3}>
                         <View style={styles.info1}>
+                            <Text style={styles.name}>{data.artist.artist_name}</Text>
                             <Text style={styles.data}>Rating: {data.artist.artist_rating}</Text>
                             <Text style={styles.data}>País: {data.artist.artist_country}</Text>
-                        </View>
-                        <View style={styles.info11}>
                             <Text style={styles.data}>Nacimiento: {data.artist.begin_date}</Text>
                         </View>
-                    </View>
                 </View>
             </View>
                 <View style={styles.extra}>
-                    <Text style={styles.albumsTitle}>Álbumes</Text>
+                    <Text style={[theme == 'dark' ? {color:'#fff'}:{color:'#000'},styles.albumsTitle]}>Álbumes</Text>
                     <FlatList
-                                data={newAlbums}
-                                horizontal={false}
-                                numColumns={2}
-                                keyExtractor={(item)=>item.id.toString()}
-                                showsHorizontalScrollIndicator={false}
-                                
-                                renderItem={({item}) => {
-                                    return(
-                                        
-                                        
-                                            
-                                            <BoxCard tittle={item.title} accion={()=>{navigation.navigate("songsbyalbum",{data:item})}}
-                                                image={{uri:item.cover_big}}
-                                            />
-                                       
-                                                                     
-                                    )
-                                }
-                            }
-                        />
-                     <View style={{height:'10%'}}></View>
+                        data={newAlbums}
+                        columnWrapperStyle={{justifyContent:'space-between', }}
+                        horizontal={false}
+                        numColumns={2}
+                        keyExtractor={(item)=>item.id.toString()}
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={({item}) => {
+                            return(
+                                <Box tittle={item.title} accion={()=>{navigation.navigate("songsbyalbum",{data:item})}}
+                                    image={{uri:item.cover_big}} style={2}
+                                />                           
+                            )
+                        }}
+                    />
+                    <View style={{marginBottom:'18%'}}></View>
                 </View>
         </View>
     );
@@ -138,7 +129,6 @@ const styles = StyleSheet.create({
 
     container:{
         flex: 9,
-        backgroundColor:"#333",
     },
     aaa:{
         height: height*0.03,
@@ -160,36 +150,18 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         marginLeft: 10,
     },
-    info11:{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        marginLeft: 10,
-    },
     info2:{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    info3:{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: height*0.06,
-        width: width*0.62,
-    },
-    nameCont:{
-        height: height*0.045,
-        width: width*0.62,
-    },
     name:{
         fontSize: height*0.035,
         color: '#fff',
     },
     data:{
+        fontSize: height*0.02,
         color: '#fff',
     },
     extra:{
@@ -199,7 +171,6 @@ const styles = StyleSheet.create({
     },
     albumsTitle: {
         marginLeft: 10,
-        color: "#fff",
         fontSize: 33,
         fontWeight: 'bold',
     },

@@ -7,7 +7,6 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { ThemeContext } from "../theme";
 import { AudioContext } from '../context/AudioProvider';
 import Box from "../components/Box";
-import { Appbar } from 'react-native-paper';
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Audio } from 'expo-av';
 import { play, playNext } from '../misc/audioController';
@@ -97,10 +96,10 @@ const searchScreen = ({navigation}) => {
             
             <View style={[{flex:1,alignItems:"center"},ContextStyles[`container${theme}`]]}>
                 <View style={{flexDirection:"row",marginTop:StatusBar.currentHeight+height*0.02}}>
-                    <TextInput placeholderTextColor="#000" style={{color:"#000",marginLeft:10,borderRadius:5,width:"80%",backgroundColor:"white",height:45}} placeholder="Busqueda..."/>
+                    <TextInput placeholderTextColor="#000" style={{color:"#000",borderRadius:width*0.01,width:width*0.8,backgroundColor:"white",height:height*0.075, fontSize: width*0.05}} placeholder="Busqueda..."/>
                     <TouchableOpacity>
-                        <View style={{marginLeft:5,width:50,height:50,borderRadius:50,alignItems:"center",backgroundColor:ContextStyles[`iconheader${theme}`].color}}>
-                            <Icon name="search" color="white" size={30} style={{marginTop:height*0.01}} />
+                        <View style={{marginLeft:5,width:width*0.14,height:width*0.14,borderRadius:50,alignItems:"center",backgroundColor:ContextStyles[`iconheader${theme}`].color}}>
+                            <Icon name="search" color="white" size={width*0.08} style={{marginTop:height*0.01}} />
                         </View>
                     </TouchableOpacity>                
                 </View>
@@ -116,10 +115,10 @@ const searchScreen = ({navigation}) => {
             
             <View style={[{flex:1,alignItems:"center"},ContextStyles[`container${theme}`]]}>
                 <View style={{flexDirection:"row",marginTop:StatusBar.currentHeight+height*0.02}}>
-                    <TextInput placeholderTextColor="#000" onChangeText={setSearch} value={search} style={{color:"#000",marginLeft:5,borderRadius:5,width:"80%",backgroundColor:"white",height:45}} placeholder="Busqueda..."/>
+                    <TextInput placeholderTextColor="#000" onChangeText={setSearch} value={search} style={{color:"#000",borderRadius:width*0.01,width:width*0.8,backgroundColor:"white",height:height*0.075, fontSize: width*0.05}} placeholder="Busqueda..."/>
                     <TouchableOpacity onPress={handleSearch}>
-                        <View style={{marginLeft:5,width:50,height:50,borderRadius:50,alignItems:"center",backgroundColor:ContextStyles[`iconheader${theme}`].color}}>
-                            <Icon name="search" color="white" size={30} style={{marginTop:height*0.01}} />
+                        <View style={{marginLeft:5,width:width*0.13,height:width*0.13,borderRadius:50,alignItems:"center",backgroundColor:ContextStyles[`iconheader${theme}`].color}}>
+                            <Icon name="search" color="white" size={width*0.08} style={{marginTop:height*0.01}} />
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -136,10 +135,10 @@ const searchScreen = ({navigation}) => {
         
         <View style={[{flex:1,alignContent:"center",justifyContent:"center"},ContextStyles[`container${theme}`]]}>
             <View style={{flexDirection:"row",marginTop:StatusBar.currentHeight+height*0.02}}>
-                <TextInput placeholderTextColor="#000" onChangeText={setSearch} value={search} style={{color:"#000",marginLeft:5,borderRadius:5,width:"83%",backgroundColor:"white",height:45}} placeholder="Busqueda..."/>
+                <TextInput placeholderTextColor="#000" onChangeText={setSearch} value={search} style={{color:"#000",borderRadius:width*0.01,width:width*0.8,backgroundColor:"white",height:height*0.075, fontSize: width*0.05}} placeholder="Busqueda..."/>
                 <TouchableOpacity onPress={handleSearch}>
-                    <View style={{marginLeft:5,width:50,height:50,borderRadius:50,alignItems:"center",backgroundColor:ContextStyles[`iconheader${theme}`].color}}>
-                        <Icon name="search" color="white" size={30} style={{marginTop:height*0.01}} />
+                    <View style={{marginLeft:5,width:width*0.13,height:width*0.13,borderRadius:50,alignItems:"center",backgroundColor:ContextStyles[`iconheader${theme}`].color}}>
+                        <Icon name="search" color="white" size={width*0.08} style={{marginTop:height*0.01}} />
                     </View>
                 </TouchableOpacity>            
             </View>
@@ -153,7 +152,7 @@ const searchScreen = ({navigation}) => {
                 renderItem={({item}) => {
                     return(
                         <TouchableOpacity onPress={()=>{handleAudioPress(item)}}>
-                            <Box tittle={item.title} image={{uri:item.album.cover_big}}/>
+                            <Box style={0} tittle={item.title} image={{uri:item.album.cover_big}}/>
                         </TouchableOpacity>
                     )
                     }

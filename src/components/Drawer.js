@@ -25,8 +25,9 @@ export function DrawerContent(props) {
 
     if(!ready){
         return(
-
-            <ActivityIndicator size="large" color="blue" backgroundColor="#1E1E1E"/>
+            <View style={[{flex:1,alignItems:'center',justifyContent:'center'},ContextStyles[`container${theme}`]]}>
+                <ActivityIndicator size="large" color="blue" />
+            </View>
 
         )
     }

@@ -110,7 +110,7 @@ const HomeScreen = ({navigation}) => {
     const getArtists = async () => {
         const newArtists = await _fetchArtists();
         setArtists(newArtists);
-        console.log(newArtists);
+        // console.log(newArtists);
     }
     
     useEffect(()=>{
@@ -140,6 +140,7 @@ const HomeScreen = ({navigation}) => {
                 <View style={styles.sections}>
                     <Text h2 style={[styles.text,ContextStyles[`text${theme}`]]}>Top Canciones</Text>
                     <FlatList
+                        contentContainerStyle={styles.list}
                         data={tracks}
                         horizontal={true}
                         keyExtractor={(item)=>item.id.toString()}
@@ -147,7 +148,7 @@ const HomeScreen = ({navigation}) => {
 
                         renderItem={({item}) => {
                             return(
-                                <Box tittle={item.title} accion={()=>{handleAudioPress(item)}} image={{uri:item.album.cover_big}}  />
+                                <Box style={0}tittle={item.title} accion={()=>{handleAudioPress(item)}} image={{uri:item.album.cover_big}}  />
                             )
                         }
                     }
@@ -156,7 +157,7 @@ const HomeScreen = ({navigation}) => {
                 <View style={styles.sections}>
                     <Text h2 style={[styles.text,ContextStyles[`text${theme}`]]}>Géneros</Text>
                     <FlatList
-                        
+                        contentContainerStyle={styles.list}
                         data={genres}
                         horizontal={true}
                         keyExtractor={(item)=>item.id.toString()}
@@ -165,7 +166,7 @@ const HomeScreen = ({navigation}) => {
                         renderItem={({item}) => {
                             return(
                                 <TouchableOpacity onPress={() => navigation.navigate("genre", {data: item})}>
-                                    <Box tittle={item.name} image={{uri:item.picture_big}}/>
+                                    <Box style={0} tittle={item.name} image={{uri:item.picture_big}}/>
                                 </TouchableOpacity>
                             )
                         }
@@ -175,6 +176,7 @@ const HomeScreen = ({navigation}) => {
                 <View style={styles.sections}>
                     <Text h2 style={[styles.text,ContextStyles[`text${theme}`]]}>Top Artistas</Text>
                     <FlatList
+                        contentContainerStyle={styles.list}
                         data={artists}
                         horizontal={true}
                         keyExtractor={(item)=>item.artist.artist_id.toString()}
@@ -189,6 +191,7 @@ const HomeScreen = ({navigation}) => {
                                         item.artist.artist_name
                                                 } 
                                         image={{uri:item.image_url}}
+                                        style={0}
                                     />
                                 </TouchableOpacity>
                             )
@@ -223,7 +226,11 @@ const styles = StyleSheet.create({
     },
     text:{
         marginLeft:10
-    }
+    },
+    list: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+      }
 })
 
 

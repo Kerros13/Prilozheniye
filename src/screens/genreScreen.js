@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, StyleSheet, TouchableOpacity, View, Text, StatusBar, FlatList, ScrollView, ActivityIndicator, RefreshControlBase} from "react-native";
 import {fetchTracks, getNewArtists, _fetchAlbums} from "../api/index";
-import Box from "../components/ArtistPhoto";
-import BoxCard from "../components/aCard";
-import BoxCard1 from "../components/genreCard";
+import { Ionicons } from '@expo/vector-icons';
+import Box from "../components/Box";
 import { ThemeContext } from "../theme";
 import getEnvVars from "../../environment";
 const {apikeyM} = getEnvVars();
@@ -95,27 +94,29 @@ const genreScreen = ({route, navigation}) => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,ContextStyles[`container${theme}`]]}>
             <StatusBar 
                 translucent
                 backgroundColor={"transparent"}
                 barStyle={'light-content'}
                 hidden={false}/>
             <View style={styles.info}>
-                <BoxCard1 tittle={data.name} image={{uri:data.picture_big}}/>
+                <Box tittle={data.name} image={{uri:data.picture_big}} style={1}/>
             </View>
+            <Ionicons name="arrow-back" size={width*0.09} color={theme == "dark" ? "white":"#2A2D2E"} onPress={() => {navigation.pop()}} style={{position:"absolute", left:'3%', top:'5%'}}/>
             <View style={styles.songBox}>
-                <Text style={styles.albumsTitle}>Artistas</Text>
+                <Text style={[theme == 'dark' ? {color:'#fff'}:{color:'#000'},styles.albumsTitle]}>Artistas</Text>
                 <FlatList
                         data={items}
                         horizontal={false}
+                        columnWrapperStyle={{justifyContent:'space-between', }}
                         numColumns={2}
                         keyExtractor={(item)=>item.artist.artist_id.toString()}
                         showsHorizontalScrollIndicator={false}
 
                         renderItem={({item}) => {
                             return(
-                                <BoxCard tittle={item.artist.artist_name} accion={()=>{navigation.navigate("artist", {data: item})}} numberOfLines={1} image={{uri:item.image_url}}  />
+                                <Box tittle={item.artist.artist_name} accion={()=>{navigation.navigate("artist", {data: item})}} numberOfLines={1} image={{uri:item.image_url}} style={2} />
                             )
                         }
                     }
@@ -131,22 +132,19 @@ const styles = StyleSheet.create({
     container:{
         marginTop:0,
         flex:10,
-        backgroundColor:"#333",
-        
     },
     info:{
-        width: width,
-        flex: 3,
+        height: width*0.05,
+        flex: 2.5,
         backgroundColor: "#777",
         justifyContent: 'center',
         alignItems: 'center',
     },
     songBox:{
-        flex: 7,
+        flex: 7.5,
     },
     albumsTitle: {
         marginLeft: 10,
-        color: "#fff",
         fontSize: 33,
         fontWeight: 'bold',
     },

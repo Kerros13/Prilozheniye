@@ -83,9 +83,9 @@ const songsbyAlbumScreen = ({route,navigation}) => {
         getTrackList()
     },[])
 
-    useEffect(()=>{
-        console.log(tracks);
-    },[tracks])
+    // useEffect(()=>{
+    //     console.log(tracks);
+    // },[tracks])
 
     if(!tracks){
         return(
@@ -99,8 +99,8 @@ const songsbyAlbumScreen = ({route,navigation}) => {
         <Screen style={{flex:1}}>
             <Header
             statusBarProps={{ backgroundColor: ContextStyles[`header${theme}`].backgroundColor, barStyle:theme == "dark" ? "light-content":"dark-content" }}
-            leftComponent={<Ionicons name="arrow-back" size={30} color={ContextStyles[`iconheader${theme}`].color} onPress={()=>{navigation.pop()}}/>}
-            centerComponent={<Text style={{fontSize:20,color:theme=="dark"? "#fff":"#000"}}>{data.title}</Text>}
+            leftComponent={<Ionicons name="arrow-back" size={width*0.085} color={ContextStyles[`iconheader${theme}`].color} onPress={()=>{navigation.pop()}}/>}
+            centerComponent={<Text style={{fontSize:width*0.06,color:theme=="dark"? "#fff":"#000"}}>{data.title}</Text>}
             containerStyle={{
                 backgroundColor: ContextStyles[`header${theme}`].backgroundColor ,
                 justifyContent: 'space-around',
@@ -143,15 +143,15 @@ const styles = StyleSheet.create({
     },
     image:{
         marginTop:5,
-        width:75,
-        height:75
+        width:width*0.2,
+        height:width*0.2,
     },
     rightcontainer:{
         justifyContent:'space-around',
         marginLeft:15
     },
     title:{
-        fontSize:18
+        fontSize:width*0.05
     },
     separator: {
         width: width*0.9,
