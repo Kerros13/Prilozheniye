@@ -11,7 +11,7 @@ import getEnvVars from "../../environment";
 import * as Google from 'expo-google-app-auth';
 
 const {width, height} = Dimensions.get("window");
-const {googleSignInKey} = getEnvVars();
+const {googleSignInKey,googleSignInKeyIOS} = getEnvVars();
 
 const SignupForm = ({ navigation }) => {
   const { state, signup, onSignIn, clearErrorMessage } = useContext(AuthContext);
@@ -82,7 +82,7 @@ const SignupForm = ({ navigation }) => {
     try {
       const result = await Google.logInAsync({
         androidClientId: googleSignInKey,
-        //iosClientId: YOUR_CLIENT_ID_HERE,
+        iosClientId: googleSignInKeyIOS,
         scopes: ['profile', 'email'],
       });
   

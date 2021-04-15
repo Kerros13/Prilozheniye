@@ -23,13 +23,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.glmartinez01.Prilozheniye"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "androidNavigationBar":{
-      "barStyle":"light-content",
+    "androidNavigationBar": {
+      "barStyle": "light-content",
       "backgroundColor": "#000000"
     }
   }

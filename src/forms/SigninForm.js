@@ -12,7 +12,7 @@ import Images from 'react-native-scalable-image';
 import { ThemeContext } from "../theme";
 
 const {width, height} = Dimensions.get("window");
-const {googleSignInKey} = getEnvVars();
+const {googleSignInKey,googleSignInKeyIOS} = getEnvVars();
 
 const SigninForm = ({ navigation }) => {
   const { state, signin,onSignIn, clearErrorMessage } = useContext(AuthContext);
@@ -55,7 +55,7 @@ const SigninForm = ({ navigation }) => {
     try {
       const result = await Google.logInAsync({
         androidClientId: googleSignInKey,
-        //iosClientId: YOUR_CLIENT_ID_HERE,
+        iosClientId: googleSignInKeyIOS,
         scopes: ['profile', 'email'],
       });
   
