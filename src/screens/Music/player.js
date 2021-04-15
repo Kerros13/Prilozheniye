@@ -165,7 +165,7 @@ const Player = () => {
         <View style={styles.midBannerContainer}>
           {context.image_uri ? 
           <SafeAreaView style={{ alignItems:"center" }}>
-            <Images style={styles.image} source={{uri:context.image_uri}} height={width*0.8}/>
+            <Image style={styles.image} source={{uri:context.image_uri}}/>
           </SafeAreaView>  
           : 
           <MaterialCommunityIcons
@@ -214,6 +214,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  image:{
+    width:320,
+    height:320
   },
   audioCount: {
     position:"absolute",
