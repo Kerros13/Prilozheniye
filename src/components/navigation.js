@@ -1,4 +1,5 @@
 import React,{useContext} from 'react';
+import { StatusBar, Dimensions } from 'react-native';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -18,6 +19,7 @@ import { Modal } from 'react-native-paper';
 const HStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
+const { width } = Dimensions.get('window');
 
 function  HomeStack({navigation}) {
     const {theme, ContextStyles} = useContext(ThemeContext); 
@@ -78,14 +80,23 @@ function  HomeStack({navigation}) {
 // }
 
 function MyTopTabs() {
+    const {theme, ContextStyles} = useContext(ThemeContext); 
     return (
         
         <TopTab.Navigator
-        initialRouteName="Player"
+            initialRouteName="Player"
             tabBarOptions={{
+                activeTintColor: ContextStyles[`iconheader${theme}`].color,
+                indicatorStyle: { backgroundColor: ContextStyles[`iconheader${theme}`].color },
+                fontSize:100,
                 style: {
-                    display: 'none'
+                    backgroundColor: ContextStyles[`header${theme}`].backgroundColor,
+                    paddingTop: StatusBar.currentHeight,
+                    fontSize:100,
                 },
+                labelStyle:{
+                    fontSize:width*0.04
+                }
           }}
         >
             <TopTab.Screen name="List" component={List} />

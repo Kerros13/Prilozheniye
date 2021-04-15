@@ -176,7 +176,6 @@ const Player = () => {
           />}
           
         </View>
-        <View style={styles.audioPlayerContainer}>
           <Text numberOfLines={1} style={[styles.audioTitle, theme == "dark" ? {color:"white"}:{color:"#002c3e"}]}>
             {context.currentAudio.artist ? context.currentAudio.title +" - " + context.currentAudio.artist.name : context.currentAudio.filename }
           </Text>
@@ -199,7 +198,6 @@ const Player = () => {
             <PlayerButton iconType='NEXT' onPress={handleNext}
             />
           </View>
-        </View>
       </View>
       <View style={{height:'10%'}}></View>
     </Screen>
@@ -220,7 +218,6 @@ const styles = StyleSheet.create({
   audioCount: {
     position:"absolute",
     right: '5%',
-    top: '4%',
     color: '#b6b8b9',
     fontSize: width*0.04,
   },
